@@ -1,0 +1,41 @@
+{{ define "main" }}
+<section class="section">
+  <div class="has-text-centered">
+    <p class="title">{{ .Title }}</p>
+    <p class="subtitle">{{ .Date.Format "Jan 2, 2006" }}</p>
+    <div class="tags is-centered">
+      {{ range .Params.tags }}
+      <span class="tag is-medium">{{.}}</span>
+      {{ end }}
+    </div>
+  </div>
+</section>
+<div class="container">
+  <main class="content mx-6">{{ .Content }}</main>
+</div>
+
+{{ with .PrevInSection }}
+<div class="section has-text-centered">
+  <p class="subtitle">Keep on reading</p>
+</div>
+<div class="container">
+  <nav class="is-flex is-align-content-stretch is-align-items-baseline">
+    <a href="{{.Permalink}}">
+      <div class="box">
+        <p class="title">Previous Post</p>
+        <h1 class="subtitle">{{.Title}}</h1>
+        <p>{{.Summary}}</p>
+      </div>
+    </a>
+    {{ end }} {{ with .NextInSection }}
+    <a href="{{.Permalink}}">
+      <div class="box mx-6">
+        <p class="title">Next Post</p>
+        <h1 class="subtitle">{{.Title}}</h1>
+        <p>{{.Summary}}</p>
+      </div>
+    </a>
+    {{ end }}
+  </nav>
+</div>
+{{ end }}

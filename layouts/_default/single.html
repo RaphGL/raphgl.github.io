@@ -1,0 +1,15 @@
+{{ define "main" }}
+<section class="py-6 mb-6 has-background-primary">
+  <div class="has-text-centered">
+    <p class="title">{{ .Title }}</p>
+  </div>
+  <div class="tags is-centered">
+    {{ range .Params.tags }}
+    <span class="tag is-medium">{{.}}</span>
+    {{ end }}
+  </div>
+</section>
+<main class="container">
+  <div class="content mx-6 px-6">{{ .Content }}</div>
+</main>
+{{end}}

@@ -5,6 +5,25 @@
     <link>https://raphgl.com/</link>
     <description>Recent content on RaphGL</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://raphgl.com/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Dec 2021 18:05:13 +0000</lastBuildDate><atom:link href="https://raphgl.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://raphgl.com/about/</link>
+      <pubDate>Fri, 10 Dec 2021 19:08:30 +0000</pubDate>
+      
+      <guid>https://raphgl.com/about/</guid>
+      <description>Hi I&amp;rsquo;m RaphGL. I&amp;rsquo;m a hobbyist programmer trying to break into the field. I&amp;rsquo;ve always had an interest for computers and everything related. Since I was a child I was always glued to my computer trying to tweak it. My first computer had windows 98 on it and I spent hours playing the good ol&#39; games on it. At around 12 years old I tried to learn programming, back then I could only write basic websites and I didn&amp;rsquo;t get very far, I gave up eventually.</description>
+    </item>
+    
+    <item>
+      <title>Test</title>
+      <link>https://raphgl.com/blog/test/</link>
+      <pubDate>Fri, 10 Dec 2021 18:05:13 +0000</pubDate>
+      
+      <guid>https://raphgl.com/blog/test/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus ornare suspendisse sed nisi lacus sed viverra. Accumsan in nisl nisi scelerisque eu. Vestibulum lorem sed risus ultricies tristique nulla aliquet. Sodales neque sodales ut etiam. Nulla posuere sollicitudin aliquam ultrices sagittis. Condimentum vitae sapien pellentesque habitant morbi tristique senectus et. Sed nisi lacus sed viverra tellus. Pharetra sit amet aliquam id.</description>
+    </item>
+    
   </channel>
 </rss>

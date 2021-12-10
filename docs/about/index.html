@@ -10,7 +10,7 @@
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
     <meta charset="utf-8" />
-    <title>{{ .Title }}</title>
+    <title>About</title>
     <meta name="description" content="My personal website" />
     <meta name="author" content="RaphGL" />
     <meta
@@ -24,14 +24,12 @@
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
 
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    
   </head>
   <body>
     <nav class="navbar">
       <div class="navbar-brand ml-5">
-        <a href="/" class="navbar-item"><img src="#" alt="{{.Site.Title}}" /></a>
+        <a href="/" class="navbar-item"><img src="#" alt="RaphGL" /></a>
         <a
           role="button"
           class="navbar-burger"
@@ -53,7 +51,31 @@
       </div>
     </nav>
 
-    {{ block "main" . }} {{ end }}
+    
+<section class="py-6 mb-6 has-background-primary">
+  <div class="has-text-centered">
+    <p class="title">About</p>
+  </div>
+  <div class="tags is-centered">
+    
+  </div>
+</section>
+<main class="container">
+  <div class="content mx-6 px-6"><h2 id="hi-im-raphgl">Hi I&rsquo;m RaphGL.</h2>
+<p>I&rsquo;m a hobbyist programmer trying to break into the field. I&rsquo;ve always had an interest for computers and everything related. Since I was a child I was always glued to my computer trying to tweak it. My first computer had windows 98 on it and I spent hours playing the good ol' games on it.
+At around 12 years old I tried to learn programming, back then I could only write basic websites and I didn&rsquo;t get very far, I gave up eventually.</p>
+<p>At around 10th grade I kinda got into a random video about Linux on YouTube and got curious about it so I ended up installing it on my computer and hold and behold: I liked it!
+The customizations and the scripting abilities of it were very appealing to me somehow. After that I went deeper and deeper into it and eventually started writing programs to help me out and that&rsquo;s how I got addicted to programming and learning everything unix related (though my laziness gets the best of me often).</p>
+<hr>
+<h2 id="software-and-programming-languages">Software and Programming Languages</h2>
+<p><strong>TODO</strong></p>
+<hr>
+<h2 id="dotfiles">Dotfiles</h2>
+<p>I&rsquo;ve been around Linux for a few years now and during that time I&rsquo;ve accumulated a reasonable amount of configuration files and scripts. It can all be found <a href="https://github.com/RaphGL/Dotfiles">here</a>.</p>
+<p><img src="https://github.com/RaphGL/Dotfiles/raw/master/screenshot1.png" alt="Qtile Screenshot"></p>
+</div>
+</main>
+
 
     <footer class="footer mt-6">
       <div class="columns px-6">

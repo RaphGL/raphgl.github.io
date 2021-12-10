@@ -5,6 +5,25 @@
     <link>https://raphgl.com/tags/</link>
     <description>Recent content in Tags on RaphGL</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://raphgl.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Dec 2021 18:05:13 +0000</lastBuildDate><atom:link href="https://raphgl.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>test</title>
+      <link>https://raphgl.com/tags/test/</link>
+      <pubDate>Fri, 10 Dec 2021 18:05:13 +0000</pubDate>
+      
+      <guid>https://raphgl.com/tags/test/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>test 2</title>
+      <link>https://raphgl.com/tags/test-2/</link>
+      <pubDate>Fri, 10 Dec 2021 18:05:13 +0000</pubDate>
+      
+      <guid>https://raphgl.com/tags/test-2/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

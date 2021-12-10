@@ -1,0 +1,36 @@
+{{define "main"}}
+<div class="section has-text-centered has-background-primary py-6 mb-5">
+  <ion-icon name="book" style="font-size: 40pt"></ion-icon>
+  <p class="title">Articles</p>
+  <p class="subtitle">
+    This is a collection of articles I've written over time talking about:
+    programming, design, languages, etc.
+  </p>
+</div>
+<div class="container">
+  {{range .Pages}}
+  <div class="card my-4">
+    <div class="card-header">
+      <a href="{{.Permalink}}" class="card-header-title">{{.Title}}</a>
+    </div>
+    <div class="card-content">
+      {{.Summary}} <a href="{{.Permalink}}">Read more</a>
+    </div>
+    <div class="card-footer">
+      <div class="card-footer-item">
+        <ion-icon name="calendar" class="mr-3"></ion-icon>
+        {{.Date.Format "Jan 2, 2006"}}
+      </div>
+      {{ with .Params.tags}}
+      <div class="card-footer-item tags">
+        <ion-icon name="pricetags" class="mr-3"></ion-icon>
+        {{range .}}
+        <span class="tag is-medium">{{.}}</span>
+        {{end}}
+      </div>
+      {{end}}
+    </div>
+  </div>
+  {{end}}
+</div>
+{{end}}

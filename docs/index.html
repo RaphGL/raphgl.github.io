@@ -30,7 +30,17 @@
   <body>
     <nav class="navbar">
       <div class="navbar-brand ml-5">
-        <img class="navbar-item" src="#" alt="RaphGL" />
+        <a href="/" class="navbar-item"><img src="#" alt="RaphGL" /></a>
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
       <div class="navbar-menu mr-6">
         <div class="navbar-end">
@@ -53,11 +63,11 @@
     </figure>
     <p class="title">Hi, I'm RaphGL!</p>
     <p class="subtitle">
-      I'm a hobbbyist programmer. I write tools to make life easier.
+        Bad programmer, avid linux user and waste of oxygen.
     </p>
     <button class="button is-link is-light">
       <a href="https://github.com/RaphGL/" alt="github.com/RaphGL"
-        >Check My Github</a
+        ><ion-icon name="logo-github" class="mr-2"></ion-icon>Check My Github</a
       >
     </button>
   </div>
@@ -129,11 +139,15 @@
       </div>
     </div>
 
-  <div class="container has-text-centered">
-    <button class="button is-medium">View More</button>
+    <div class="container has-text-centered">
+      <a href="/projects">
+        <div class="box is-medium has-background-link has-text-white">
+          View More
+        </div>
+      </a>
+    </div>
   </div>
 </div>
-  </div>
 
 <div class="section">
   <div class="container has-text-centered my-4">
@@ -200,14 +214,19 @@
         </div>
       </div>
     </div>
-  <div class="container has-text-centered">
-    <button class="button is-medium">View More</button>
+    <div class="container has-text-centered">
+      <a href="/blog">
+        <div class="box is-medium has-background-link has-text-white">
+          View More
+        </div>
+      </a>
+    </div>
   </div>
-  </div>
+</div>
 
 
     <footer class="footer mt-6">
-      <div class="columns mx-6">
+      <div class="columns px-6">
         <div class="column is-three-fifths">
           <p>
             This website is licensed under GPLv3 and all of it's content is
