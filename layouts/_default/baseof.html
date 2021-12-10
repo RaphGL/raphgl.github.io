@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
     <meta charset="utf-8" />
     <title>{{ .Title }}</title>
     <meta name="description" content="My personal website" />
@@ -9,6 +17,8 @@
       name="keywords"
       content="Programming, Portfolio, Personal Website, Resume, RaphGL"
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
@@ -23,25 +33,26 @@
       <div class="navbar-brand ml-5">
         <img class="navbar-item" src="#" alt="RaphGL" />
       </div>
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">Projects</a>
-          <a class="navbar-item">Blog</a>
-          <a class="navbar-item">About Me</a>
+      <div class="navbar-menu mr-6">
+        <div class="navbar-end">
+          <a class="navbar-item" href="/">Home</a>
+          <a class="navbar-item" href="/projects">Projects</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+          <a class="navbar-item" href="/about">About Me</a>
         </div>
       </div>
     </nav>
 
     {{ block "main" . }} {{ end }}
 
-    <footer class="footer mx-6">
-      <div class="columns">
+    <footer class="footer mt-6">
+      <div class="columns mx-6">
         <div class="column is-three-fifths">
           <p>
             This website is licensed under GPLv3 and all of it's content is
             licensed under CC BY-SA.
           </p>
-          <p>If you wish to contact me: raphfl.dev@gmail.com</p>
+          <p>© 2021 - RaphGL</p>
         </div>
 
         <div class="column">
@@ -56,6 +67,7 @@
           <p class="menu-label">Social</p>
           <ul class="menu-list">
             <li><a href="https://github.com/RaphGL">Github</a></li>
+            <li><a href="#">Discord</a></li>
           </ul>
         </div>
 
