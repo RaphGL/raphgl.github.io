@@ -2,4 +2,5 @@ baseURL = "https://raphgl.com"
 languageCode = "en-us"
 title = "RaphGL"
 publishDir = "docs"
-summaryLength = 40
+pluralizelisttitles = false 
+paginate = 2
