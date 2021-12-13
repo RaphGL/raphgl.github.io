@@ -1,7 +1,6 @@
 ---
 title: "About"
 date: 2021-12-10T19:08:30Z
-draft: false
 ---
 
 ## Hi I'm RaphGL.

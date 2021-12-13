@@ -8,9 +8,7 @@
       />
     </figure>
     <p class="title">Hi, I'm RaphGL!</p>
-    <p class="subtitle">
-        Bad programmer, avid linux user and waste of oxygen.
-    </p>
+    <p class="subtitle">Bad programmer, avid linux user and waste of oxygen.</p>
     <button class="button is-link is-light">
       <a href="https://github.com/RaphGL/" alt="github.com/RaphGL"
         ><ion-icon name="logo-github" class="mr-2"></ion-icon>Check My Github</a
@@ -26,63 +24,26 @@
   </div>
 
   <div class="container mt-6">
-    <div class="tile is-ancestor">
+    <div class="tile is-ancestor mb-4">
+  {{ range last 4 (where .Site.RegularPages "Type" "projects") }}
       <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
+        <a href="{{.Permalink}}">
+        <div class="is-child card">
+          <div class="card-header">
+            <p class="card-header-title">{{.Title}}</p>
+          </div>
+          <div class="card-image">
             <img
               src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
               alt=""
-              class="image"
             />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
           </div>
+          <div class="card-content">{{.Summary}}</div>
         </div>
+        </a>
       </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
+  {{ end }}
+    </div>
     </div>
 
     <div class="container has-text-centered">
@@ -102,66 +63,30 @@
   </div>
 
   <div class="container mt-6">
-    <div class="tile is-ancestor">
+    <div class="tile is-ancestor mb-4">
+  {{ range last 4 (where .Site.RegularPages "Type" "blog") }}
       <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
+        <a href="{{.Permalink}}">
+        <div class="is-child card">
+          <div class="card-header">
+            <p class="card-header-title">{{.Title}}</p>
+          </div>
+          <div class="card-image">
             <img
               src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
               alt=""
-              class="image"
             />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
           </div>
+          <div class="card-content">{{.Summary}}</div>
         </div>
+        </a>
       </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
-      <div class="tile is-parent">
-        <div class="is-child box">
-          <div class="my-3 mx-3">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              width="300"
-              alt=""
-              class="image"
-            />
-            <p class="title has-text-centered mt-3"><a>Article title</a></p>
-            <p class="subtitle">This is the contents of the article</p>
-          </div>
-        </div>
-      </div>
+  {{ end }}
     </div>
+    </div>
+
     <div class="container has-text-centered">
-      <a href="/blog">
+      <a href="/projects">
         <div class="box is-medium has-background-link has-text-white">
           View More
         </div>
@@ -169,4 +94,7 @@
     </div>
   </div>
 </div>
+
+
+
 {{ end }}

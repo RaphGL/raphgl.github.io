@@ -14,10 +14,10 @@
   <main class="content mx-6">{{ .Content }}</main>
 </div>
 
-{{ with .PrevInSection }}
 <div class="section has-text-centered">
   <p class="subtitle">Keep on reading</p>
 </div>
+{{ with .PrevInSection }}
 <div class="container">
   <nav class="is-flex is-align-content-stretch is-align-items-baseline">
     <a href="{{.Permalink}}">
