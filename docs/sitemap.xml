@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://raphgl.github.io/categories/</loc>
+    <loc>https://raphgl.com/blog/</loc>
+    <priority>0</priority>
   </url><url>
-    <loc>https://raphgl.github.io/</loc>
+    <loc>https://raphgl.com/projects/</loc>
+    <priority>0</priority>
   </url><url>
-    <loc>https://raphgl.github.io/tags/</loc>
+    <loc>https://raphgl.com/categories/</loc>
+  </url><url>
+    <loc>https://raphgl.com/</loc>
+  </url><url>
+    <loc>https://raphgl.com/tags/</loc>
   </url>
 </urlset>
