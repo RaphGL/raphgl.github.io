@@ -1,15 +1,11 @@
-{{ define "main" }}
-<section class="py-6 mb-6 has-background-primary">
-  <div class="has-text-centered">
-    <p class="title">{{ .Title }}</p>
-  </div>
-  <div class="tags is-centered my-2">
-    {{ range .Params.tags }}
-    <span class="tag is-medium">{{.}}</span>
-    {{ end }}
-  </div>
-</section>
-<main class="container">
-  <div class="content px-6">{{ .Content }}</div>
-</main>
-{{end}}
+{{ define "main"}}
+{{ partial "navbar.html" .}}
+<div class="bg-gray mb-8 h-28 flex flex-col place-content-center items-center">
+    <h2 class="text-3xl">{{ .Title }}</h2>
+    <h4 class="text-light-gray">{{ .Date.Format "Monday, January 2, 2006" }}</h4>
+</div>
+
+<div class="post-content">
+    {{ .Content }}
+</div>
+{{ end }}

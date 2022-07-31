@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    h1 {
+        @apply text-4xl text-center text-blue m-8 font-bold
+    }
+    footer {
+        @apply text-center m-16 mb-8 text-light-gray
+    }
+    .post-content {
+        @apply mx-60 text-justify
+    }
+    ul li {
+        @apply text-lg hover:text-blue transition hover:ease-in active:text-white
+    }
+}

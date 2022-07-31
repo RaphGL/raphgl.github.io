@@ -1,6 +1,4 @@
-baseURL = "https://raphgl.com"
-languageCode = "en-us"
-title = "RaphGL"
-publishDir = "docs"
-pluralizelisttitles = false 
-paginate = 2
+baseURL = 'https://raphgl.github.io'
+languageCode = 'en-us'
+title = 'RaphGL'
+pluralizelisttitles = "false"

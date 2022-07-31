@@ -1,100 +1,22 @@
 {{ define "main" }}
-<div class="has-background-primary py-6">
-  <div class="container has-text-centered">
-    <figure class="container image is-rounded is-128x128 mb-3">
+<div class="min-h-screen bg-gradient-to-br from-blacker to-black">
+  <div class="flex h-screen w-screen items-center place-content-center">
+    <div class="flex flex-col items-center gap-5">
       <img
-        class="is-rounded"
-        src="https://avatars.githubusercontent.com/u/28673457?v=4&size=280"
+        src="/profilepic.jpg"
+        alt="profile picture"
+        class="rounded-full w-4/5"
       />
-    </figure>
-    <p class="title">Hi, I'm RaphGL!</p>
-    <p class="subtitle">Bad programmer, avid linux user and waste of oxygen.</p>
-    <button class="button is-link is-light">
-      <a href="https://github.com/RaphGL/" alt="github.com/RaphGL"
-        ><ion-icon name="logo-github" class="mr-2"></ion-icon>Check My Github</a
-      >
-    </button>
-  </div>
-</div>
-
-<div class="section">
-  <div class="container has-text-centered my-4">
-    <h1 class="title">Projects</h1>
-    <h2 class="subtitle">Highlighted Projects</h2>
-  </div>
-
-  <div class="container mt-6">
-    <div class="tile is-ancestor mb-4">
-  {{ range last 4 (where .Site.RegularPages "Type" "projects") }}
-      <div class="tile is-parent">
-        <a href="{{.Permalink}}">
-        <div class="is-child card">
-          <div class="card-header">
-            <p class="card-header-title">{{.Title}}</p>
-          </div>
-          <div class="card-image">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              alt=""
-            />
-          </div>
-          <div class="card-content">{{truncate 100 .Summary}}</div>
-        </div>
-        </a>
+      <h2 class="text-4xl font-bold">Hi, I'm RaphGL!</h2>
+      <div class="flex flex-row gap-2">
+        <img src="/icons/github.svg" />
+        <img src="/icons/gitlab.svg" />
+        <img src="/icons/discord.svg" />
       </div>
-  {{ end }}
-    </div>
-    </div>
-
-    <div class="container has-text-centered">
-      <a href="/projects">
-        <div class="box is-medium has-background-link has-text-white">
-          View More
-        </div>
-      </a>
     </div>
   </div>
 </div>
 
-<div class="section">
-  <div class="container has-text-centered my-4">
-    <h1 class="title">Blog</h1>
-    <h2 class="subtitle">Recent Articles</h2>
-  </div>
-
-  <div class="container mt-6">
-    <div class="tile is-ancestor mb-4">
-  {{ range last 4 (where .Site.RegularPages "Type" "blog") }}
-      <div class="tile is-parent">
-        <a href="{{.Permalink}}">
-        <div class="is-child card">
-          <div class="card-header">
-            <p class="card-header-title">{{.Title}}</p>
-          </div>
-          <div class="card-image">
-            <img
-              src="http://gestaodecomunidades.com/wp-content/uploads/2015/11/Anatomia-Blog-Post-Perfeito.jpg"
-              alt=""
-            />
-          </div>
-          <div class="card-content">{{truncate 100 .Summary}}</div>
-        </div>
-        </a>
-      </div>
-  {{ end }}
-    </div>
-    </div>
-
-    <div class="container has-text-centered">
-      <a href="/projects">
-        <div class="box is-medium has-background-link has-text-white">
-          View More
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
-
-
-
+{{ partial "navbar.html" .}}
+{{ partial "about_me.html" . }}
 {{ end }}
