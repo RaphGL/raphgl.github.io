@@ -1,5 +1,4 @@
-baseURL = 'https://raphgl.com'
+baseURL = 'https://raphgl.com/'
 languageCode = 'en-us'
 title = 'RaphGL'
 pluralizelisttitles = "false"
-publishDir = "docs"
