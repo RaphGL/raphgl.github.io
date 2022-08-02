@@ -1,12 +1,10 @@
 {{ define "main"}}
 {{ partial "navbar.html" . }}
-<h1>{{ .Title }}</h1>
-
 {{ range .Pages }}
 <a href="{{ .Permalink }}">
-    <div class="flex flex-col items-center bg-gray my-4 w-3/5 mx-auto rounded-sm bg-light-black">
+    <div class="flex flex-col items-center my-4 w-3/5 mx-auto rounded-sm bg-light-black">
         <div class="flex flex-row items-center place-content-center justify-between w-5/6 h-14">
-            <span>{{.Title }}</span>
+            <span>{{ .Title }}</span>
             <span class="text-light-gray">{{ .PublishDate.Format "2 Jan 2006" }}</span>
         </div>
     </div>
