@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RaphGL</title>
-    <link>https://raphgl.com/blog/</link>
+    <link>http://raphgl.com/blog/</link>
     <description>Recent content on RaphGL</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 Jul 2022 11:34:32 +0100</lastBuildDate><atom:link href="https://raphgl.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Jul 2022 11:34:32 +0100</lastBuildDate><atom:link href="http://raphgl.com/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>second post</title>
-      <link>https://raphgl.com/blog/blogtest2/</link>
+      <link>http://raphgl.com/blog/blogtest2/</link>
       <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
       
-      <guid>https://raphgl.com/blog/blogtest2/</guid>
+      <guid>http://raphgl.com/blog/blogtest2/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
       <title>third post</title>
-      <link>https://raphgl.com/blog/blogtest/</link>
+      <link>http://raphgl.com/blog/blogtest/</link>
       <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
       
-      <guid>https://raphgl.com/blog/blogtest/</guid>
+      <guid>http://raphgl.com/blog/blogtest/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
