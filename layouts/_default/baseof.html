@@ -7,7 +7,7 @@
     <title>{{ .Site.Title }}</title>
 
     {{ $css := resources.Get "css/index.css" }}
-    <link rel="stylesheet" type="text/css" href="{{ $css.Permalink }}" />
+    <link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}" />
 </head>
 <body class="text-white bg-black">
     {{ block "main" . }}{{ end }}
