@@ -10,7 +10,7 @@
         @apply text-center m-16 mb-8 text-light-gray
     }
     .post-content {
-        @apply mx-60 text-justify
+        @apply mx-auto text-justify w-11/12 sm:w-2/3 md:w-5/6 lg:w-2/3
     }
     ul li {
         @apply text-lg hover:text-blue transition hover:ease-in active:text-white
