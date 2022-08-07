@@ -1,4 +1,4 @@
-<nav class="fixed md:sticky w-full {{ if .IsHome }} bottom-0 {{ else }} bottom-0 {{ end }} bg-dark-gray h-20">
+<nav class="fixed md:sticky w-full {{ if .IsHome }} bottom-0 {{ else }} bottom-0 md:top-0 {{ end }} bg-dark-gray h-20">
   <ul class="flex flex-row gap-8 place-content-center h-full items-center">
     {{ $curr_page := "text-blue font-bold" }}
     <li><a href="/" class="{{ if .IsHome }} {{ $curr_page }} {{ end }}">Home</a></li>
