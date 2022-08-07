@@ -2,10 +2,10 @@
 {{ partial "navbar.html" .}}
 <div class="bg-gray mb-8 h-28 flex flex-col place-content-center items-center">
     <h2 class="text-3xl">{{ .Title }}</h2>
-    <h4 class="text-light-gray">{{ .Date.Format "Monday, January 2, 2006" }}</h4>
+    <h4 class="text-light-gray">{{ .Date.Format "January 2, 2006" }}</h4>
 </div>
 
-<div class="post-content">
+<div class="post-content text-justify">
     {{ .Content }}
 </div>
 {{ end }}
