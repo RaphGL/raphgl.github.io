@@ -38,7 +38,13 @@
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></div><p><strong>Note:</strong> If there&rsquo;s an error connecting to the LSP, open Godot and go on <code>Editor &gt; Editor Settings &gt; Network &gt; Language Server</code> and check that the port numbers and IP address match.</p>
-<p>For syntax highlighting you could install the <code>sheerun/vim-polyglot</code> or use <code>habamax/vim-godot</code> which provides syntax highlighting as well as a set of commands allows you to run scenes through NeoVim.</p>
+<h2 id="additional-steps">Additional steps</h2>
+<p>You probably want syntax highlighting, for that you have 2 options: you could install the <a href="https://github.com/sheerun/vim-polyglot"><code>sheerun/vim-polyglot</code></a> or use <a href="https://github.com/habamax/vim-godot"><code>habamax/vim-godot</code></a> (which provides syntax highlighting as well as a set of commands allows you to run scenes through NeoVim).</p>
+<p><strong>Settings up the editor</strong>
+To set up the editor go to <code>Editor &gt; Editor Settings &gt; Text Editor</code> and change the <code>Exec Path</code> to the terminal of your liking (kitty in my case) and on <code>Exec Flags</code> put <code>nvim {file}</code>.</p>
+<p><img src="/blog/nvim-for-godot/godot.png" alt="Editor settings &gt; External Editor"></p>
+<p>Now everything should be working correctly and when you click to open a script on the engine it should open nvim on the correct file.</p>
+<p><img src="/blog/nvim-for-godot/vim.png" alt="Neovim opened with Godot"></p>
 
 </div>
 

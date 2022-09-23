@@ -874,33 +874,6 @@ p {
   background-color: rgb(48 50 77 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-blue:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(118 144 227 / var(--tw-bg-opacity));
-}
-
-.hover\:font-bold:hover {
-  font-weight: 700;
-}
-
-.hover\:font-medium:hover {
-  font-weight: 500;
-}
-
-.hover\:font-semibold:hover {
-  font-weight: 600;
-}
-
-.hover\:text-blue:hover {
-  --tw-text-opacity: 1;
-  color: rgb(118 144 227 / var(--tw-text-opacity));
-}
-
-.hover\:text-accent-color:hover {
-  --tw-text-opacity: 1;
-  color: rgb(48 50 77 / var(--tw-text-opacity));
-}
-
 @media (min-width: 640px) {
   .sm\:grid {
     display: grid;
