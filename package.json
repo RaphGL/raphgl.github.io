@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "hugo server -D; npx tailwindcss --jit --watch -i assets/css/input.css -o assets/css/index.css",
+    "server": "hugo server -D & npx tailwindcss --jit --watch -i assets/css/input.css -o assets/css/index.css &",
     "build": "npx tailwindcss --minify -i assets/css/input.css -o assets/css/index.css && hugo"
   },
   "keywords": [],

@@ -3,16 +3,36 @@
 @tailwind utilities;
 
 @layer components {
-    h1 {
-        @apply text-4xl text-center text-blue m-8 font-bold
-    }
-    footer {
-        @apply text-center m-16 mb-8 text-light-gray
-    }
-    .post-content {
-        @apply mx-auto w-11/12 sm:w-2/3 md:w-5/6 lg:w-2/3 my-4
-    }
-    ul li {
-        @apply text-lg hover:text-blue transition hover:ease-in active:text-white
-    }
+  h1 {
+    @apply text-4xl text-center m-8 font-bold;
+  }
+  h2 {
+    @apply text-2xl text-center m-4 font-bold;
+  }
+  footer {
+    @apply text-center m-16 mb-8 text-light-gray;
+  }
+  .post-content {
+    @apply mx-auto w-11/12 sm:w-2/3 md:w-5/6 lg:w-2/3 my-4;
+  }
+
+  .post-content ul {
+    @apply list-disc 
+  }
+
+  ul li > a {
+    @apply text-lg hover:text-blue transition hover:ease-in active:text-white;
+  }
+
+  p {
+    @apply m-2;
+  }
+
+  .post-content a {
+    @apply text-blue
+  }
+
+  .post-content a:hover {
+    @apply text-light-gray
+  }
 }

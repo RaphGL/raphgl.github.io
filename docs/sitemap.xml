@@ -3,21 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://raphgl.com/blog/</loc>
-    <lastmod>2022-07-31T11:34:32+01:00</lastmod>
+    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
     <priority>0</priority>
+  </url><url>
+    <loc>http://raphgl.com/</loc>
+    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/blog/godot-with-nvim/</loc>
+    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/projects/</loc>
     <lastmod>2022-07-31T11:34:32+01:00</lastmod>
     <priority>0</priority>
-  </url><url>
-    <loc>http://raphgl.com/</loc>
-    <lastmod>2022-07-31T11:34:32+01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/blog/blogtest2/</loc>
-    <lastmod>2022-07-31T11:34:32+01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/blogtest2-copy-2/</loc>
-    <lastmod>2022-07-31T11:34:32+01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/projects/blogtest2-copy-3/</loc>
     <lastmod>2022-07-31T11:34:32+01:00</lastmod>
@@ -32,9 +29,6 @@
     <lastmod>2022-07-31T11:34:32+01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/projects/blogtest2/</loc>
-    <lastmod>2022-07-31T11:34:32+01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/blog/blogtest/</loc>
     <lastmod>2022-07-31T11:34:32+01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/projects/blogtest/</loc>

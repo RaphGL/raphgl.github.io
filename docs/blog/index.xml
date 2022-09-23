@@ -6,23 +6,15 @@
     <description>Recent content on RaphGL</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 Jul 2022 11:34:32 +0100</lastBuildDate><atom:link href="http://raphgl.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Sep 2022 13:28:10 -0100</lastBuildDate><atom:link href="http://raphgl.com/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/blog/blogtest2/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Setting up NeoVim for Godot</title>
+      <link>http://raphgl.com/blog/godot-with-nvim/</link>
+      <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
       
-      <guid>http://raphgl.com/blog/blogtest2/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
-    </item>
-    
-    <item>
-      <title>third post</title>
-      <link>http://raphgl.com/blog/blogtest/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
-      
-      <guid>http://raphgl.com/blog/blogtest/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
+      <guid>http://raphgl.com/blog/godot-with-nvim/</guid>
+      <description>Recently I&amp;rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.
+Setting Up If you have CoC working correctly already, open NeoVim and run :CocConfig, it&amp;rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</description>
     </item>
     
   </channel>

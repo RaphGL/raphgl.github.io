@@ -1,7 +1,7 @@
 {{ define "main"}}
 {{ partial "navbar.html" .}}
-<div class="bg-gray mb-8 h-28 flex flex-col place-content-center items-center">
-    <h2 class="text-3xl">{{ .Title }}</h2>
+<div class="bg-gray mb-8 p-4 py-6 h-fit flex flex-col text-center place-content-center items-center">
+    <h2 class="text-3xl text-white m-4">{{ .Title }}</h2>
     <h4 class="text-light-gray">{{ .Date.Format "January 2, 2006" }}</h4>
 </div>
 
