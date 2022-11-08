@@ -3,3 +3,10 @@ languageCode = 'en-us'
 title = 'RaphGL'
 publishDir = 'docs'
 pluralizelisttitles = 'false'
+
+[markup]
+[markup.highlight]
+style = "dracula"
+tabwidth = 4
+codeFences = true
+noClasses = false

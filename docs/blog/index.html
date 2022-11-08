@@ -8,11 +8,13 @@
 
     
     <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
 </head>
 <body class="text-white bg-black">
     
 <nav class="fixed md:sticky w-full  bottom-0 md:top-0  bg-dark-gray h-20">
-  <ul class="flex flex-row gap-8 place-content-center h-full items-center">
+  <ul class="flex flex-row gap-8 md:gap-12 place-content-center h-full items-center">
     
     <li><a href="/" class="">Home</a></li>
     <li><a href="/projects" class="">Projects</a></li>
@@ -21,16 +23,18 @@
   </ul>
 </nav>
 
+<div class="m-10">
 
 <a href="http://raphgl.com/blog/godot-with-nvim/">
-    <div class="flex flex-col items-center post-content rounded-sm bg-light-black hover:bg-accent-color transition ease-in">
-        <div class="flex flex-row items-center place-content-center justify-between w-5/6 h-14">
+    <div class="flex flex-col items-center post-content rounded-lg bg-light-black hover:bg-accent-color transition ease-in">
+        <div class="p-4 flex flex-col md:flex-row items-center place-content-center justify-between w-5/6">
             <span>Setting up NeoVim for Godot</span>
             <span class="text-light-gray">23 Sep 2022</span>
         </div>
     </div>
 </a>
 
+</div>
 
     <footer>
     @2022 RaphGL

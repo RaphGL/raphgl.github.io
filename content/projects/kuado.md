@@ -1,7 +1,7 @@
 ---
-title: "second post"
-description: "this is the description of the project"
-date: 2022-07-31T11:34:32+01:00
+title: "Kuado"
+description: "An indie game in the same vain as Mini Militia"
+date: 2022-10-8T19:59:32
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum. Justo donec enim diam vulputate ut. Bibendum neque egestas congue quisque. Praesent elementum facilisis leo vel fringilla. Elit pellentesque habitant morbi tristique senectus et netus. Convallis aenean et tortor at risus viverra adipiscing at in. In pellentesque massa placerat duis ultricies lacus sed turpis. A lacus vestibulum sed arcu non. Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci.  

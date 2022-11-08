@@ -8,6 +8,8 @@
 
     {{ $css := resources.Get "css/index.css" }}
     <link rel="stylesheet" type="text/css" href="{{ $css.RelPermalink }}" />
+    {{ $syntax_css := resources.Get "css/syntax.css" }}
+    <link rel="stylesheet" type="text/css" href="{{ $syntax_css.RelPermalink }}" />
 </head>
 <body class="text-white bg-black">
     {{ block "main" . }}{{ end }}

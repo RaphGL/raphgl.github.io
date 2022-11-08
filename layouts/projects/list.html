@@ -1,15 +1,17 @@
 {{ define "main" }}
 {{ partial "navbar.html" . }}
-<div class="post-content">
-    <div class="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mx-auto">
+<div class="m-10">
+<div class="post-content container">
+    <div class="grid sm:grid sm:grid-cols-2 gap-4 w-full">
         {{ range .Pages }}
         <a href="{{ .Permalink }}">
-            <div class="flex flex-col items-center place-content-center rounded-sm bg-light-black w-full p-6 hover:bg-accent-color transition ease-in">
+            <div class="flex flex-col items-center place-content-center rounded-lg bg-light-black w-full p-6 hover:bg-accent-color transition ease-in">
                 <h2 class="text-lg text-white m-0 font-normal">{{ .Title }}</h2>
-                <p class="text-light-gray text-center">{{ .Description }}</p>
+                <p class="text-light-gray text-left">{{ .Description }}</p>
             </div>
         </a>
         {{ end }}
     </div>
+</div>
 </div>
 {{ end }}

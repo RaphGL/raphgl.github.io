@@ -18,56 +18,65 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     </item>
     
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/projects/blogtest2-copy-3/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Clibs</title>
+      <link>http://raphgl.com/projects/clibs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest2-copy-3/</guid>
+      <guid>http://raphgl.com/projects/clibs/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/projects/blogtest2-copy-4/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Kuado</title>
+      <link>http://raphgl.com/projects/kuado/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest2-copy-4/</guid>
+      <guid>http://raphgl.com/projects/kuado/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/projects/blogtest2-copy-5/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>NeoSent</title>
+      <link>http://raphgl.com/projects/neosent/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest2-copy-5/</guid>
+      <guid>http://raphgl.com/projects/neosent/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/projects/blogtest2-copy/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Posix Coreutils</title>
+      <link>http://raphgl.com/projects/posixcoreutils/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest2-copy/</guid>
+      <guid>http://raphgl.com/projects/posixcoreutils/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
-      <title>second post</title>
-      <link>http://raphgl.com/projects/blogtest2/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Syngit</title>
+      <link>http://raphgl.com/projects/syngit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest2/</guid>
+      <guid>http://raphgl.com/projects/syngit/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
     <item>
-      <title>third post</title>
-      <link>http://raphgl.com/projects/blogtest/</link>
-      <pubDate>Sun, 31 Jul 2022 11:34:32 +0100</pubDate>
+      <title>Tuckr</title>
+      <link>http://raphgl.com/projects/tuckr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://raphgl.com/projects/blogtest/</guid>
+      <guid>http://raphgl.com/projects/tuckr/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
+    </item>
+    
+    <item>
+      <title>XPMan</title>
+      <link>http://raphgl.com/projects/xpman/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://raphgl.com/projects/xpman/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
     </item>
     
