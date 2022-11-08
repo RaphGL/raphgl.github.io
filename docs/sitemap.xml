@@ -2,35 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://raphgl.com/projects/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+    <priority>0</priority>
+  </url><url>
+    <loc>http://raphgl.com/projects/clibs/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/kuado/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/neosent/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/posixcoreutils/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/syngit/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/tuckr/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/projects/xpman/</loc>
+    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
+  </url><url>
     <loc>http://raphgl.com/blog/</loc>
     <lastmod>2022-09-23T13:28:10-01:00</lastmod>
     <priority>0</priority>
   </url><url>
-    <loc>http://raphgl.com/</loc>
-    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
-  </url><url>
     <loc>http://raphgl.com/blog/godot-with-nvim/</loc>
     <lastmod>2022-09-23T13:28:10-01:00</lastmod>
   </url><url>
-    <loc>http://raphgl.com/projects/</loc>
-    <priority>0</priority>
-  </url><url>
     <loc>http://raphgl.com/categories/</loc>
   </url><url>
-    <loc>http://raphgl.com/projects/clibs/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/kuado/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/neosent/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/posixcoreutils/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/syngit/</loc>
-  </url><url>
     <loc>http://raphgl.com/tags/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/tuckr/</loc>
-  </url><url>
-    <loc>http://raphgl.com/projects/xpman/</loc>
   </url>
 </urlset>

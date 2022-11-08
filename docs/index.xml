@@ -6,21 +6,11 @@
     <description>Recent content on RaphGL</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Sep 2022 13:28:10 -0100</lastBuildDate><atom:link href="http://raphgl.com/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Setting up NeoVim for Godot</title>
-      <link>http://raphgl.com/blog/godot-with-nvim/</link>
-      <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/blog/godot-with-nvim/</guid>
-      <description>Recently I&amp;rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.
-Setting Up If you have CoC working correctly already, open NeoVim and run :CocConfig, it&amp;rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</description>
-    </item>
-    
+    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate><atom:link href="http://raphgl.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Clibs</title>
       <link>http://raphgl.com/projects/clibs/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/clibs/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -29,7 +19,7 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>Kuado</title>
       <link>http://raphgl.com/projects/kuado/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/kuado/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -38,7 +28,7 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>NeoSent</title>
       <link>http://raphgl.com/projects/neosent/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/neosent/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -47,7 +37,7 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>Posix Coreutils</title>
       <link>http://raphgl.com/projects/posixcoreutils/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/posixcoreutils/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -56,7 +46,7 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>Syngit</title>
       <link>http://raphgl.com/projects/syngit/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/syngit/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -65,7 +55,7 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>Tuckr</title>
       <link>http://raphgl.com/projects/tuckr/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/tuckr/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
@@ -74,10 +64,20 @@ Setting Up If you have CoC working correctly already, open NeoVim and run :CocCo
     <item>
       <title>XPMan</title>
       <link>http://raphgl.com/projects/xpman/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/xpman/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum.</description>
+    </item>
+    
+    <item>
+      <title>Setting up NeoVim for Godot</title>
+      <link>http://raphgl.com/blog/godot-with-nvim/</link>
+      <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
+      
+      <guid>http://raphgl.com/blog/godot-with-nvim/</guid>
+      <description>Recently I&amp;rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.
+Setting Up If you have CoC working correctly already, open NeoVim and run :CocConfig, it&amp;rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</description>
     </item>
     
   </channel>
