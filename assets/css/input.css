@@ -11,6 +11,10 @@
     @apply text-2xl text-center m-8 mt-12 font-bold;
   }
 
+  h3 {
+    @apply text-xl text-center m-8 mt-12 font-bold;
+  }
+
   footer {
     @apply text-center p-8 mt-8 text-light-gray bg-black;
   }

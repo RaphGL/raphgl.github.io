@@ -5,6 +5,93 @@ date: 2022-11-08T20:42:21-01:00
 tags: [Rust, Automation, Dotfiles]
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum. Justo donec enim diam vulputate ut. Bibendum neque egestas congue quisque. Praesent elementum facilisis leo vel fringilla. Elit pellentesque habitant morbi tristique senectus et netus. Convallis aenean et tortor at risus viverra adipiscing at in. In pellentesque massa placerat duis ultricies lacus sed turpis. A lacus vestibulum sed arcu non. Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci.  
+## [Find it on GitHub](https://github.com/RaphGL/Tuckr)
 
-Lectus nulla at volutpat diam ut venenatis tellus. Faucibus turpis in eu mi bibendum neque egestas. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Nulla facilisi etiam dignissim diam quis enim lobortis. Viverra tellus in hac habitasse platea dictumst. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Justo donec enim diam vulputate ut. Lectus nulla at volutpat diam ut. Eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus. Enim diam vulputate ut pharetra sit amet aliquam id. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Malesuada nunc vel risus commodo viverra maecenas accumsan. Non arcu risus quis varius. Mauris nunc congue nisi vitae suscipit tellus mauris. Ultricies tristique nulla aliquet enim tortor at. Nisl purus in mollis nunc sed. Volutpat lacus laoreet non curabitur gravida arcu. Sodales neque sodales ut etiam sit amet nisl purus in.
+<!-- ABOUT THE PROJECT -->
+
+Tuckr is a dotfile manager inspired by Stow and Git. Tuckr aims to make dotfile management less painful. It follows the same model as Stow, symlinking files onto $HOME. It works on all the major OSes (Windows, MacOS, Linux).  
+
+Most dotfile managers out there rely on some sort of configuration file to be able manage your dotfiles, this project came about because I couldn't find any dotfile manager that was simple enough that you could just jump into it and start using it, with no need for reading lengthy documentation and dotfile manager specific things. 
+
+A lot of people have been using Stow + Git to manage their dotfiles, while this approach is fine, Stow was not made for this, so it's not a perfect solution and it lacks features that are dotfile management specific, thus this project was born.
+
+**What makes tuckr different?**
+
+- No additional configuration required, everything that is needed comes setup by default
+- You can manage your files from any directory
+- Symlinks are tracked, the manager is smart enough to be able to manage them without conflicting with the rest of the symlinks in the system
+- Hooks, write small scripts that will be run when you set up programs from your dotfiles
+- Encrypted files for sensitive information  
+  
+  
+Built With:
+- [Rust](https://www.rust-lang.org/)
+- [Clap](https://github.com/clap-rs/clap)
+
+<!-- USAGE EXAMPLES -->
+
+## Usage
+```sh
+$ tuckr add \* # adds all dotfiles to the system
+$ tuckr add neovim zsh # adds the neovim and zsh dotfiles only
+$ tuckr set \* # adds all the dotfiles and runs their hooks (scripts)
+$ tuckr rm \* # removes all dotfiles from your system
+```
+
+```sh
+Super powered GNU Stow replacement
+
+Usage: tuckr <COMMAND>
+
+Commands:
+  set        Setup a program and run their hooks hooks
+  add        Deploy dotfiles for PROGRAM
+  rm         Remove configuration for a program on the system
+  status     Check symlink status
+  init       Initialize a dotfile folder
+  from-stow  Converts a stow repo into a tuckr one
+  help       Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help information
+  -V, --version  Print version information
+```
+
+### How it works
+
+Tuckr works without having to use a configuration file by making a few minor choices for you. As long as you follow the file structure for tuckr repos it will do everything else for you automatically.
+
+```sh
+.
+├── Configs # Dotfiles go here
+├── Encrypts # Encrypted files go here
+└── Hooks # Setup scripts go here
+```
+
+Your dotfiles should be one folder by program, the folder name will become how that program is named by tuckr.
+```sh
+.
+├── Configs
+│   ├── Program1
+│   ├── Program2
+├── Encrypts
+└── Hooks
+    ├── Program1
+    └── Program2
+```
+As long as the names align between Configs, Hooks and Encrypts, they will work together.
+
+### Using Hooks
+Hooks are run before and after adding every program. Hooks that run before the program addition are prefixed with `pre`, scripts that run afterward are prefixed with `post`, as long as this is true you can name the file whatever you want.
+
+```sh
+Hooks
+├── Program1
+│   ├── post.sh
+│   └── pre.sh
+└── Program2
+    ├── post.sh
+    └── pre.sh
+```
+To run scripts for a program run `tuckr set <program_name>` or alternatively use a wildcard like so: `tuckr set \*` to run all hooks.
+

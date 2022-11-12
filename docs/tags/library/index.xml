@@ -13,7 +13,7 @@
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       
       <guid>http://raphgl.com/projects/clibs/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit.</description>
+      <description>This is a collection of C libraries I&amp;rsquo;ve written myself to solved my own problems. It contains data structures, algorithms (todo) and other things that are useful in writing C programs.</description>
     </item>
     
   </channel>

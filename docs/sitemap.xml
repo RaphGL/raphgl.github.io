@@ -9,37 +9,7 @@
     <loc>http://raphgl.com/tags/automation/</loc>
     <lastmod>2022-11-08T20:42:21-01:00</lastmod>
   </url><url>
-    <loc>http://raphgl.com/tags/bot/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/tags/c/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/clibs/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
     <loc>http://raphgl.com/tags/dotfiles/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/tags/game-dev/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/tags/godot/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/tags/golang/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/kuado/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/tags/library/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/neosent/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/posixcoreutils/</loc>
     <lastmod>2022-11-08T20:42:21-01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/tags/python/</loc>
@@ -57,16 +27,10 @@
     <loc>http://raphgl.com/tags/</loc>
     <lastmod>2022-11-08T20:42:21-01:00</lastmod>
   </url><url>
-    <loc>http://raphgl.com/tags/telegram/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
     <loc>http://raphgl.com/projects/tuckr/</loc>
     <lastmod>2022-11-08T20:42:21-01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/tags/utility/</loc>
-    <lastmod>2022-11-08T20:42:21-01:00</lastmod>
-  </url><url>
-    <loc>http://raphgl.com/projects/xpman/</loc>
     <lastmod>2022-11-08T20:42:21-01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/blog/</loc>
@@ -81,6 +45,12 @@
   </url><url>
     <loc>http://raphgl.com/tags/tooling/</loc>
     <lastmod>2022-10-10T12:13:10-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/tags/game-dev/</loc>
+    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
+  </url><url>
+    <loc>http://raphgl.com/tags/godot/</loc>
+    <lastmod>2022-09-23T13:28:10-01:00</lastmod>
   </url><url>
     <loc>http://raphgl.com/tags/neovim/</loc>
     <lastmod>2022-09-23T13:28:10-01:00</lastmod>

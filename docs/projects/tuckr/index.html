@@ -49,8 +49,72 @@
   <h4 class="text-light-gray">November 8, 2022</h4>
 </div>
 
-<div class="post-content text-justify"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum. Justo donec enim diam vulputate ut. Bibendum neque egestas congue quisque. Praesent elementum facilisis leo vel fringilla. Elit pellentesque habitant morbi tristique senectus et netus. Convallis aenean et tortor at risus viverra adipiscing at in. In pellentesque massa placerat duis ultricies lacus sed turpis. A lacus vestibulum sed arcu non. Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci.</p>
-<p>Lectus nulla at volutpat diam ut venenatis tellus. Faucibus turpis in eu mi bibendum neque egestas. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Nulla facilisi etiam dignissim diam quis enim lobortis. Viverra tellus in hac habitasse platea dictumst. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Justo donec enim diam vulputate ut. Lectus nulla at volutpat diam ut. Eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus. Enim diam vulputate ut pharetra sit amet aliquam id. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Malesuada nunc vel risus commodo viverra maecenas accumsan. Non arcu risus quis varius. Mauris nunc congue nisi vitae suscipit tellus mauris. Ultricies tristique nulla aliquet enim tortor at. Nisl purus in mollis nunc sed. Volutpat lacus laoreet non curabitur gravida arcu. Sodales neque sodales ut etiam sit amet nisl purus in.</p>
+<div class="post-content text-justify"><h2 id="find-it-on-githubhttpsgithubcomraphgltuckr"><a href="https://github.com/RaphGL/Tuckr">Find it on GitHub</a></h2>
+<!-- raw HTML omitted -->
+<p>Tuckr is a dotfile manager inspired by Stow and Git. Tuckr aims to make dotfile management less painful. It follows the same model as Stow, symlinking files onto $HOME. It works on all the major OSes (Windows, MacOS, Linux).</p>
+<p>Most dotfile managers out there rely on some sort of configuration file to be able manage your dotfiles, this project came about because I couldn&rsquo;t find any dotfile manager that was simple enough that you could just jump into it and start using it, with no need for reading lengthy documentation and dotfile manager specific things.</p>
+<p>A lot of people have been using Stow + Git to manage their dotfiles, while this approach is fine, Stow was not made for this, so it&rsquo;s not a perfect solution and it lacks features that are dotfile management specific, thus this project was born.</p>
+<p><strong>What makes tuckr different?</strong></p>
+<ul>
+<li>No additional configuration required, everything that is needed comes setup by default</li>
+<li>You can manage your files from any directory</li>
+<li>Symlinks are tracked, the manager is smart enough to be able to manage them without conflicting with the rest of the symlinks in the system</li>
+<li>Hooks, write small scripts that will be run when you set up programs from your dotfiles</li>
+<li>Encrypted files for sensitive information</li>
+</ul>
+<p>Built With:</p>
+<ul>
+<li><a href="https://www.rust-lang.org/">Rust</a></li>
+<li><a href="https://github.com/clap-rs/clap">Clap</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<h2 id="usage">Usage</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">$ tuckr add <span class="se">\*</span> <span class="c1"># adds all dotfiles to the system</span>
+</span></span><span class="line"><span class="cl">$ tuckr add neovim zsh <span class="c1"># adds the neovim and zsh dotfiles only</span>
+</span></span><span class="line"><span class="cl">$ tuckr <span class="nb">set</span> <span class="se">\*</span> <span class="c1"># adds all the dotfiles and runs their hooks (scripts)</span>
+</span></span><span class="line"><span class="cl">$ tuckr rm <span class="se">\*</span> <span class="c1"># removes all dotfiles from your system</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Super powered GNU Stow replacement
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Usage: tuckr &lt;COMMAND&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Commands:
+</span></span><span class="line"><span class="cl">  <span class="nb">set</span>        Setup a program and run their hooks hooks
+</span></span><span class="line"><span class="cl">  add        Deploy dotfiles <span class="k">for</span> PROGRAM
+</span></span><span class="line"><span class="cl">  rm         Remove configuration <span class="k">for</span> a program on the system
+</span></span><span class="line"><span class="cl">  status     Check symlink status
+</span></span><span class="line"><span class="cl">  init       Initialize a dotfile folder
+</span></span><span class="line"><span class="cl">  from-stow  Converts a stow repo into a tuckr one
+</span></span><span class="line"><span class="cl">  <span class="nb">help</span>       Print this message or the <span class="nb">help</span> of the given subcommand<span class="o">(</span>s<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Options:
+</span></span><span class="line"><span class="cl">  -h, --help     Print <span class="nb">help</span> information
+</span></span><span class="line"><span class="cl">  -V, --version  Print version information
+</span></span></code></pre></div><h3 id="how-it-works">How it works</h3>
+<p>Tuckr works without having to use a configuration file by making a few minor choices for you. As long as you follow the file structure for tuckr repos it will do everything else for you automatically.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── Configs <span class="c1"># Dotfiles go here</span>
+</span></span><span class="line"><span class="cl">├── Encrypts <span class="c1"># Encrypted files go here</span>
+</span></span><span class="line"><span class="cl">└── Hooks <span class="c1"># Setup scripts go here</span>
+</span></span></code></pre></div><p>Your dotfiles should be one folder by program, the folder name will become how that program is named by tuckr.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">.
+</span></span><span class="line"><span class="cl">├── Configs
+</span></span><span class="line"><span class="cl">│   ├── Program1
+</span></span><span class="line"><span class="cl">│   ├── Program2
+</span></span><span class="line"><span class="cl">├── Encrypts
+</span></span><span class="line"><span class="cl">└── Hooks
+</span></span><span class="line"><span class="cl">    ├── Program1
+</span></span><span class="line"><span class="cl">    └── Program2
+</span></span></code></pre></div><p>As long as the names align between Configs, Hooks and Encrypts, they will work together.</p>
+<h3 id="using-hooks">Using Hooks</h3>
+<p>Hooks are run before and after adding every program. Hooks that run before the program addition are prefixed with <code>pre</code>, scripts that run afterward are prefixed with <code>post</code>, as long as this is true you can name the file whatever you want.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Hooks
+</span></span><span class="line"><span class="cl">├── Program1
+</span></span><span class="line"><span class="cl">│   ├── post.sh
+</span></span><span class="line"><span class="cl">│   └── pre.sh
+</span></span><span class="line"><span class="cl">└── Program2
+</span></span><span class="line"><span class="cl">    ├── post.sh
+</span></span><span class="line"><span class="cl">    └── pre.sh
+</span></span></code></pre></div><p>To run scripts for a program run <code>tuckr set &lt;program_name&gt;</code> or alternatively use a wildcard like so: <code>tuckr set \*</code> to run all hooks.</p>
 </div>
  
   </body>

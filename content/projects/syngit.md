@@ -5,6 +5,39 @@ date: 2022-11-08T20:42:21-01:00
 tags: [Python, Utility, Automation]
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit. Ac tincidunt vitae semper quis lectus nulla at volutpat. Tempor orci eu lobortis elementum nibh. Purus ut faucibus pulvinar elementum integer enim neque volutpat ac. Ornare massa eget egestas purus viverra. Tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Eget lorem dolor sed viverra ipsum. Justo donec enim diam vulputate ut. Bibendum neque egestas congue quisque. Praesent elementum facilisis leo vel fringilla. Elit pellentesque habitant morbi tristique senectus et netus. Convallis aenean et tortor at risus viverra adipiscing at in. In pellentesque massa placerat duis ultricies lacus sed turpis. A lacus vestibulum sed arcu non. Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Ipsum suspendisse ultrices gravida dictum fusce ut placerat orci.  
+## [Find it on GitHub](https://github.com/RaphGL/Syngit)
 
-Lectus nulla at volutpat diam ut venenatis tellus. Faucibus turpis in eu mi bibendum neque egestas. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque. Nulla facilisi etiam dignissim diam quis enim lobortis. Viverra tellus in hac habitasse platea dictumst. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Justo donec enim diam vulputate ut. Lectus nulla at volutpat diam ut. Eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus. Enim diam vulputate ut pharetra sit amet aliquam id. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Malesuada nunc vel risus commodo viverra maecenas accumsan. Non arcu risus quis varius. Mauris nunc congue nisi vitae suscipit tellus mauris. Ultricies tristique nulla aliquet enim tortor at. Nisl purus in mollis nunc sed. Volutpat lacus laoreet non curabitur gravida arcu. Sodales neque sodales ut etiam sit amet nisl purus in.
+<!-- ABOUT THE PROJECT -->
+
+Syngit is a CLI and init service that let's you synchronize repositories across different clients (Github, Codeberg, Gitlab, etc) with a very simple interface and configuration file.
+
+Built With:
+
+- [Python](https://www.python.org/)
+- [Poetry](https://python-poetry.org/)
+- [AioHttp](https://docs.aiohttp.org/en/stable/)
+- [TOML](https://github.com/uiri/toml)
+
+## Usage
+
+1. Create a `$HOME/.config/syngit.toml` file
+2. Make something akin to this:
+
+```toml
+main_client = "github"
+
+[github]
+username = "RaphGL"
+
+[codeberg]
+username = "RaphGL"
+
+[gitlab]
+username = "RaphGL"
+```
+
+3. Enable the syngit service:
+
+```sh
+$ systemctl enable syngit --now
+```
