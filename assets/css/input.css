@@ -24,7 +24,7 @@
   }
 
   code {
-    @apply bg-gray p-1 rounded-lg border-blacker;
+    @apply bg-gray p-0.5 rounded-lg border-blacker;
   }
 
   .post-content {
