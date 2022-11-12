@@ -1,5 +1,5 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gradient-to-br from-blacker to-black">
+<div class="h-screen bg-gradient-to-br from-blacker to-black">
   <div class="flex h-screen w-screen items-center place-content-center">
     <div class="flex flex-col items-center gap-5">
       <img
@@ -9,14 +9,22 @@
       />
       <h2 class="text-4xl font-bold">Hi, I'm RaphGL!</h2>
       <div class="flex flex-row gap-2">
-        <a href="https://github.com/RaphGL" class="hover:bg-light-black p-1 hover:rounded-md"><img src="/icons/github.svg" /></a>
-        <a href="https://gitlab.com/RaphGL" class="hover:bg-light-black p-1 hover:rounded-md"><img src="/icons/gitlab.svg" /></a>
-        <a href="#" class="hover:bg-light-black p-1 hover:rounded-md"><img src="/icons/discord.svg" /></a>
+        <a
+          href="https://github.com/RaphGL"
+          class="hover:bg-light-black p-1 hover:rounded-md"
+          ><img src="/icons/github.svg"
+        /></a>
+        <a
+          href="https://gitlab.com/RaphGL"
+          class="hover:bg-light-black p-1 hover:rounded-md"
+          ><img src="/icons/gitlab.svg"
+        /></a>
+        <a href="#" class="hover:bg-light-black p-1 hover:rounded-md"
+          ><img src="/icons/discord.svg"
+        /></a>
       </div>
     </div>
   </div>
 </div>
 
-{{ partial "navbar.html" .}}
-{{ partial "about_me.html" . }}
-{{ end }}
+{{ partial "navbar.html" .}} {{ partial "about_me.html" . }} {{ end }}

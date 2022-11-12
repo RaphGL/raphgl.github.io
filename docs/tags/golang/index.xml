@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on RaphGL</title>
+    <link>http://raphgl.com/tags/golang/</link>
+    <description>Recent content in Golang on RaphGL</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate><atom:link href="http://raphgl.com/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>XPMan</title>
+      <link>http://raphgl.com/projects/xpman/</link>
+      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
+      
+      <guid>http://raphgl.com/projects/xpman/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus interdum posuere lorem ipsum dolor sit.</description>
+    </item>
+    
+  </channel>
+</rss>

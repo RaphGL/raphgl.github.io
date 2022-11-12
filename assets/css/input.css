@@ -12,7 +12,7 @@
   }
 
   footer {
-    @apply text-center m-16 mb-8 text-light-gray;
+    @apply text-center p-8 mt-8 text-light-gray bg-black;
   }
 
   ul li > a {
@@ -24,7 +24,7 @@
   }
 
   code {
-    @apply bg-gray p-1 rounded-lg border-blacker; 
+    @apply bg-gray p-1 rounded-lg border-blacker;
   }
 
   .post-content {
@@ -45,5 +45,9 @@
 
   .post-content img {
     @apply mx-auto my-5;
+  }
+
+  .post-tag {
+    @apply list-none bg-accent-color text-blue p-2 py-0 rounded-lg mb-1 text-center;
   }
 }

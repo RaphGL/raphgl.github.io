@@ -3,6 +3,7 @@ languageCode = 'en-us'
 title = 'RaphGL'
 publishDir = 'docs'
 pluralizelisttitles = 'false'
+summaryLength = 20
 
 [markup]
 [markup.highlight]
@@ -10,3 +11,6 @@ style = "dracula"
 tabwidth = 4
 codeFences = true
 noClasses = false
+
+[taxonomies]
+tag = "tags"

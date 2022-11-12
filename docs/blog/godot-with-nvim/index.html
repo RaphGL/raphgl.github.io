@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RaphGL</title>
 
-    <link rel="icon" type="image/x-icon" href="/icons/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.png" />
     
     <link rel="stylesheet" type="text/css" href="/css/index.css" />
     
-    <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
-</head>
-<body class="text-white bg-black">
-    
-<nav class="fixed md:sticky w-full  bottom-0 md:top-0  bg-dark-gray h-20">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/syntax.css"
+    />
+  </head>
+  <body class="text-white bg-black">
+     <nav class="fixed md:sticky w-full  bottom-0 md:top-0  bg-dark-gray h-20">
   <ul class="flex flex-row gap-8 md:gap-12 place-content-center h-full items-center">
     
     <li><a href="/" class="">Home</a></li>
@@ -24,13 +27,29 @@
   </ul>
 </nav>
 
-<div class="bg-gray mb-8 p-4 py-6 h-fit flex flex-col text-center place-content-center items-center">
-    <h2 class="text-3xl text-white m-4">Setting up NeoVim for Godot</h2>
-    <h4 class="text-light-gray">September 23, 2022</h4>
+<div
+  class="bg-gray mb-8 p-4 py-6 h-fit flex flex-col text-center place-content-center items-center"
+>
+  <h2 class="text-3xl text-white m-4">Setting up NeoVim for Godot</h2>
+  <ul class="flex flex-row gap-2 m-1">
+    
+    <li class="post-tag hover:bg-dark-gray">
+      <a href="http://raphgl.com/tags/neovim/"> Neovim</a>
+    </li>
+    
+    <li class="post-tag hover:bg-dark-gray">
+      <a href="http://raphgl.com/tags/godot/"> Godot</a>
+    </li>
+    
+    <li class="post-tag hover:bg-dark-gray">
+      <a href="http://raphgl.com/tags/game-dev/"> Game Dev</a>
+    </li>
+    
+  </ul>
+  <h4 class="text-light-gray">September 23, 2022</h4>
 </div>
 
-<div class="post-content text-justify">
-    <p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
+<div class="post-content text-justify"><p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
 <h2 id="setting-up">Setting Up</h2>
 <p>If you have CoC working correctly already, open NeoVim and run <code>:CocConfig</code>, it&rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="s2">&#34;languageserver&#34;</span><span class="o">:</span> <span class="p">{</span>
@@ -48,11 +67,8 @@
 <p><img src="/blog/nvim-for-godot/godot.png" alt="Editor settings &gt; External Editor"></p>
 <p>Now everything should be working correctly and when you click to open a script on the engine it should open nvim on the correct file.</p>
 <p><img src="/blog/nvim-for-godot/vim.png" alt="Neovim opened with Godot"></p>
-
 </div>
+ <footer>@2022 RaphGL</footer>
 
-    <footer>
-    @2022 RaphGL
-</footer>
-</body>
+  </body>
 </html>

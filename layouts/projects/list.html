@@ -1,17 +1,23 @@
-{{ define "main" }}
-{{ partial "navbar.html" . }}
-<div class="m-10">
-<div class="post-content container">
+{{ define "main" }} {{ partial "navbar.html" . }}
+<div class="md:m-10">
+  <div class="post-content container">
     <div class="grid sm:grid sm:grid-cols-2 gap-4 w-full">
-        {{ range .Pages }}
-        <a href="{{ .Permalink }}">
-            <div class="flex flex-col items-center place-content-center rounded-lg bg-light-black w-full p-6 hover:bg-accent-color transition ease-in">
-                <h2 class="text-lg text-white m-0 font-normal">{{ .Title }}</h2>
-                <p class="text-light-gray text-left">{{ .Description }}</p>
-            </div>
-        </a>
-        {{ end }}
+      {{ range .Pages }}
+      <a href="{{ .Permalink }}">
+        <div
+          class="flex flex-col items-center place-content-center rounded-lg bg-light-black w-full sm:h-44 lg:h-32 p-6 hover:bg-accent-color transition ease-in"
+        >
+          <h2 class="text-lg text-white m-0 font-normal">{{ .Title }}</h2>
+          <p class="text-light-gray text-left">{{ .Description }}</p>
+          <ul class="flex flex-wrap gap-2">
+            {{ range .GetTerms "tags"}}
+            <li class="post-tag">{{ .LinkTitle }}</li>
+            {{ end }}
+          </ul>
+        </div>
+      </a>
+      {{ end }}
     </div>
-</div>
+  </div>
 </div>
 {{ end }}
