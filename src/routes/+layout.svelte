@@ -10,7 +10,17 @@
 
 <slot />
 
+<footer>
+	<b>RaphGL</b> @2023
+</footer>
+
 <style>
+	footer {
+		text-align: center;
+		font-size: 14pt;
+		margin: 1.5em;
+	}
+
 	nav {
 		display: flex;
 		justify-content: center;
@@ -21,8 +31,8 @@
 	nav a {
 		text-decoration: none;
 		color: var(--fg-color);
-        width: 4em;
-        text-align: center;
+		width: 4em;
+		text-align: center;
 		transition: font-weight 0.1s ease-out;
 	}
 

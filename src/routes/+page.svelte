@@ -1,3 +1,8 @@
+<script>
+	import BlogList from '../lib/BlogList.svelte';
+	import ProjectList from '../lib/ProjectList.svelte';
+</script>
+
 <section class="info">
 	<div>
 		<!-- svelte-ignore a11y-img-redundant-alt -->
@@ -11,15 +16,15 @@
 			<ul>
 				<li>
 					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="Github">Github</a>
+					<a href="https://github.com/RaphGL">Github</a>
 				</li>
 				<li>
 					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="Gitlab">Gitlab</a>
+					<a href="https://gitlab.com/RaphGL">Gitlab</a>
 				</li>
 				<li>
 					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="Codeberg">Codeberg</a>
+					<a href="https://codeberg.org/RaphGL">Codeberg</a>
 				</li>
 			</ul>
 		</div>
@@ -31,7 +36,24 @@
 	Scroll for more
 </div>
 
+<section class="main-content">
+	<BlogList />
+	<ProjectList />
+</section>
+
 <style>
+	.main-content {
+		background-color: #18191f;
+		margin: 1em;
+		margin-top: 2em;
+		padding-top: 4em;
+		padding-bottom: 4em;
+		border-radius: 2em;
+		display: flex;
+		justify-content: center;
+		gap: 5em;
+	}
+
 	.info {
 		height: 100%;
 		width: 100%;
@@ -46,8 +68,8 @@
 	}
 
 	.info > div {
-		background: rgb(40, 42, 54);
-		background: linear-gradient(310deg, rgba(40, 42, 54, 1) 0%, rgba(32, 33, 41, 1) 100%);
+		background-color: rgb(40, 42, 54);
+		background-color: linear-gradient(310deg, rgba(40, 42, 54, 1) 0%, rgba(32, 33, 41, 1) 100%);
 		border-radius: var(--radius-size);
 		margin: auto;
 		padding: 1.3em;
@@ -87,7 +109,7 @@
 		gap: 0.5em;
 		padding: 0.6em;
 		border-radius: var(--radius-size);
-		background: var(--bg-color);
+		align-items: center;
 	}
 
 	.info-text li img {
@@ -97,9 +119,10 @@
 	.scroll {
 		display: flex;
 		justify-content: center;
-        flex-direction: column;
-        align-items: center;
+		flex-direction: column;
+		align-items: center;
 		font-size: 15pt;
-        gap: 1em;
+		gap: 1em;
+		cursor: default;
 	}
 </style>
