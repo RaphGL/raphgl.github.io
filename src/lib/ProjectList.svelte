@@ -1,7 +1,7 @@
 <div class="project">
 	<h2>Projects</h2>
-	<ul>
-		<li>
+	<div>
+		<a href="/">
 			<div class="project-name">Tuckr</div>
 			<div class="project-description">A dotfile manager inspired by GNU Stow</div>
 			<ul class="project-tags">
@@ -9,8 +9,8 @@
 				<li>Dotfiles</li>
 				<li>Automation</li>
 			</ul>
-		</li>
-		<li>
+		</a>
+		<a href="/">
 			<div class="project-name">NeoSent</div>
 			<div class="project-description">Suckful Sent - Minimal presentation tool</div>
 			<ul class="project-tags">
@@ -18,22 +18,14 @@
 				<li>Dotfiles</li>
 				<li>Automation</li>
 			</ul>
-		</li>
-	</ul>
+		</a>
+	</div>
 	<button>View More</button>
 </div>
 
 <style>
 	.project {
-		width: 30vw;
-	}
-
-	.project li {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-content: center;
-		text-align: center;
+		width: 25vw;
 	}
 
 	.project-name {
@@ -50,9 +42,12 @@
 		border: none;
 		color: var(--fg-color);
 		font-size: 14pt;
-		text-decoration: underline;
 		width: 100%;
 		cursor: pointer;
+	}
+
+	.project button:hover {
+		text-decoration: underline;
 	}
 
 	.project button:hover {
@@ -64,16 +59,29 @@
 		list-style: none;
 	}
 
-	.project li {
+	.project > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-content: center;
+		text-align: center;
+	}
+
+	.project a {
+		all: unset;
 		background: rgb(32, 33, 41);
 		background: linear-gradient(310deg, rgba(32, 33, 41, 1) 0%, rgba(40, 42, 54, 1) 100%);
 		border-radius: var(--radius-size);
-		margin-top: 1em;
 		font-size: 15pt;
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
-		width: 100%;
-		padding: 2em 0;
+		padding: 1em 0;
+		margin-bottom: 1em;
+	}
+
+	.project a:hover {
+		cursor: pointer;
 	}
 
 	.project-tags {
@@ -86,7 +94,6 @@
 		background: #383a59;
 		padding: 0.2em 1em;
 		font-size: 12pt;
-		width: auto;
+		border-radius: var(--radius-size);
 	}
-
 </style>

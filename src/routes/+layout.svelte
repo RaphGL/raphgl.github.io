@@ -33,10 +33,10 @@
 		color: var(--fg-color);
 		width: 4em;
 		text-align: center;
-		transition: font-weight 0.1s ease-out;
 	}
 
 	nav a:hover {
+		color: var(--hover-color);
 		font-weight: bold;
 	}
 </style>
