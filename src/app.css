@@ -9,6 +9,11 @@
 	font-size: 17pt;
 }
 
+::selection {
+	background-color: var(--hover-color);
+	color: var(--fg-color);
+}
+
 body {
 	all: unset;
     background: rgb(20,21,25);

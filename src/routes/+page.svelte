@@ -1,6 +1,7 @@
 <script>
 	import BlogList from '../lib/BlogList.svelte';
 	import ProjectList from '../lib/ProjectList.svelte';
+	import ContentRect from '../lib/ContentRect.svelte';
 </script>
 
 <section class="info">
@@ -36,21 +37,24 @@
 	Scroll for more
 </div>
 
-<section class="main-content">
-	<BlogList />
-	<ProjectList />
-</section>
+<ContentRect>
+	<div class="main-content">
+		<BlogList
+			blogs={[
+				{ title: 'Poetry is a saner package manager for python', date: '10 Oct 2022', href: '/' },
+				{ title: 'Setting up NeoVim for Godot', date: '11 Nov 2022', href: '/' }
+			]}
+		/>
+		<ProjectList />
+	</div>
+</ContentRect>
 
 <style>
 	.main-content {
-		background-color: #18191f;
-		margin: 1em;
-		margin-top: 2em;
-		padding-top: 4em;
-		padding-bottom: 4em;
-		border-radius: 2em;
 		display: flex;
 		justify-content: center;
+		padding: 3em 0;
+		margin-top: 1em;
 		gap: 5em;
 	}
 

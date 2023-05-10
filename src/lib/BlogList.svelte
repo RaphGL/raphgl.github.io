@@ -1,14 +1,22 @@
+<script lang="ts">
+	type Blog = {
+		title: string,
+		date: string,
+		href: string,
+	};
+
+	export let blogs: Blog[];
+</script>
+
 <div class="blog">
 	<h2>Blog</h2>
 	<div>
-		<a href="/">
-			<div class="blog-title">Poetry is a saner package manager</div>
-			<div class="blog-date">10 Oct 2022</div>
+		{#each blogs as blog}
+		<a href={blog.href}>
+			<div class="blog-title">{blog.title}</div>
+			<div class="blog-date">{blog.date}</div>
 		</a>
-		<a href="/">
-			<div class="blog-title">Setting up NeoVim for Godot</div>
-			<div class="blog-date">10 Oct 2023</div>
-		</a>
+		{/each}
 	</div>
 	<button>View More</button>
 </div>
