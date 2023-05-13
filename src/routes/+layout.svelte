@@ -1,11 +1,13 @@
 <script>
 	import '../app.css';
+	import {page} from '$app/stores';
+	export const ssr = false;
 </script>
 
 <nav>
-	<a href="/">Home</a>
-	<a href="/projects">Projects</a>
-	<a href="/blog">Blog</a>
+	<a class:active={$page.url.pathname === "/"} href="/">Home</a>
+	<a class:active={$page.url.pathname === "/projects"} href="/projects">Projects</a>
+	<a class:active={$page.url.pathname === "/blog" } href="/blog">Blog</a>
 </nav>
 
 <slot />
@@ -38,5 +40,9 @@
 	nav a:hover {
 		color: var(--hover-color);
 		font-weight: bold;
+	}
+
+	.active {
+		color: var(--hover-color);
 	}
 </style>
