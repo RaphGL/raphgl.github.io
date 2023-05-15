@@ -1,6 +1,6 @@
 <script>
-	import BlogList from '../lib/BlogList.svelte';
-	import ProjectList from '../lib/ProjectList.svelte';
+	import BlogList from '../lib/Blog/BlogList.svelte';
+	import ProjectList from '../lib/Projects/ProjectList.svelte';
 	import ContentRect from '../lib/ContentRect.svelte';
 </script>
 
