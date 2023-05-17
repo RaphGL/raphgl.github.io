@@ -1,27 +1,21 @@
 <script>
-	import ProjectList from '../../lib/Projects/ProjectItem.svelte';
-	import ContentRect from '../../lib/ContentRect.svelte';
-	import ProjectItem from '../../lib/Projects/ProjectItem.svelte';
+	import ProjectList from '$lib/Projects/ProjectItem.svelte';
+	import ContentRect from '$lib/ContentRect.svelte';
+	import ProjectItem from '$lib/Projects/ProjectItem.svelte';
+	import {getProjects} from '../../lib/Projects/projects';
 </script>
 
 <ContentRect>
 	<section>
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
-		<ProjectItem href="/" />
+		{#await getProjects()}
+			<div><p>Retrieving projects...</p></div>
+		{:then projects}
+			{#each projects as project}
+				<ProjectItem href={project.href} desc={project.description} tags={project.tags}>
+					{project.name}
+				</ProjectItem>
+			{/each}
+		{/await}
 	</section>
 </ContentRect>
 

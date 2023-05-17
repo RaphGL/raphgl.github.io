@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import BlogList from '../lib/Blog/BlogList.svelte';
 	import ProjectList from '../lib/Projects/ProjectList.svelte';
 	import ContentRect from '../lib/ContentRect.svelte';

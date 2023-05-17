@@ -1,15 +1,23 @@
 <script lang="ts">
 	export let href: string;
+	export let desc: string;
+	export let tags: string[];
 </script>
 
 <a {href}>
-	<div class="project-name">Tuckr</div>
-	<div class="project-description">A dotfile manager inspired by GNU Stow</div>
+	<div class="project-name"><slot /></div>
+
+	{#if desc}
+	<div class="project-description">{desc}</div>
+	{/if}
+
+	{#if tags.length}
 	<ul class="project-tags">
-		<li>Rust</li>
-		<li>Dotfiles</li>
-		<li>Automation</li>
+		{#each tags as tag}
+			<li>{tag}</li>
+		{/each}
 	</ul>
+	{/if}
 </a>
 
 <style>
@@ -23,8 +31,7 @@
 		width: 25vw;
 		flex-direction: column;
 		text-align: center;
-		justify-content: space-between;
-		padding: 1em 0;
+		padding: 1em;
 	}
 
 	a:hover {
@@ -40,6 +47,7 @@
 		display: flex;
 		gap: 0.5em;
 		justify-content: center;
+		flex-wrap: wrap;
 	}
 
 	ul {
