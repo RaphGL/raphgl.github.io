@@ -2,34 +2,41 @@
 	import BlogList from '../lib/Blog/BlogList.svelte';
 	import ProjectList from '../lib/Projects/ProjectList.svelte';
 	import ContentRect from '../lib/ContentRect.svelte';
+	import { fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
+	let visible = false;
+	onMount(() => (visible = true));
 </script>
 
 <section class="info">
-	<div>
-		<!-- svelte-ignore a11y-img-redundant-alt -->
-		<img
-			src="https://avatars.githubusercontent.com/u/28673457?s=400&u=bc6d2bccf7d9bc6b8d403c0d462a4bc49b0fc678&v=4"
-			alt="Profile Picture"
-		/>
-		<div class="info-text">
-			<div class="info-title">Hi, I'm <b>RaphGL</b></div>
+	{#if visible}
+		<div transition:fly={{ y: 100, duration: 200 }}>
+			<!-- svelte-ignore a11y-img-redundant-alt -->
+			<img
+				src="https://avatars.githubusercontent.com/u/28673457?s=400&u=bc6d2bccf7d9bc6b8d403c0d462a4bc49b0fc678&v=4"
+				alt="Profile Picture"
+			/>
+			<div class="info-text">
+				<div class="info-title">Hi, I'm <b>RaphGL</b></div>
 
-			<ul>
-				<li>
-					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="https://github.com/RaphGL">Github</a>
-				</li>
-				<li>
-					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="https://gitlab.com/RaphGL">Gitlab</a>
-				</li>
-				<li>
-					<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
-					<a href="https://codeberg.org/RaphGL">Codeberg</a>
-				</li>
-			</ul>
+				<ul>
+					<li>
+						<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
+						<a href="https://github.com/RaphGL">Github</a>
+					</li>
+					<li>
+						<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
+						<a href="https://gitlab.com/RaphGL">Gitlab</a>
+					</li>
+					<li>
+						<div style="background-color:white;height: 1em; width: 1em;border-radius:0.2em;" />
+						<a href="https://codeberg.org/RaphGL">Codeberg</a>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</div>
+	{/if}
 </section>
 
 <div class="scroll">

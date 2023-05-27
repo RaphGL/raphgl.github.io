@@ -1,5 +1,5 @@
 <section class="main-content">
-    <slot />
+	<slot />
 </section>
 
 <style>

@@ -17,10 +17,10 @@
 
 <style>
 	section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 2em;
-        gap: 1em;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2em;
+		gap: 1em;
 	}
 </style>

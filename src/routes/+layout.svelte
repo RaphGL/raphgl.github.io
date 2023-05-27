@@ -1,13 +1,12 @@
 <script>
 	import '../app.css';
-	import {page} from '$app/stores';
-	export const ssr = false;
+	import { page } from '$app/stores';
 </script>
 
 <nav>
-	<a class:active={$page.url.pathname === "/"} href="/">Home</a>
-	<a class:active={$page.url.pathname === "/projects"} href="/projects">Projects</a>
-	<a class:active={$page.url.pathname === "/blog" } href="/blog">Blog</a>
+	<a class:active={$page.url.pathname === '/'} href="/">Home</a>
+	<a class:active={$page.url.pathname === '/projects'} href="/projects">Projects</a>
+	<a class:active={$page.url.pathname === '/blog'} href="/blog">Blog</a>
 </nav>
 
 <slot />

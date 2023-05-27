@@ -7,7 +7,7 @@
 	<h2>Projects</h2>
 	<div>
 		{#await getProjects(5)}
-			<div><p>Retrieving projects...</p></div>
+			<ProjectItem>Retrieving projects...</ProjectItem>
 		{:then projects}
 			{#each projects as project}
 				<ProjectItem href={project.href} desc={project.description} tags={project.tags}>

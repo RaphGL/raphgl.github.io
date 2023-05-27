@@ -1,22 +1,23 @@
 <script lang="ts">
-	export let href: string;
-	export let desc: string;
-	export let tags: string[];
+	import { fly } from 'svelte/transition';
+	export let href: string = '';
+	export let desc: string = '';
+	export let tags: string[] = [];
 </script>
 
-<a {href}>
+<a {href} transition:fly={{ y: 100, duration: 100 }}>
 	<div class="project-name"><slot /></div>
 
 	{#if desc}
-	<div class="project-description">{desc}</div>
+		<div class="project-description">{desc}</div>
 	{/if}
 
 	{#if tags.length}
-	<ul class="project-tags">
-		{#each tags as tag}
-			<li>{tag}</li>
-		{/each}
-	</ul>
+		<ul class="project-tags">
+			{#each tags as tag}
+				<li>{tag}</li>
+			{/each}
+		</ul>
 	{/if}
 </a>
 
