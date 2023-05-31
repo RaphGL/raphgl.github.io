@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fly } from 'svelte/transition';
 	import Header from '$lib/Blog/Header.svelte';
 	import TableOfContents from '$lib/Blog/TableOfContents.svelte';
 	import ContentRect from '$lib/ContentRect.svelte';
@@ -14,7 +15,7 @@
 
 <Header>Setting up NeoVim for Godot</Header>
 <ContentRect>
-	<div class="content">
+	<div class="content" transition:fly>
 		<TableOfContents {contents} />
 		<div class="blog-text">
 			<h1>How to do it</h1>

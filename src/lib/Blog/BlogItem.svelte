@@ -21,7 +21,7 @@
 		color: var(--fg-color);
 		text-decoration: unset;
 		background: rgb(32, 33, 41);
-		background: linear-gradient(310deg, rgba(32, 33, 41, 1) 0%, rgba(40, 42, 54, 1) 100%);
+		background: var(--gradient-fg-color);
 		padding: 1em;
 		border-radius: var(--radius-size);
 		font-size: 15pt;
@@ -30,6 +30,7 @@
 	}
 
 	a:hover {
+		background: var(--gradient-hover-color);
 		cursor: pointer;
 	}
 </style>

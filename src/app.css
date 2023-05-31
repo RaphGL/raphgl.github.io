@@ -2,8 +2,15 @@
 
 :root {
 	--bg-color: #141519;
+	--gradient-bg-color: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
 	--fg-color: #ffffff;
+	--gradient-fg-color: linear-gradient(310deg, rgba(32, 33, 41, 1) 0%, rgba(40, 42, 54, 1) 100%);
 	--hover-color: #506eff;
+	--gradient-hover-color: linear-gradient(
+		124deg,
+		rgba(50, 68, 158, 1) 0%,
+		rgba(47, 61, 134, 1) 100%
+	);
 	--radius-size: 0.5em;
 	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: 17pt;
