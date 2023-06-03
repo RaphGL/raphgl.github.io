@@ -14,6 +14,8 @@
 					{project.name}
 				</ProjectItem>
 			{/each}
+			{:catch}
+			<ProjectItem>Failed to load Github data!</ProjectItem>
 		{/await}
 	</div>
 	<a class="view-more" href="/projects">View More</a>

@@ -13,10 +13,10 @@ export async function getProjects(noOfItems?: number, page?: number): Promise<Pr
 	const parser = new DOMParser();
 	const pageDOM = parser.parseFromString(pageText, 'text/html');
 
-	let projectsElems = pageDOM.querySelectorAll('div.col-10.col-lg-9.d-inline-block');
+	const projectsElems = pageDOM.querySelectorAll('div.col-10.col-lg-9.d-inline-block');
 	let projects: Project[] = [];
 
-	for (let elem of projectsElems) {
+	for (const elem of projectsElems) {
 		let projectName = elem.querySelector('h3.wb-break-all a');
 		let projectDescription = elem.querySelector('p.col-9.d-inline-block.color-fg-muted.mb-2.pr-4');
 		let projectTagElems = elem.querySelectorAll('a.topic-tag.topic-tag-link.f6.my-1');
@@ -25,8 +25,6 @@ export async function getProjects(noOfItems?: number, page?: number): Promise<Pr
 		for (let tag of projectTagElems) {
 			projectTags.push(tag.innerHTML);
 		}
-
-		console.log(projectTags);
 
 		projects.push({
 			name: projectName?.innerHTML as string,
