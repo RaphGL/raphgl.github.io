@@ -23,7 +23,7 @@
 
 body {
 	all: unset;
-	background: rgb(20, 21, 25);
+	background: var(--bg-color);
 	background: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
 	background-attachment: fixed;
 	color: var(--fg-color);

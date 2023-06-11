@@ -7,38 +7,20 @@ type Project = {
 
 export async function getProjects(noOfItems?: number, page?: number): Promise<Project[]> {
 	const github = await fetch(
-		'https://github.com/RaphGL?tab=repositories&q=&type=source&language=&sort=stargazers'
+		`https://api.github.com/users/raphgl/repos?type=sources&sort=pushed&per_page=${noOfItems}&page=${page}`
 	);
-	const pageText = await github.text();
-	const parser = new DOMParser();
-	const pageDOM = parser.parseFromString(pageText, 'text/html');
+	const projectsJSON = await github.json();
 
-	const projectsElems = pageDOM.querySelectorAll('div.col-10.col-lg-9.d-inline-block');
-	let projects: Project[] = [];
-
-	for (const elem of projectsElems) {
-		let projectName = elem.querySelector('h3.wb-break-all a');
-		let projectDescription = elem.querySelector('p.col-9.d-inline-block.color-fg-muted.mb-2.pr-4');
-		let projectTagElems = elem.querySelectorAll('a.topic-tag.topic-tag-link.f6.my-1');
-
-		let projectTags = [];
-		for (let tag of projectTagElems) {
-			projectTags.push(tag.innerHTML);
-		}
-
-		projects.push({
-			name: projectName?.innerHTML as string,
-			href: ('https://github.com' + projectName?.getAttribute('href')) as string,
-			description: projectDescription?.innerHTML as string,
-			tags: projectTags
-		});
+	let projects = [];
+	for (const project of projectsJSON) {
+		if (!project.fork)
+			projects.push({
+				name: project.name,
+				href: project.html_url,
+				description: project.description,
+				tags: project.topics
+			});
 	}
 
-	if (noOfItems) {
-		return projects.slice(0, noOfItems);
-	} else if (noOfItems && page) {
-		return projects.slice(page * noOfItems, noOfItems);
-	} else {
-		return projects;
-	}
+	return projects;
 }

@@ -13,7 +13,6 @@
 	onMount(() => {
 		getProjects().then((projs) => {
 			projects = projs;
-			console.log(projects);
 		});
 	});
 </script>

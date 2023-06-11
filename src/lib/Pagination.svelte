@@ -9,6 +9,7 @@
 			--current;
 		}
 	}
+
 	function nextPage() {
 		if (current < numOfPages - 1) {
 			++current;
