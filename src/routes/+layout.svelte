@@ -1,12 +1,25 @@
 <script>
 	import '../app.css';
 	import { page } from '$app/stores';
+
+	const langs = [
+		{ id: 'en', name: 'English' },
+		{ id: 'es', name: 'Español' },
+		{ id: 'pt', name: 'Português' },
+	];
+	let selectedLang = 'en';
 </script>
 
 <nav>
 	<a class:active={$page.url.pathname === '/'} href="/">Home</a>
 	<a class:active={$page.url.pathname === '/projects'} href="/projects">Projects</a>
 	<a class:active={$page.url.pathname === '/blog'} href="/blog">Blog</a>
+
+	<select bind:value={selectedLang}>
+		{#each langs as lang}
+			<option value={lang.id}>{lang.name}</option>
+		{/each}
+	</select>
 </nav>
 
 <slot />
@@ -26,7 +39,10 @@
 		display: flex;
 		justify-content: center;
 		gap: 2em;
-		padding: 1em 0 1em 0;
+		margin: auto;
+		margin-top: 0.5em;
+		padding: 1em;
+		width: fit-content;
 	}
 
 	nav a {
@@ -43,5 +59,20 @@
 
 	.active {
 		color: var(--hover-color);
+	}
+
+	select {
+		background-color: rgb(40, 42, 54);
+		background-color: linear-gradient(310deg, rgba(40, 42, 54, 1) 0%, rgba(32, 33, 41, 1) 100%);
+		color: var(--gradient-bg-color);
+		border-radius: var(--radius-size);
+		border: 0;
+		padding: 0.3em 1em;
+		font-size: 0.8em;
+	}
+
+	select:hover {
+		background-color: var(--hover-color);
+		cursor: pointer;
 	}
 </style>
