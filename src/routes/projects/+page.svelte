@@ -8,21 +8,24 @@
 
 	const itemPerPage = 9;
 	let currPage = 0;
-	let projects: any = null;
+	let projectsPages: any = null;
 
 	onMount(() => {
 		getProjects().then((projs) => {
-			projects = projs;
+			projectsPages = [];
+			for (let i = 0; i < projs.length; i++) {
+				projectsPages.push(projs.slice(i * itemPerPage, (i + 1) * itemPerPage));
+			}
 		});
 	});
 </script>
 
 <ContentRect>
 	<section>
-		{#if !projects}
+		{#if !projectsPages}
 			<div>Retrieving projects...</div>
 		{:else}
-			{#each projects.slice(currPage * itemPerPage, (currPage + 1) * itemPerPage) as project}
+			{#each projectsPages[currPage] as project}
 				<ProjectItem href={project.href} desc={project.description} tags={project.tags}>
 					{project.name}
 				</ProjectItem>
@@ -30,8 +33,8 @@
 		{/if}
 	</section>
 
-	{#if projects}
-		<Pagination bind:current={currPage} numOfPages={Math.ceil(++projects.length / itemPerPage)} />
+	{#if projectsPages}
+		<Pagination bind:current={currPage} numOfPages={Math.ceil(++projectsPages.length / itemPerPage)} />
 	{/if}
 </ContentRect>
 
