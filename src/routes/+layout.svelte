@@ -42,7 +42,6 @@
 		margin: auto;
 		margin-top: 0.5em;
 		padding: 1em;
-		width: fit-content;
 	}
 
 	nav a {
@@ -59,6 +58,7 @@
 
 	.active {
 		color: var(--hover-color);
+		font-weight: bold;
 	}
 
 	select {
@@ -68,6 +68,7 @@
 		border-radius: var(--radius-size);
 		border: 0;
 		padding: 0.3em 1em;
+		text-align: center;
 		font-size: 0.8em;
 	}
 
