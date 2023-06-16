@@ -43,7 +43,6 @@
 	}
 
 	.view-more:hover {
-		text-decoration: underline;
 		color: var(--hover-color);
 	}
 

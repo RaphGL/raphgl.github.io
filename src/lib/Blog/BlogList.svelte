@@ -17,7 +17,7 @@
 			<BlogItem date={blog.date} href={blog.href}>{blog.title}</BlogItem>
 		{/each}
 	</div>
-	<a class="view-more" href="/blog">View More</a>
+	<a href="/blog">View More</a>
 </div>
 
 <style>
@@ -37,7 +37,6 @@
 	}
 
 	a:hover {
-		text-decoration: underline;
 		color: var(--hover-color);
 	}
 
