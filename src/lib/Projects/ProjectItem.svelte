@@ -32,6 +32,7 @@
 		width: 25vw;
 		flex-direction: column;
 		text-align: center;
+		justify-content: center;
 		padding: 1em;
 	}
 
@@ -41,7 +42,7 @@
 	}
 
 	a:hover .project-tags li {
-		background: var(--bg-color);
+		background: var(--gradient-fg-color);
 	}
 
 	.project-name {

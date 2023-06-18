@@ -22,10 +22,6 @@
 </div>
 
 <style>
-	.project {
-		width: 25vw;
-	}
-
 	h2 {
 		text-align: center;
 	}
@@ -34,16 +30,17 @@
 		display: flex;
 		justify-content: center;
 		text-decoration: none;
-		background: none;
-		border: none;
-		color: var(--fg-color);
 		font-size: 14pt;
 		cursor: pointer;
-		height: fit-content;
+		color: var(--fg-color);
+		background-color: var(--bg-color);
+		padding: 1em;
+		border-radius: var(--radius-size);
 	}
 
 	.view-more:hover {
-		color: var(--hover-color);
+		background: var(--gradient-hover-color);
+		color: var(--fg-color);
 	}
 
 	.project > div {

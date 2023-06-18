@@ -17,7 +17,7 @@
 			<BlogItem date={blog.date} href={blog.href}>{blog.title}</BlogItem>
 		{/each}
 	</div>
-	<a href="/blog">View More</a>
+	<a class="view-more" href="/blog">View More</a>
 </div>
 
 <style>
@@ -46,5 +46,16 @@
 		justify-content: space-between;
 		gap: 1em;
 		margin-bottom: 1em;
+	}
+
+	.view-more {
+		background-color: var(--bg-color);
+		padding: 1em;
+		border-radius: var(--radius-size);
+	}
+
+	.view-more:hover {
+		background: var(--gradient-hover-color);
+		color: var(--fg-color);
 	}
 </style>

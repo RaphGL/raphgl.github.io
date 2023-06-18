@@ -2,16 +2,10 @@
 	import BlogList from '../lib/Blog/BlogList.svelte';
 	import ProjectList from '../lib/Projects/ProjectList.svelte';
 	import ContentRect from '../lib/ContentRect.svelte';
-	import { fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
-
-	let visible = false;
-	onMount(() => (visible = true));
 </script>
 
 <section class="info">
-	{#if visible}
-		<div transition:fly={{ y: 100, duration: 200 }}>
+		<div>
 			<img
 				src="https://avatars.githubusercontent.com/u/28673457?s=400&u=bc6d2bccf7d9bc6b8d403c0d462a4bc49b0fc678&v=4"
 				alt="Girl staring at the camera"
@@ -65,7 +59,6 @@
 				</ul>
 			</div>
 		</div>
-	{/if}
 </section>
 
 <div class="scroll">
