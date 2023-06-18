@@ -53,6 +53,6 @@
 	.pagination {
 		display: flex;
 		justify-content: center;
-		padding: 1em;
+		padding-bottom: 2em;
 	}
 </style>

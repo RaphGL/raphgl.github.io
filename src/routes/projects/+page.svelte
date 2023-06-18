@@ -43,7 +43,6 @@
 		display: flex;
 		padding: 2em;
 		flex-flow: row wrap;
-		align-content: center;
 		justify-content: center;
 		gap: 1em;
 	}

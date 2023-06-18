@@ -76,4 +76,9 @@
 		background-color: var(--hover-color);
 		cursor: pointer;
 	}
+
+	option {
+		background-color: red;
+		color: white;
+	}
 </style>
