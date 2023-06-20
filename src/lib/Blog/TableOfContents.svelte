@@ -1,10 +1,9 @@
 <script lang="ts">
-	import {fly} from 'svelte/transition'
 	export let contents: NodeListOf<Element> | null;
 	let show = false;
 </script>
 
-<div class={show ? 'table-of-contents' : 'hidden-table'}>
+<div class="table-of-contents">
 	<div class="expand-btn">
 		<div class="btn" on:click={() => (show = !show)} on:keydown>
 			<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512">
@@ -53,14 +52,6 @@
 
 	.expand-btn .btn {
 		cursor: pointer;
-	}
-
-	.hidden-table {
-		background-color: #141519;
-		padding: 1em;
-		width: 30vw;
-		border-top-left-radius: 2em;
-		border-bottom-left-radius: 2em;
 	}
 
 	.table-of-contents {

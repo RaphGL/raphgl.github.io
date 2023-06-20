@@ -23,6 +23,7 @@
 <style>
 	.blog h2 {
 		text-align: center;
+		margin-bottom: 1em;
 	}
 
 	a {
@@ -42,6 +43,7 @@
 
 	.blog-posts {
 		display: flex;
+		flex: 1 1 0;
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 1em;

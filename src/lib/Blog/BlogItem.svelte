@@ -17,7 +17,6 @@
 	}
 
 	a {
-		width: 35vw;
 		color: var(--fg-color);
 		text-decoration: unset;
 		background: rgb(32, 33, 41);
@@ -27,6 +26,12 @@
 		font-size: 15pt;
 		display: flex;
 		justify-content: space-between;
+	}
+
+	@media only screen and (min-width: 768px) {
+		a {
+			width: 35vw;
+		}
 	}
 
 	a:hover {

@@ -29,11 +29,16 @@
 		border-radius: var(--radius-size);
 		font-size: 15pt;
 		display: flex;
-		width: 25vw;
 		flex-direction: column;
 		text-align: center;
 		justify-content: center;
-		padding: 1em;
+		padding: 1.5em;
+	}
+
+	@media only screen and (min-width: 768px) {
+		a {
+			width: 25vw;
+		}
 	}
 
 	a:hover {
@@ -51,6 +56,7 @@
 	}
 
 	.project-tags {
+		margin-top: 0.5em;
 		display: flex;
 		gap: 0.5em;
 		justify-content: center;

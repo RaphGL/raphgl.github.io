@@ -14,16 +14,17 @@
 					{project.name}
 				</ProjectItem>
 			{/each}
-			{:catch}
+		{:catch}
 			<ProjectItem>Failed to load Github data!</ProjectItem>
 		{/await}
+		<a class="view-more" href="/projects">View More</a>
 	</div>
-	<a class="view-more" href="/projects">View More</a>
 </div>
 
 <style>
 	h2 {
 		text-align: center;
+		margin-bottom: 1em;
 	}
 
 	.view-more {
@@ -49,6 +50,5 @@
 		justify-content: center;
 		align-content: center;
 		gap: 1em;
-		margin-bottom: 1em;
 	}
 </style>

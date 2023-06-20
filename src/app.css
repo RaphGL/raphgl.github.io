@@ -21,8 +21,17 @@
 	color: var(--fg-color);
 }
 
+*,
+*::before,
+*::after { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+
 body {
-	all: unset;
+	margin-top: 10vh;
 	background: var(--bg-color);
 	background: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
 	background-attachment: fixed;

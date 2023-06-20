@@ -15,7 +15,7 @@
 
 <Header>Setting up NeoVim for Godot</Header>
 <ContentRect>
-	<div class="content" transition:fly>
+	<div class="content">
 		<TableOfContents {contents} />
 		<div class="blog-text">
 			<h1>How to do it</h1>
