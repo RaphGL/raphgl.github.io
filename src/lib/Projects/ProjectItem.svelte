@@ -25,7 +25,7 @@
 	a {
 		all: unset;
 		background: rgb(32, 33, 41);
-		background: var(--gradient-fg-color);
+		background: var(--gradient-bg-color);
 		border-radius: var(--radius-size);
 		font-size: 15pt;
 		display: flex;
@@ -47,7 +47,7 @@
 	}
 
 	a:hover .project-tags li {
-		background: var(--gradient-fg-color);
+		background: var(--gradient-bg-color);
 	}
 
 	.project-name {

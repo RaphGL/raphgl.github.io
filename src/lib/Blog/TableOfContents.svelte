@@ -55,7 +55,7 @@
 	}
 
 	.table-of-contents {
-		background-color: #141519;
+		background-color: var(--bg-color);
 		padding: 1em;
 		width: 100vw;
 		border-top-left-radius: 2em;

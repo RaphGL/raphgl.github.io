@@ -4,7 +4,7 @@
 
 <style>
 	.main-content {
-		background-color: #18191f;
+		background-color: var(--content-bg-color);
 		border-radius: 2em;
 	}
 

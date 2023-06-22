@@ -15,6 +15,10 @@
 	</section>
 </ContentRect>
 
+<svelte:head>
+	<title>RaphGL - Blog</title>
+</svelte:head>
+
 <style>
 	section {
 		display: flex;

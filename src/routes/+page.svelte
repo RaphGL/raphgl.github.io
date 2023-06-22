@@ -1,8 +1,12 @@
 <script lang="ts">
-	import BlogList from '../lib/Blog/BlogList.svelte';
-	import ProjectList from '../lib/Projects/ProjectList.svelte';
-	import ContentRect from '../lib/ContentRect.svelte';
+	import BlogList from '$lib/Blog/BlogList.svelte';
+	import ProjectList from '$lib/Projects/ProjectList.svelte';
+	import ContentRect from '$lib/ContentRect.svelte';
 </script>
+
+<svelte:head>
+	<title>RaphGL</title>
+</svelte:head>
 
 <section class="info">
 	<div>
@@ -96,24 +100,24 @@
 	}
 
 	@media only screen and (min-width: 768px) {
-	.main-content {
-		flex-direction: row;
-	}
+		.main-content {
+			flex-direction: row;
+		}
 	}
 
 	.info {
-		height: 90h;
+		height: 80vh;
 		width: 90vw;
 		display: flex;
 		justify-items: center;
 		min-height: 84vh;
-		margin:auto;
+		margin: auto;
 	}
 
 	.info img {
 		margin-left: auto;
 		margin-right: auto;
-		width: 80vw;
+		width: 50vw;
 		margin-bottom: 1em;
 		border-radius: var(--radius-size);
 	}
@@ -121,7 +125,7 @@
 	@media only screen and (min-width: 768px) {
 		.info img {
 			width: auto;
-			height: 12em;
+			height: 20vh;
 			flex-direction: row;
 		}
 	}
@@ -135,27 +139,14 @@
 	.info > div {
 		display: flex;
 		flex-direction: column;
-		background-color: rgb(40, 42, 54);
-		background-color: linear-gradient(310deg, rgba(40, 42, 54, 1) 0%, rgba(32, 33, 41, 1) 100%);
 		border-radius: var(--radius-size);
+		gap: 1em;
 		margin: auto;
 		padding: 1em;
 	}
 
-	@media only screen and (min-width: 850px) {
-		.info > div {
-			flex-direction: row;
-		}
-	}
-
-	.info ul {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 1em;
-	}
-
 	.info-title {
+		text-align: center;
 		font-size: 30pt;
 	}
 
@@ -166,6 +157,20 @@
 		align-items: center;
 		gap: 1em;
 		padding: 0 1em;
+	}
+
+	.info ul {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5em;
+	}
+
+	@media only screen and (min-width: 768px) {
+		.info-text ul {
+			flex-direction: row;
+		}
 	}
 
 	.info-text ul li {
@@ -180,11 +185,10 @@
 		padding: 0.6em;
 		border-radius: var(--radius-size);
 		align-items: center;
-		background-color: var(--bg-color);
 	}
 
 	.info-text li a:hover {
-		color: var(--hover-color);
+		background: var(--gradient-hover-color);
 	}
 
 	.scroll {

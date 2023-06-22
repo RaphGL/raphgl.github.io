@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Pagination from '$lib/Pagination.svelte';
-	import Button from '$lib/Button.svelte';
 	import ContentRect from '$lib/ContentRect.svelte';
 	import ProjectItem from '$lib/Projects/ProjectItem.svelte';
-	import { getProjects } from '../../lib/Projects/projects';
+	import { getProjects } from '$lib/Projects/projects';
 	import { onMount } from 'svelte';
 
 	const itemPerPage = 9;
@@ -19,6 +18,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+	<title>RaphGL - Projects</title>
+</svelte:head>
 
 <ContentRect>
 	<section>

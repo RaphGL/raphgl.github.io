@@ -20,7 +20,7 @@
 		color: var(--fg-color);
 		text-decoration: unset;
 		background: rgb(32, 33, 41);
-		background: var(--gradient-fg-color);
+		background: var(--gradient-bg-color);
 		padding: 1em;
 		border-radius: var(--radius-size);
 		font-size: 15pt;

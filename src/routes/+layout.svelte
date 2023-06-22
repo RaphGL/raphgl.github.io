@@ -7,10 +7,14 @@
 		{ id: 'es', name: 'Español' },
 		{ id: 'pt', name: 'Português' }
 	];
-	let selectedLang = 'en';
 
+	let selectedLang = 'en';
 	let show = false;
 </script>
+
+<svelte:head>
+	<title>RaphGL</title>
+</svelte:head>
 
 <div class="hamburger" on:click={() => (show = !show)} on:keydown>
 	<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512">
@@ -25,10 +29,20 @@
 </div>
 
 {#if show}
+	{@const pages = [
+		['/', 'Home'],
+		['/projects', 'Projects'],
+		['/blog', 'Blog']
+	]}
 	<nav>
-		<a class:active={$page.url.pathname === '/'} href="/">Home</a>
-		<a class:active={$page.url.pathname === '/projects'} href="/projects">Projects</a>
-		<a class:active={$page.url.pathname === '/blog'} href="/blog">Blog</a>
+		{#each pages as [pageUrl, pageName]}
+			<!-- hides menu when a link is clicked -->
+			<a
+				on:click={() => (show = false)}
+				class:active={$page.url.pathname === pageUrl}
+				href={pageUrl}>{pageName}</a
+			>
+		{/each}
 
 		<select bind:value={selectedLang}>
 			{#each langs as lang}
@@ -62,9 +76,8 @@
 		gap: 2em;
 		padding: 1em;
 		padding-right: 5vw;
-		background-color: var(--bg-color);
+		background-color: var(--content-bg-color);
 		border-radius: var(--radius-size);
-		border: 1px solid var(--hover-color);
 	}
 
 	@media only screen and (min-width: 768px) {
@@ -93,7 +106,7 @@
 	select {
 		background-color: rgb(40, 42, 54);
 		background-color: linear-gradient(310deg, rgba(40, 42, 54, 1) 0%, rgba(32, 33, 41, 1) 100%);
-		color: var(--gradient-bg-color);
+		color: var(--fg-color);
 		border-radius: var(--radius-size);
 		border: 0;
 		padding: 0.3em 1em;
@@ -116,5 +129,4 @@
 		font-size: 14pt;
 		margin: 1.5em;
 	}
-
 </style>

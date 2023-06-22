@@ -5,6 +5,7 @@
 	import TableOfContents from '$lib/Blog/TableOfContents.svelte';
 	import ContentRect from '$lib/ContentRect.svelte';
 
+	let postTitle = 'Post Title';
 	let contents: NodeListOf<Element> | null = null;
 	onMount(() => {
 		contents = document.querySelectorAll(
