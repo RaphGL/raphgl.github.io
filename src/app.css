@@ -12,8 +12,13 @@
 		rgba(47, 61, 134, 1) 100%
 	);
 	--radius-size: 0.5em;
-	font-family: 'Source Sans Pro', 'sans-serif';
-	font-size: 17pt;
+	--font-size: 14pt;
+}
+
+@media only screen and (min-width: 768px) {
+	:root {
+		--font-size: 16pt;
+	}
 }
 
 ::selection {
@@ -23,12 +28,11 @@
 
 *,
 *::before,
-*::after { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
-
 
 body {
 	margin-top: 11vh;
@@ -36,4 +40,6 @@ body {
 	background: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
 	background-attachment: fixed;
 	color: var(--fg-color);
+	font-family: 'Source Sans Pro', 'sans-serif';
+	font-size: var(--font-size);
 }

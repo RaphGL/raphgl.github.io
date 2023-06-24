@@ -13,7 +13,7 @@
 
 <style>
 	.blog-date {
-		font-size: 13pt;
+		font-size: calc(var(--font-size) - 2pt);
 	}
 
 	a {
@@ -22,13 +22,19 @@
 		background: rgb(32, 33, 41);
 		background: var(--gradient-bg-color);
 		padding: 1em;
+		margin: auto;
 		border-radius: var(--radius-size);
-		font-size: 15pt;
 		display: flex;
 		justify-content: space-between;
 	}
 
 	@media only screen and (min-width: 768px) {
+		a {
+			width: 80vw;
+		}
+	}
+
+	@media only screen and (min-width: 850px) {
 		a {
 			width: 35vw;
 		}

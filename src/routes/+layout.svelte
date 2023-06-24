@@ -70,26 +70,28 @@
 	nav {
 		position: fixed;
 		top: 0.5em;
-		right: 1em;
 		display: flex;
 		flex-direction: column;
+		width: 100vw;
 		gap: 2em;
-		padding: 1em;
-		padding-right: 5vw;
+		padding: 3em;
 		background-color: var(--content-bg-color);
 		border-radius: var(--radius-size);
+		border: 2px solid var(--bg-color);
 	}
 
 	@media only screen and (min-width: 768px) {
 		nav {
-			flex-direction: row;
+			padding: 1em;
+			width: 16em;
+			right: 1em;
+			gap: 1em;
 		}
 	}
 
 	nav a {
 		text-decoration: none;
 		color: var(--fg-color);
-		width: 4em;
 		text-align: center;
 	}
 
@@ -109,7 +111,9 @@
 		color: var(--fg-color);
 		border-radius: var(--radius-size);
 		border: 0;
-		padding: 0.3em 1em;
+		padding: 0.3em 2em;
+		width: fit-content;
+		margin: auto;
 		text-align: center;
 		font-size: 0.8em;
 	}
@@ -126,7 +130,7 @@
 
 	footer {
 		text-align: center;
-		font-size: 14pt;
+		font-size: calc(var(--font-size) - 3pt);
 		margin: 1.5em;
 	}
 </style>

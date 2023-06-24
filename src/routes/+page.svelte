@@ -102,6 +102,14 @@
 	@media only screen and (min-width: 768px) {
 		.main-content {
 			flex-direction: row;
+			gap: 2em;
+			padding: 3em 1em;
+		}
+	}
+
+	@media only screen and (min-width: 850px) {
+		.main-content {
+			gap: 3em;
 		}
 	}
 
@@ -147,7 +155,7 @@
 
 	.info-title {
 		text-align: center;
-		font-size: 30pt;
+		font-size: calc(var(--font-size) * 2);
 	}
 
 	.info-text {

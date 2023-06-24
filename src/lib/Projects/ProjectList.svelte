@@ -31,7 +31,7 @@
 		display: flex;
 		justify-content: center;
 		text-decoration: none;
-		font-size: 14pt;
+		font-size: calc(var(--font-size) - 2pt);
 		cursor: pointer;
 		color: var(--fg-color);
 		background-color: var(--bg-color);

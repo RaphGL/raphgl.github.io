@@ -46,7 +46,7 @@
 
 	.expand-btn span {
 		font-weight: bold;
-		font-size: 20pt;
+		font-size: calc(var(--font-size) + 3pt);
 		cursor: default;
 	}
 

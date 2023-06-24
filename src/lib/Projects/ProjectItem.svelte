@@ -27,7 +27,7 @@
 		background: rgb(32, 33, 41);
 		background: var(--gradient-bg-color);
 		border-radius: var(--radius-size);
-		font-size: 15pt;
+		font-size: calc(var(--font-size) - 2pt);
 		display: flex;
 		flex-direction: column;
 		text-align: center;
@@ -52,7 +52,7 @@
 
 	.project-name {
 		font-weight: bold;
-		font-size: 18pt;
+		font-size: calc(var(--font-size) + 2pt);
 	}
 
 	.project-tags {

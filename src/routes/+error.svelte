@@ -11,14 +11,13 @@
 		flex-direction: column;
 		text-align: center;
 		justify-content: center;
-		align-content: center;
 		padding-bottom: 4em;
 		margin: 1em;
+		width: 100vw;
 		height: 70vh;
 	}
 
 	h1 {
-		font-size: 100pt;
-		margin-bottom: 0;
+		font-size: 15vh;
 	}
 </style>
