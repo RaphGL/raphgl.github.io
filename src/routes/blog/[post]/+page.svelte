@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
 	import Header from '$lib/Blog/Header.svelte';
 	import TableOfContents from '$lib/Blog/TableOfContents.svelte';
 	import ContentRect from '$lib/ContentRect.svelte';

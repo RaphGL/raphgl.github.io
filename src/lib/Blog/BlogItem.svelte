@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade } from "svelte/transition";
+
 	export let href: string;
 	export let date: string;
 </script>
 
-<div transition:fly={{ y: 100, duration: 100 }}>
+<div in:fade={{duration: 150}}>
 	<a {href}>
 		<div class="blog-title"><slot /></div>
 		<div class="blog-date">{date}</div>

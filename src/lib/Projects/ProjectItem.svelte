@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	export let href: string = '';
 	export let desc: string = '';
 	export let tags: string[] = [];
 </script>
 
-<a {href} transition:fly={{ y: 100, duration: 100 }}>
+<a {href} in:fade={{ duration: 150 }}>
 	<div class="project-name"><slot /></div>
 
 	{#if desc}

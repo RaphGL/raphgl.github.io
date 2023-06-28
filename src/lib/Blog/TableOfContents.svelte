@@ -1,10 +1,13 @@
 <script lang="ts">
 	export let contents: NodeListOf<Element> | null;
 	let show = false;
+	let scroll: number;
 </script>
 
+<svelte:window bind:scrollY={scroll} />
+
 <div class="table-of-contents">
-	<div class="expand-btn">
+	<div class="expand-btn" style:transform={`translateY(${scroll}px)`}>
 		<div class="btn" on:click={() => (show = !show)} on:keydown>
 			<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512">
 				<style>
@@ -23,7 +26,7 @@
 	</div>
 
 	{#if show}
-		<div>
+		<div style:transform={`translateY(${scroll}px)`}>
 			<ul>
 				{#if contents != null}
 					{#each contents as content}
