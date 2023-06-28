@@ -12,7 +12,7 @@
 	let show = false;
 </script>
 
-<div class="hamburger" on:click={() => (show = !show)} on:keydown>
+<div class="hamburger" on:click={() => (show = !show)} on:keydown role="button" tabindex="0">
 	<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512">
 		<style>
 			svg {
@@ -30,7 +30,7 @@
 		['/projects', 'Projects'],
 		['/blog', 'Blog']
 	]}
-	<nav transition:slide={{axis: 'x', duration: 150}}>
+	<nav transition:slide|global={{ axis: 'x', duration: 150 }}>
 		{#each pages as [pageUrl, pageName]}
 			<!-- hides menu when a link is clicked -->
 			<a
@@ -49,7 +49,6 @@
 {/if}
 
 <style>
-
 	.hamburger {
 		position: fixed;
 		top: 1.5em;

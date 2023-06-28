@@ -1,15 +1,9 @@
-<script>
-	import { fade } from 'svelte/transition';
-</script>
-
-<div transition:fade>
-	<h2>
-		<slot />
-	</h2>
-</div>
+<h2>
+	<slot />
+</h2>
 
 <style>
-	div {
+	h2 {
 		padding: 1em;
 		text-align: center;
 	}

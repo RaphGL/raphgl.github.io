@@ -8,7 +8,7 @@
 
 <div class="table-of-contents">
 	<div class="expand-btn" style:transform={`translateY(${scroll}px)`}>
-		<div class="btn" on:click={() => (show = !show)} on:keydown>
+		<div class="btn" on:click={() => (show = !show)} on:keydown role="button" tabindex="0">
 			<svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 448 512">
 				<style>
 					svg {

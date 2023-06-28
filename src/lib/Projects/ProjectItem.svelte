@@ -5,7 +5,7 @@
 	export let tags: string[] = [];
 </script>
 
-<a {href} in:fade={{ duration: 150 }}>
+<a {href} in:fade|global={{ duration: 150 }}>
 	<div class="project-name"><slot /></div>
 
 	{#if desc}
