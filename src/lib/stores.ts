@@ -1,3 +1,5 @@
+import { readable } from "svelte/store";
+
 type Project = {
 	name: string;
 	href: string;
@@ -5,7 +7,7 @@ type Project = {
 	tags: string[];
 };
 
-export async function getProjects(noOfItems?: number, page?: number): Promise<Project[]> {
+async function getProjects(noOfItems?: number, page?: number): Promise<Project[]> {
 	const github = await fetch(
 		`https://api.github.com/users/raphgl/repos?type=sources&sort=pushed&per_page=${noOfItems}&page=${page}`
 	);
@@ -24,3 +26,5 @@ export async function getProjects(noOfItems?: number, page?: number): Promise<Pr
 
 	return projects;
 }
+
+export const projects = readable(await getProjects());

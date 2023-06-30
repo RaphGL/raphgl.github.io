@@ -28,8 +28,8 @@
 	}
 
 	@media only screen and (min-width: 768px) {
-	section {
-		align-items: center;
-	}
+		section {
+			align-items: center;
+		}
 	}
 </style>

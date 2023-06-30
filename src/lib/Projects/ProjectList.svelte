@@ -1,22 +1,17 @@
 <script>
 	import ProjectItem from './ProjectItem.svelte';
-	import { getProjects } from './projects';
+    import { projects } from '$lib/stores';
+    export let size = 4;
 </script>
 
 <div class="project">
 	<h2>Projects</h2>
 	<div>
-		{#await getProjects(5)}
-			<ProjectItem>Retrieving projects...</ProjectItem>
-		{:then projects}
-			{#each projects as project}
+			{#each $projects.slice(0, size) as project}
 				<ProjectItem href={project.href} desc={project.description} tags={project.tags}>
 					{project.name}
 				</ProjectItem>
 			{/each}
-		{:catch}
-			<ProjectItem>Failed to load Github data!</ProjectItem>
-		{/await}
 		<a class="view-more" href="/projects">View More</a>
 	</div>
 </div>
