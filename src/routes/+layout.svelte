@@ -19,6 +19,6 @@
 	footer {
 		text-align: center;
 		font-size: calc(var(--font-size) - 3pt);
-		margin: 1.5em;
+		padding: 1.5em;
 	}
 </style>

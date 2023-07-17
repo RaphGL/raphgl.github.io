@@ -103,15 +103,12 @@
 		gap: 3em;
 	}
 
-	@media only screen and (min-width: 768px) {
+	@media only screen and (min-width: 850px) {
 		.main-content {
 			flex-direction: row;
 			gap: 2em;
 			padding: 3em 1em;
 		}
-	}
-
-	@media only screen and (min-width: 850px) {
 		.main-content {
 			gap: 3em;
 		}

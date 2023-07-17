@@ -35,11 +35,12 @@
 }
 
 body {
-	margin-top: 11vh;
-	background: var(--bg-color);
-	background: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
-	background-attachment: fixed;
+	padding-top: 11vh;
 	color: var(--fg-color);
 	font-family: 'Source Sans Pro', 'sans-serif';
 	font-size: var(--font-size);
+	background: var(--bg-color);
+	background: radial-gradient(circle, rgba(20, 21, 25, 1) 0%, rgba(16, 17, 20, 1) 100%);
+	background-attachment: fixed;
+    min-height: 100vh;
 }

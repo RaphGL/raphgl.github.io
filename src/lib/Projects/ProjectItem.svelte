@@ -35,12 +35,6 @@
 		padding: 1.5em;
 	}
 
-	@media only screen and (min-width: 768px) {
-		a {
-			width: 25vw;
-		}
-	}
-
 	a:hover {
 		cursor: pointer;
 		background: var(--gradient-hover-color);
@@ -69,7 +63,7 @@
 	}
 
 	.project-tags li {
-		background: #383a59;
+		background: var(--gradient-hover-color);
 		padding: 0.2em 1em;
 		font-size: 12pt;
 		border-radius: var(--radius-size);
