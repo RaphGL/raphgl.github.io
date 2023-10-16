@@ -90,7 +90,7 @@
 	}
 
 	select {
-		font-size: 11pt;
+		font-size: calc(var(--font-size) - 3pt);
 		font-weight: bold;
 		padding: 0.5em;
 		text-align: center;
@@ -104,7 +104,7 @@
 	}
 
 	select:hover {
-        background: var(--bg-color);
+		background: var(--bg-color);
 	}
 
 	.active {
@@ -116,7 +116,7 @@
 		display: flex;
 		position: fixed;
 		right: 1em;
-		top: 1em;
+		top: 1vh;
 	}
 
 	.hamburger {

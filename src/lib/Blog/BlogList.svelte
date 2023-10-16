@@ -30,7 +30,7 @@
 		background: none;
 		border: none;
 		color: var(--fg-color);
-		font-size: 14pt;
+		font-size: var(--font-size);
 		display: flex;
 		justify-content: center;
 		cursor: pointer;
@@ -53,6 +53,7 @@
 	.view-more {
 		background-color: var(--bg-color);
 		padding: 1em;
+		font-size: calc(var(--font-size) - 2pt);
 		border-radius: var(--radius-size);
 	}
 

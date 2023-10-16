@@ -4,7 +4,7 @@
 </script>
 
 <ContentRect>
-	<section>
+	<div>
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
@@ -12,7 +12,7 @@
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
 		<BlogItem href="/" date="10 Nov 2022">asdfadsfadsf</BlogItem>
-	</section>
+	</div>
 </ContentRect>
 
 <svelte:head>
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <style>
-	section {
+	div {
 		display: flex;
 		flex-direction: column;
 		padding: 2em;
@@ -28,7 +28,7 @@
 	}
 
 	@media only screen and (min-width: 768px) {
-		section {
+		div {
 			align-items: center;
 		}
 	}

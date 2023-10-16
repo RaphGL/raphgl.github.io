@@ -1,4 +1,4 @@
-import { readable } from "svelte/store";
+import { readable } from 'svelte/store';
 
 type Project = {
 	name: string;

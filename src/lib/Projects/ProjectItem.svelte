@@ -30,6 +30,7 @@
 		font-size: calc(var(--font-size) - 2pt);
 		display: flex;
 		flex-direction: column;
+		gap: 0.2em;
 		text-align: center;
 		justify-content: center;
 		padding: 1.5em;
@@ -65,7 +66,7 @@
 	.project-tags li {
 		background: var(--gradient-hover-color);
 		padding: 0.2em 1em;
-		font-size: 12pt;
+		font-size: calc(var(--font-size) - 4pt);
 		border-radius: var(--radius-size);
 	}
 </style>

@@ -128,13 +128,13 @@
 		margin-right: auto;
 		width: 50vw;
 		margin-bottom: 1em;
-		border-radius: var(--radius-size);
+		border-radius: 100%;
 	}
 
 	@media only screen and (min-width: 768px) {
 		.info img {
 			width: auto;
-			height: 20vh;
+			height: 30vh;
 			flex-direction: row;
 		}
 	}
@@ -205,7 +205,7 @@
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
-		font-size: 15pt;
+		font-size: calc(var(--font-size) + 2pt);
 		gap: 1em;
 		cursor: default;
 	}
