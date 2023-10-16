@@ -18,7 +18,7 @@
 	}
 
 	a {
-    font-size: calc(var(--font-size) - 2pt);
+		font-size: calc(var(--font-size) - 2pt);
 		color: var(--fg-color);
 		text-decoration: unset;
 		background: rgb(32, 33, 41);
@@ -37,7 +37,7 @@
 
 	@media only screen and (min-width: 850px) {
 		a {
-			width: 35vw;
+			width: 45vw;
 		}
 	}
 

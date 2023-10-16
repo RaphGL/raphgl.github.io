@@ -41,4 +41,9 @@
 		justify-content: center;
 		gap: 1em;
 	}
+
+    h2 {
+        text-align: center;
+    font-weight: normal;
+    }
 </style>

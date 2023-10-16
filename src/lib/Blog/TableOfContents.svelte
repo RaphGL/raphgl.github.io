@@ -43,7 +43,7 @@
 <style>
 	.expand-btn {
 		display: flex;
-		gap: 2em;
+		gap: 1em;
 		padding: 0.5em;
 	}
 

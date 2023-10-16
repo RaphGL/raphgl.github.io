@@ -97,13 +97,14 @@
 		margin-left: 1em;
 		margin-top: 1em;
 		border-radius: 0.5em;
-		background-color: var(--bg-color);
+		color: var(--fg-color);
+		background: var(--content-bg-color);
 		border-color: transparent;
 		cursor: pointer;
 	}
 
 	select:hover {
-		background: var(--gradient-hover-color);
+        background: var(--bg-color);
 	}
 
 	.active {
@@ -124,7 +125,7 @@
 	}
 
 	.hamburger-open {
-		background: var(--content-bg-color);
+		background-color: var(--bg-color);
 		border-top-right-radius: var(--radius-size);
 		border-bottom-right-radius: var(--radius-size);
 	}
