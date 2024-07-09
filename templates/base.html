@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>RaphGL</title>
+  <link rel="stylesheet" href="/pico.min.css">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <nav class="container">
+    <ul>
+      <li>
+        <h4><a class="contrast" href="/">RaphGL</a></h4>
+      </li>
+    </ul>
+    <ul>
+      {% macro navbar_link(url="", name="") %}
+      <li>
+        <a class="
+          {% if current_path == url %}
+            primary
+          {% else %}
+            contrast
+          {% endif %}
+        " href={{url}}>
+          {{ name }}
+        </a>
+      </li>
+      {% endmacro navbar_link %}
+
+      {{ self::navbar_link(url="/", name="Home") }}
+      {{ self::navbar_link(url="/blog/", name="Blog") }}
+    </ul>
+  </nav>
+
+  <main>
+    {% block content %} {% endblock %}
+  </main>
+</body>
+
+</html>

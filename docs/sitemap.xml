@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://raphgl.github.io/</loc>
+    </url>
+    <url>
+        <loc>https://raphgl.github.io/blog/</loc>
+    </url>
+    <url>
+        <loc>https://raphgl.github.io/blog/test1/</loc>
+        <lastmod>2024-07-07</lastmod>
+    </url>
+    <url>
+        <loc>https://raphgl.github.io/blog/test2/</loc>
+    </url>
+    <url>
+        <loc>https://raphgl.github.io/blog/test3/</loc>
+    </url>
+    <url>
+        <loc>https://raphgl.github.io/blog/test4/</loc>
+    </url>
+</urlset>
