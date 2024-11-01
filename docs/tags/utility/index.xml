@@ -2,19 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Utility on RaphGL</title>
-    <link>http://raphgl.com/tags/utility/</link>
+    <link>http://localhost:36295/tags/utility/</link>
     <description>Recent content in Utility on RaphGL</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate><atom:link href="http://raphgl.com/tags/utility/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate>
+    <atom:link href="http://localhost:36295/tags/utility/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Syngit</title>
-      <link>http://raphgl.com/projects/syngit/</link>
+      <link>http://localhost:36295/projects/syngit/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/projects/syngit/</guid>
-      <description>Find it on GitHub Syngit is a CLI and init service that let&amp;rsquo;s you synchronize repositories across different clients (Github, Codeberg, Gitlab, etc) with a very simple interface and configuration file.</description>
+      <guid>http://localhost:36295/projects/syngit/</guid>
+      <description>&lt;h2 id=&#34;find-it-on-githubhttpsgithubcomraphglsyngit&#34;&gt;&lt;a href=&#34;https://github.com/RaphGL/Syngit&#34;&gt;Find it on GitHub&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;!-- raw HTML omitted --&gt;&#xA;&lt;p&gt;Syngit is a CLI and init service that let&amp;rsquo;s you synchronize repositories across different clients (Github, Codeberg, Gitlab, etc) with a very simple interface and configuration file.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

@@ -2,19 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dotfiles on RaphGL</title>
-    <link>http://raphgl.com/tags/dotfiles/</link>
+    <link>http://localhost:1313/tags/dotfiles/</link>
     <description>Recent content in Dotfiles on RaphGL</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate><atom:link href="http://raphgl.com/tags/dotfiles/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/dotfiles/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tuckr</title>
-      <link>http://raphgl.com/projects/tuckr/</link>
+      <link>http://localhost:1313/projects/tuckr/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/projects/tuckr/</guid>
-      <description>Find it on GitHub Tuckr is a dotfile manager inspired by Stow and Git. Tuckr aims to make dotfile management less painful.</description>
+      <guid>http://localhost:1313/projects/tuckr/</guid>
+      <description>&lt;h2 id=&#34;find-it-on-githubhttpsgithubcomraphgltuckr&#34;&gt;&lt;a href=&#34;https://github.com/RaphGL/Tuckr&#34;&gt;Find it on GitHub&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;!-- raw HTML omitted --&gt;&#xA;&lt;p&gt;Tuckr is a dotfile manager inspired by Stow and Git. Tuckr aims to make dotfile management less painful. It follows the same model as Stow, symlinking files onto $HOME. It works on all the major OSes (Windows, MacOS, Linux).&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

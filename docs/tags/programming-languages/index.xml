@@ -2,19 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Programming Languages on RaphGL</title>
-    <link>http://raphgl.com/tags/programming-languages/</link>
+    <link>http://localhost:1313/tags/programming-languages/</link>
     <description>Recent content in Programming Languages on RaphGL</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Oct 2022 12:13:10 -0100</lastBuildDate><atom:link href="http://raphgl.com/tags/programming-languages/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2022 12:13:10 -0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/programming-languages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Poetry is a saner package manager for Python</title>
-      <link>http://raphgl.com/blog/poetry-is-saner/</link>
+      <link>http://localhost:1313/blog/poetry-is-saner/</link>
       <pubDate>Mon, 10 Oct 2022 12:13:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/blog/poetry-is-saner/</guid>
-      <description>Like many, I enjoy Python and the versatility and speed of development it provides. But, to me Python tooling is a big deal breaker.</description>
+      <guid>http://localhost:1313/blog/poetry-is-saner/</guid>
+      <description>&lt;p&gt;Like many, I enjoy Python and the versatility and speed of development it provides. But, to me Python tooling is a big deal breaker. It&amp;rsquo;s insane, there&amp;rsquo;s way too many ways to do things. Not to mention that documentation in the official python website is kind of convoluted, you end up going through hoops to understand whatever you need or relying on other people&amp;rsquo;s tutorials, videos, etc, to understand them, even then it can be overwhelming the amount of choices there are in python. For python bundling you have: wheels, pyinstaller, py2exe. For configuration you have: setup.py, setup.cfg, pyproject.toml. Then you need to configure your environment: pyenv, pipenv, virtualenv. This goes on and on and the recommended approach seems to change every few years and we get a conflict between all of these being used in production.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

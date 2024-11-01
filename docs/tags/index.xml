@@ -2,100 +2,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on RaphGL</title>
-    <link>http://raphgl.com/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on RaphGL</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate><atom:link href="http://raphgl.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Automation</title>
-      <link>http://raphgl.com/tags/automation/</link>
+      <link>http://localhost:1313/tags/automation/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/automation/</guid>
+      <guid>http://localhost:1313/tags/automation/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Dotfiles</title>
-      <link>http://raphgl.com/tags/dotfiles/</link>
+      <link>http://localhost:1313/tags/dotfiles/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/dotfiles/</guid>
+      <guid>http://localhost:1313/tags/dotfiles/</guid>
       <description></description>
     </item>
-    
-    <item>
-      <title>Python</title>
-      <link>http://raphgl.com/tags/python/</link>
-      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/python/</guid>
-      <description></description>
-    </item>
-    
     <item>
       <title>Rust</title>
-      <link>http://raphgl.com/tags/rust/</link>
+      <link>http://localhost:1313/tags/rust/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/rust/</guid>
+      <guid>http://localhost:1313/tags/rust/</guid>
       <description></description>
     </item>
-    
-    <item>
-      <title>Utility</title>
-      <link>http://raphgl.com/tags/utility/</link>
-      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/utility/</guid>
-      <description></description>
-    </item>
-    
     <item>
       <title>Programming Languages</title>
-      <link>http://raphgl.com/tags/programming-languages/</link>
+      <link>http://localhost:1313/tags/programming-languages/</link>
       <pubDate>Mon, 10 Oct 2022 12:13:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/programming-languages/</guid>
+      <guid>http://localhost:1313/tags/programming-languages/</guid>
       <description></description>
     </item>
-    
+    <item>
+      <title>Python</title>
+      <link>http://localhost:1313/tags/python/</link>
+      <pubDate>Mon, 10 Oct 2022 12:13:10 -0100</pubDate>
+      <guid>http://localhost:1313/tags/python/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Tooling</title>
-      <link>http://raphgl.com/tags/tooling/</link>
+      <link>http://localhost:1313/tags/tooling/</link>
       <pubDate>Mon, 10 Oct 2022 12:13:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/tooling/</guid>
+      <guid>http://localhost:1313/tags/tooling/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Game Dev</title>
-      <link>http://raphgl.com/tags/game-dev/</link>
+      <link>http://localhost:1313/tags/game-dev/</link>
       <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/game-dev/</guid>
+      <guid>http://localhost:1313/tags/game-dev/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Godot</title>
-      <link>http://raphgl.com/tags/godot/</link>
+      <link>http://localhost:1313/tags/godot/</link>
       <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/godot/</guid>
+      <guid>http://localhost:1313/tags/godot/</guid>
       <description></description>
     </item>
-    
     <item>
       <title>Neovim</title>
-      <link>http://raphgl.com/tags/neovim/</link>
+      <link>http://localhost:1313/tags/neovim/</link>
       <pubDate>Fri, 23 Sep 2022 13:28:10 -0100</pubDate>
-      
-      <guid>http://raphgl.com/tags/neovim/</guid>
+      <guid>http://localhost:1313/tags/neovim/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>
