@@ -8,7 +8,7 @@
 </div>
 <div class="m-10 grid sm:grid-cols-2 lg:m-40 lg:my-0 gap-4">
   {{ range .Data.Pages }}
-  <a href="{{ .Permalink }}">
+  <a href="{{ .RelPermalink }}">
     <div
       class="flex flex-col min:h-72 place-content-center bg-gray hover:bg-accent-color p-8 rounded-lg transition hover:ease-in"
     >

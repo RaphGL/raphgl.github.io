@@ -1,7 +1,7 @@
 {{ define "main"}} {{ partial "navbar.html" . }}
 <div class="m-10">
   {{ range .Pages }}
-  <a href="{{ .Permalink }}">
+  <a href="{{ .RelPermalink }}">
     <div
       class="flex flex-col items-center post-content rounded-lg bg-light-black hover:bg-accent-color transition ease-in"
     >

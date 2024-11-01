@@ -6,7 +6,7 @@
   <ul class="flex flex-row gap-2 m-1">
     {{ range (.GetTerms "tags") }}
     <li class="post-tag hover:bg-dark-gray">
-      <a href="{{ .Permalink }}"> {{ .LinkTitle }}</a>
+      <a href="{{ .RelPermalink }}"> {{ .LinkTitle }}</a>
     </li>
     {{end }}
   </ul>
