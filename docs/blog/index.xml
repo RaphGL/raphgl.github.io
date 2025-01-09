@@ -6,8 +6,15 @@
     <description>Recent content on RaphGL</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://raphgl.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Error handling patterns in Rust</title>
+      <link>http://raphgl.com/blog/rust-error-handling-patterns/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://raphgl.com/blog/rust-error-handling-patterns/</guid>
+      <description>&lt;p&gt;These are some patterns I&amp;rsquo;ve found in Rust that tend to make error handling code more legible/less noisy.&lt;/p&gt;&#xA;&lt;h2 id=&#34;handling-errors&#34;&gt;Handling errors&lt;/h2&gt;&#xA;&lt;p&gt;If you only care about one case in an error, instead of being forced to match against all errors, do this:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>How base64 works</title>
       <link>http://raphgl.com/blog/how_base64_works/</link>

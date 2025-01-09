@@ -6,8 +6,15 @@
     <description>Recent content in Rust on RaphGL</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://raphgl.com/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Error handling patterns in Rust</title>
+      <link>http://raphgl.com/blog/rust-error-handling-patterns/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://raphgl.com/blog/rust-error-handling-patterns/</guid>
+      <description>&lt;p&gt;These are some patterns I&amp;rsquo;ve found in Rust that tend to make error handling code more legible/less noisy.&lt;/p&gt;&#xA;&lt;h2 id=&#34;handling-errors&#34;&gt;Handling errors&lt;/h2&gt;&#xA;&lt;p&gt;If you only care about one case in an error, instead of being forced to match against all errors, do this:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Tuckr</title>
       <link>http://raphgl.com/projects/tuckr/</link>

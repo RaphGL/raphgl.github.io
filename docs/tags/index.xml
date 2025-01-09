@@ -6,8 +6,22 @@
     <description>Recent content in Tags on RaphGL</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2022 20:42:21 -0100</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jan 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://raphgl.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming Languages</title>
+      <link>http://raphgl.com/tags/programming-languages/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://raphgl.com/tags/programming-languages/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rust</title>
+      <link>http://raphgl.com/tags/rust/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://raphgl.com/tags/rust/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Automation</title>
       <link>http://raphgl.com/tags/automation/</link>
@@ -20,20 +34,6 @@
       <link>http://raphgl.com/tags/dotfiles/</link>
       <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
       <guid>http://raphgl.com/tags/dotfiles/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Rust</title>
-      <link>http://raphgl.com/tags/rust/</link>
-      <pubDate>Tue, 08 Nov 2022 20:42:21 -0100</pubDate>
-      <guid>http://raphgl.com/tags/rust/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Programming Languages</title>
-      <link>http://raphgl.com/tags/programming-languages/</link>
-      <pubDate>Mon, 10 Oct 2022 12:13:10 -0100</pubDate>
-      <guid>http://raphgl.com/tags/programming-languages/</guid>
       <description></description>
     </item>
     <item>
