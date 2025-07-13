@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -13,16 +14,69 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
+const TargetDirName = "docs"
+
+func getMetadataHeader(contents string) (header string, headerEnd int) {
+	const DashLen = 3
+	if string(contents[:DashLen]) != "---" {
+		return "", -1
+	}
+	contents = contents[DashLen:]
+	headerEnd = strings.Index(contents, "---")
+	if headerEnd == -1 {
+		return "", -1
+	}
+
+	header = string(contents[:headerEnd])
+	// exclude both the beginning and ending dashes
+	headerEnd += DashLen * 2
+	return
+}
+
+func appendPageHeader(contents string, header string) (string, error) {
+	_ = contents
+	for entry := range strings.SplitSeq(header, "\n") {
+		entry = strings.TrimSpace(entry)
+		if len(entry) == 0 {
+			continue
+		}
+
+		entrySep := strings.Index(entry, ":")
+		if entrySep == -1 {
+			// TODO track what file stuff comes from
+			return "", errors.New("expected `:` separated key-values in metadata header")
+		}
+		key := entry[:entrySep]
+		// value := entry[entrySep+1:]
+
+		switch key {
+		case "title":
+		case "description":
+		default:
+			return "", errors.New("invalid key in metadata header")
+		}
+	}
+
+	return "", nil
+}
+
 func compileToHTML(mdFile string) ([]byte, error) {
 	extensions := parser.CommonExtensions
 	p := parser.NewWithExtensions(extensions)
 
-	contents, err := os.ReadFile(mdFile)
+	contentsBytes, err := os.ReadFile(mdFile)
 	if err != nil {
-		return []byte{}, err
+		return nil, err
 	}
+	contents := string(contentsBytes)
 
-	parsedMd := p.Parse(contents)
+	metadata, metadataEnd := getMetadataHeader(contents)
+	if metadataEnd == -1 {
+		return nil, errors.New("could not find a metadata header")
+	}
+	contents = contents[metadataEnd:]
+
+	parsedMd := p.Parse([]byte(contents))
 
 	// TODO: set more options
 	htmlOpts := html.RendererOptions{
@@ -30,12 +84,12 @@ func compileToHTML(mdFile string) ([]byte, error) {
 	}
 
 	renderer := html.NewRenderer(htmlOpts)
-	return markdown.Render(parsedMd, renderer), nil
+	contentsHtml := string(markdown.Render(parsedMd, renderer))
+	contentsHtml, err = appendPageHeader(contentsHtml, metadata)
+	return []byte(contentsHtml), err
 }
 
 func main() {
-	const TargetDirName = "docs"
-
 	if len(os.Args) == 1 {
 		fmt.Println("expected more args")
 		return
@@ -76,6 +130,9 @@ func main() {
 		if d.IsDir() {
 			return nil
 		}
+		if filepath.Ext(path) != ".md" {
+			return nil
+		}
 
 		htmlArtifact, err := compileToHTML(path)
 		if err != nil {
@@ -103,11 +160,4 @@ func main() {
 
 		return nil
 	})
-
-	// compiled, err := compileToHTML(file)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-
 }
