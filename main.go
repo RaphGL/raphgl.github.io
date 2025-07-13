@@ -1,8 +1,12 @@
 package main
 
+// TODO: generate blog list page
+// TODO: generate home page
+
 import (
 	"errors"
 	"fmt"
+	"html/template"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -16,26 +20,28 @@ import (
 
 const TargetDirName = "docs"
 
-func getMetadataHeader(contents string) (header string, headerEnd int) {
+type PostHeader struct {
+	Title       string
+	Description string
+	Date        string
+}
+
+func getMetadataHeader(contents string) (header PostHeader, headerEnd int, err error) {
 	const DashLen = 3
 	if string(contents[:DashLen]) != "---" {
-		return "", -1
+		return PostHeader{}, -1, errors.New("missing header")
 	}
 	contents = contents[DashLen:]
 	headerEnd = strings.Index(contents, "---")
 	if headerEnd == -1 {
-		return "", -1
+		return PostHeader{}, -1, errors.New("missing header terminator")
 	}
 
-	header = string(contents[:headerEnd])
+	headerStr := string(contents[:headerEnd])
 	// exclude both the beginning and ending dashes
 	headerEnd += DashLen * 2
-	return
-}
 
-func appendPageHeader(contents string, header string) (string, error) {
-	_ = contents
-	for entry := range strings.SplitSeq(header, "\n") {
+	for entry := range strings.SplitSeq(headerStr, "\n") {
 		entry = strings.TrimSpace(entry)
 		if len(entry) == 0 {
 			continue
@@ -44,20 +50,105 @@ func appendPageHeader(contents string, header string) (string, error) {
 		entrySep := strings.Index(entry, ":")
 		if entrySep == -1 {
 			// TODO track what file stuff comes from
-			return "", errors.New("expected `:` separated key-values in metadata header")
+			return PostHeader{}, -1, errors.New("expected `:` separated key-values in metadata header")
 		}
-		key := entry[:entrySep]
-		// value := entry[entrySep+1:]
+		key := strings.ToLower(strings.TrimSpace(entry[:entrySep]))
+		value := strings.TrimSpace(entry[entrySep+1:])
 
 		switch key {
 		case "title":
+			header.Title = value
 		case "description":
+			header.Description = value
+		case "date":
+			header.Date = value
 		default:
-			return "", errors.New("invalid key in metadata header")
+			return PostHeader{}, -1, errors.New("invalid key in metadata header")
 		}
 	}
 
-	return "", nil
+	return
+}
+
+// TODO: read header from a file
+func appendPageHeader(contents string, header PostHeader) (string, error) {
+	var opts struct {
+		Header PostHeader
+		Post   template.HTML
+	}
+
+	opts.Header = header
+	opts.Post = template.HTML(contents)
+
+	headerTempl := `
+	<div id="post-header">
+		{{if .Header.Title}}
+			<div id="post-header-title">
+				{{.Header.Title}}
+			</div>
+		{{end}}
+
+		{{if .Header.Description}}
+			<div id="post-header-description">
+				{{.Header.Description}}
+			</div>
+		{{end}}
+	</div>
+
+	<div id="post-content">
+		{{.Post}}
+	</div>
+	`
+	templ, err := template.New("header").Parse(headerTempl)
+	if err != nil {
+		return "", err
+	}
+
+	var headerBuilder strings.Builder
+	if err := templ.Execute(&headerBuilder, opts); err != nil {
+		return "", err
+	}
+	return headerBuilder.String(), nil
+}
+
+// TODO: read body from a file
+// TODO: include css file in html
+func appendBody(contents string, header PostHeader) (string, error) {
+	type Body struct {
+		Header PostHeader
+		Child  template.HTML
+	}
+
+	bodyFields := Body{
+		Header: header,
+		Child:  template.HTML(contents),
+	}
+
+	bodyTemplate := `
+	<!DOCTYPE html>
+	<html lang="en">
+
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>RaphGL | {{.Header.Title}}</title>
+	</head>
+	<body>
+		{{.Child}}
+	</body>
+	</html>
+	`
+
+	templ, err := template.New("body").Parse(bodyTemplate)
+	if err != nil {
+		return "", err
+	}
+
+	var bodyBuilder strings.Builder
+	if err := templ.Execute(&bodyBuilder, bodyFields); err != nil {
+		return "", err
+	}
+	return bodyBuilder.String(), nil
 }
 
 func compileToHTML(mdFile string) ([]byte, error) {
@@ -70,11 +161,11 @@ func compileToHTML(mdFile string) ([]byte, error) {
 	}
 	contents := string(contentsBytes)
 
-	metadata, metadataEnd := getMetadataHeader(contents)
-	if metadataEnd == -1 {
-		return nil, errors.New("could not find a metadata header")
+	header, headerEnd, err := getMetadataHeader(contents)
+	if err != nil {
+		return nil, err
 	}
-	contents = contents[metadataEnd:]
+	contents = contents[headerEnd:]
 
 	parsedMd := p.Parse([]byte(contents))
 
@@ -85,7 +176,11 @@ func compileToHTML(mdFile string) ([]byte, error) {
 
 	renderer := html.NewRenderer(htmlOpts)
 	contentsHtml := string(markdown.Render(parsedMd, renderer))
-	contentsHtml, err = appendPageHeader(contentsHtml, metadata)
+	contentsHtml, err = appendPageHeader(contentsHtml, header)
+	if err != nil {
+		return nil, err
+	}
+	contentsHtml, err = appendBody(contentsHtml, header)
 	return []byte(contentsHtml), err
 }
 

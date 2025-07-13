@@ -1,7 +1,6 @@
 ---
-title: "Setting up NeoVim for Godot"
+title: Setting up NeoVim for Godot
 date: 2022-09-23T13:28:10-01:00
-tags: [Neovim, Godot, Game Dev]
 ---
 
 Recently I've been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP. 

@@ -1,7 +1,6 @@
 ---
-title: "Error handling patterns in Rust"
+title: Error handling patterns in Rust
 date: 2025-01-09
-tags: [Rust, Programming Languages ]
 ---
 
 These are some patterns I've found in Rust that tend to make error handling code more legible/less noisy.
