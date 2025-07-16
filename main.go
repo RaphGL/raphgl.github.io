@@ -16,7 +16,7 @@ import (
 	"sync"
 
 	"github.com/alecthomas/chroma/v2"
-	formatterHtml "github.com/alecthomas/chroma/v2/formatters/html"
+	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/alecthomas/chroma/v2/styles"
 	"github.com/gomarkdown/markdown"
@@ -27,26 +27,42 @@ import (
 
 const TargetDirName = "docs"
 
-type PostHeader struct {
-	Title       string
-	Description string
-	Date        string
+type Post struct {
+	SourceFilePath     string
+	Title              string
+	Description        string
+	Date               string
+	Content            string
+	SyntaxHighlightCSS template.CSS
 }
 
-func getMetadataHeader(contents string) (header PostHeader, headerEnd int, err error) {
-	const DashLen = 3
-	if string(contents[:DashLen]) != "---" {
-		return PostHeader{}, -1, errors.New("missing header")
+func NewPost(path string) (Post, error) {
+	contentsBytes, err := os.ReadFile(path)
+	if err != nil {
+		return Post{}, err
+	}
+	contents := string(contentsBytes)
+
+	const HeaderSeparator = "---"
+	const DashLen = len(HeaderSeparator)
+	if string(contents[:DashLen]) != HeaderSeparator {
+		return Post{}, errors.New("missing header")
 	}
 	contents = contents[DashLen:]
-	headerEnd = strings.Index(contents, "---")
+	headerEnd := strings.Index(contents, HeaderSeparator)
 	if headerEnd == -1 {
-		return PostHeader{}, -1, errors.New("missing header terminator")
+		return Post{}, errors.New("missing header terminator")
 	}
 
 	headerStr := string(contents[:headerEnd])
 	// exclude both the beginning and ending dashes
 	headerEnd += DashLen * 2
+
+	post := Post{
+		// content without header
+		Content:        contents[headerEnd:],
+		SourceFilePath: path,
+	}
 
 	for entry := range strings.SplitSeq(headerStr, "\n") {
 		entry = strings.TrimSpace(entry)
@@ -56,28 +72,27 @@ func getMetadataHeader(contents string) (header PostHeader, headerEnd int, err e
 
 		entrySep := strings.Index(entry, ":")
 		if entrySep == -1 {
-			// TODO track what file stuff comes from
-			return PostHeader{}, -1, errors.New("expected `:` separated key-values in metadata header")
+			return Post{}, fmt.Errorf("expected `:` separated key-values in metadata header in `%v`", post.SourceFilePath)
 		}
 		key := strings.ToLower(strings.TrimSpace(entry[:entrySep]))
 		value := strings.TrimSpace(entry[entrySep+1:])
 
 		switch key {
 		case "title":
-			header.Title = value
+			post.Title = value
 		case "description":
-			header.Description = value
+			post.Description = value
 		case "date":
-			header.Date = value
+			post.Date = value
 		default:
-			return PostHeader{}, -1, errors.New("invalid key in metadata header")
+			return Post{}, errors.New("invalid key in metadata header")
 		}
 	}
 
-	return
+	return post, nil
 }
 
-func getStyles() (template.CSS, error) {
+func (p Post) GetStyles() (template.CSS, error) {
 	styles, err := os.ReadFile("./layout/styles.css")
 	if err != nil {
 		return "", err
@@ -87,12 +102,11 @@ func getStyles() (template.CSS, error) {
 		return "", err
 	}
 
-	finalStyles := fmt.Sprintln(string(cssReset), string(styles))
+	finalStyles := fmt.Sprintln(string(cssReset), string(styles), p.SyntaxHighlightCSS)
 	return template.CSS(finalStyles), nil
 }
 
-func getHeaderHTML(header PostHeader) (template.HTML, error) {
-	// TODO: generate date
+func (p Post) GetHeaderHTML() (template.HTML, error) {
 	headerTempl, err := os.ReadFile("./layout/header.html")
 	if err != nil {
 		return "", err
@@ -103,33 +117,33 @@ func getHeaderHTML(header PostHeader) (template.HTML, error) {
 	}
 
 	var headerBuilder strings.Builder
-	if err := templ.Execute(&headerBuilder, header); err != nil {
+	if err := templ.Execute(&headerBuilder, p); err != nil {
 		return "", err
 	}
 	return template.HTML(headerBuilder.String()), nil
 }
 
-func getPageHTML(contents string, header PostHeader) (template.HTML, error) {
+func (p Post) GetPageHTML() (template.HTML, error) {
 	type Body struct {
-		Header     PostHeader
+		Post       Post
 		HeaderHTML template.HTML
 		PostHTML   template.HTML
 		StylesCSS  template.CSS
 	}
 
-	headerHTML, err := getHeaderHTML(header)
+	headerHTML, err := p.GetHeaderHTML()
 	if err != nil {
 		return "", err
 	}
-	stylesCSS, err := getStyles()
+	stylesCSS, err := p.GetStyles()
 	if err != nil {
 		return "", err
 	}
 
 	bodyFields := Body{
-		Header:     header,
+		Post:       p,
 		HeaderHTML: headerHTML,
-		PostHTML:   template.HTML(contents),
+		PostHTML:   template.HTML(p.Content),
 		StylesCSS:  stylesCSS,
 	}
 
@@ -150,29 +164,21 @@ func getPageHTML(contents string, header PostHeader) (template.HTML, error) {
 	return template.HTML(bodyBuilder.String()), nil
 }
 
-func compileToHTML(mdFile string) (template.HTML, error) {
+func (post *Post) Render() (template.HTML, error) {
 	extensions := parser.CommonExtensions
 	p := parser.NewWithExtensions(extensions)
 
-	contentsBytes, err := os.ReadFile(mdFile)
-	if err != nil {
-		return "", err
-	}
-	contents := string(contentsBytes)
-
-	header, headerEnd, err := getMetadataHeader(contents)
-	if err != nil {
-		return "", err
-	}
-	contents = contents[headerEnd:]
-
-	parsedMd := p.Parse([]byte(contents))
-
+	// === Add syntax highlighting for code blocks ===
 	style := styles.Get("dracula")
 	if style == nil {
 		style = styles.Fallback
 	}
-	formatter := formatterHtml.New(formatterHtml.WithClasses(true))
+	formatter := formatterHTML.New(formatterHTML.WithClasses(true))
+	var cssBuilder strings.Builder
+	if err := formatter.WriteCSS(&cssBuilder, style); err != nil {
+		return "", err
+	}
+	post.SyntaxHighlightCSS = template.CSS(cssBuilder.String())
 
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,
@@ -195,12 +201,6 @@ func compileToHTML(mdFile string) (template.HTML, error) {
 					return ast.GoToNext, false
 				}
 
-				// TODO: refactor code so that we can append a single highlight CSS
-				// in the page's header
-				w.Write([]byte("<style>"))
-				formatter.WriteCSS(w, style)
-				w.Write([]byte("</style>"))
-
 				return ast.GoToNext, true
 			}
 
@@ -208,9 +208,12 @@ func compileToHTML(mdFile string) (template.HTML, error) {
 		},
 	}
 
+	// === convert post from Markdown to HTML ===
 	renderer := html.NewRenderer(htmlOpts)
+	parsedMd := p.Parse([]byte(post.Content))
 	postContents := string(markdown.Render(parsedMd, renderer))
-	page, err := getPageHTML(postContents, header)
+	post.Content = postContents
+	page, err := post.GetPageHTML()
 	return page, err
 }
 
@@ -260,7 +263,13 @@ func main() {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			htmlArtifact, err := compileToHTML(filePath)
+			post, err := NewPost(filePath)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			htmlArtifact, err := post.Render()
 			if err != nil {
 				fmt.Println(err)
 				return

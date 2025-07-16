@@ -1,6 +1,6 @@
 ---
 title: Poetry is a saner package manager for Python
-date: 2022-10-10T12:13:10-01:00
+date: 2022-10-10
 ---
 
 Like many, I enjoy Python and the versatility and speed of development it provides. But, to me Python tooling is a big deal breaker. It's insane, there's way too many ways to do things. Not to mention that documentation in the official python website is kind of convoluted, you end up going through hoops to understand whatever you need or relying on other people's tutorials, videos, etc, to understand them, even then it can be overwhelming the amount of choices there are in python. For python bundling you have: wheels, pyinstaller, py2exe. For configuration you have: setup.py, setup.cfg, pyproject.toml. Then you need to configure your environment: pyenv, pipenv, virtualenv. This goes on and on and the recommended approach seems to change every few years and we get a conflict between all of these being used in production.

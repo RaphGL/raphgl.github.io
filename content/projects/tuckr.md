@@ -1,7 +1,7 @@
 ---
 title: Tuckr
 description: A dotfile manager heavily inspired by GNU Stow
-date: 2022-11-08T20:42:21-01:00
+date: 2022-11-08
 ---
 
 ## [Find it on GitHub](https://github.com/RaphGL/Tuckr)

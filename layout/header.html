@@ -1,21 +1,19 @@
 <div class="post-header">
-	<div class="title-container">
-		{{if .Title}}
-			<div id="title">
-				{{.Title}}
-			</div>
-		{{end}}
-
-		{{if .Date}}
-		<div id="date">
-			{{.Date}}
+	{{if .Title}}
+		<div id="title">
+			{{.Title}}
 		</div>
-		{{end}}
-	</div>
+	{{end}}
 
 	{{if .Description}}
 		<div id="description">
 			{{.Description}}
 		</div>
+	{{end}}
+
+	{{if .Date}}
+	<div id="date">
+		{{.Date}}
+	</div>
 	{{end}}
 </div>
