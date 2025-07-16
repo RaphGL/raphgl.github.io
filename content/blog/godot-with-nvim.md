@@ -22,7 +22,7 @@ If you have CoC working correctly already, open NeoVim and run `:CocConfig`, it'
 ## Additional steps
 You probably want syntax highlighting, for that you have 2 options: you could install the [`sheerun/vim-polyglot`](https://github.com/sheerun/vim-polyglot) or use [`habamax/vim-godot`](https://github.com/habamax/vim-godot) (which provides syntax highlighting as well as a set of commands allows you to run scenes through NeoVim). 
 
-**Setting up the editor**  
+#### Setting up the editor
 
 To set up the editor go to `Editor > Editor Settings > Text Editor` and change the `Exec Path` to the terminal of your liking (kitty in my case) and on `Exec Flags` put `nvim {file}`.  
 
