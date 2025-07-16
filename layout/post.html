@@ -1,0 +1,21 @@
+	<!DOCTYPE html>
+	<html lang="en">
+  	<head>
+  	  <meta charset="utf-8">
+  	  <meta name="viewport" content="width=device-width, initial-scale=1">
+  	  <title>RaphGL | {{.Post.Title}}</title>
+      <style>
+        {{.StylesCSS}}
+      </style>
+  	</head>
+  	<body>
+      <div class="post-container">
+        <div>
+          {{.HeaderHTML}}
+        </div>
+        <div class="post-content">
+        	{{.PostHTML}}
+        </div>
+      </div>
+  	</body>
+	</html>
