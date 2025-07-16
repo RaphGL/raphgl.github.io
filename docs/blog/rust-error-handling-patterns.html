@@ -1,0 +1,1153 @@
+	<!DOCTYPE html>
+	<html lang="en">
+  	<head>
+  	  <meta charset="utf-8">
+  	  <meta name="viewport" content="width=device-width, initial-scale=1">
+  	  <title>RaphGL | Error handling patterns in Rust</title>
+      <style>
+        *,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Normalize font features
+*/
+
+:root {
+  line-height: 1.5; /* 1 */
+  text-size-adjust: 100%; /* 2: -webkit-text-size-adjust */
+  tab-size: 4; /* 3: -moz-tab-size */
+  font-feature-settings: normal; /* 4 */
+  font-variation-settings: normal; /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Correct the odd `em` font sizing in all browsers.
+2. Use a web-safe monospace font.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-size: 1em; /* 1 */
+  font-family: 'Courier New', Courier, monospace; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  appearance: button; /* -webkit-appearance */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  appearance: textfield; /* -webkit-appearance */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  appearance: none; /* -webkit-appeaance */
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  appearance: button; /* -webkit-appearance */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to gray.
+*/
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default.
+  (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default.
+  (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio.
+(https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
+/*
+  Helps prevent single words on a newline,
+  which can make a title seem unbalanced.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  text-wrap: balance;
+}
+ @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+
+:root {
+  --bg: #222831; 
+  --bg2: #31363F;
+  --fg: #EEEEEE;
+  --fg2: #9ECAD6;
+}
+
+body {
+  font-family: "Merriweather", serif;
+  font-size: 13pt;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-style: bold;
+  margin-top: 0.5em;  
+  color: var(--fg2);
+}
+
+h1 {
+  font-size: 2.2em;
+}
+
+h2 {
+ font-size: 2em; 
+}
+
+h3 {
+  font-size: 1.8em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.3em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+code {
+  display: inline-block;
+  background-color: var(--bg2);
+  border-radius: 6px;
+  padding: 0 0.2em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12pt;
+}
+
+pre code {
+  display: block;
+  padding: 1em;
+  margin: 0.5em 0;
+}
+
+.post-header {
+  margin: 1em 0 3em 0;
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #title {
+    font-size: 2em;
+  } 
+
+  #date {
+    font-size: 0.8em;
+  }
+
+  #description {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.post-content {
+  margin: 0 2em;
+  margin-bottom: 1em;
+}
+
+
+      </style>
+  	</head>
+  	<body>
+      <div class="post-container">
+        <div>
+          <div class="post-header">
+	<div class="title-container">
+		
+			<div id="title">
+				Error handling patterns in Rust
+			</div>
+		
+
+		
+		<div id="date">
+			2025-01-09
+		</div>
+		
+	</div>
+
+	
+</div>
+
+        </div>
+        <div class="post-content">
+        	<p>These are some patterns I&rsquo;ve found in Rust that tend to make error handling code more legible/less noisy.</p>
+
+<h2>Handling errors</h2>
+
+<p>If you only care about one case in an error, instead of being forced to match against all errors, do this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_option</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// do something
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>If the value that is returns doesn&rsquo;t matter, then you can do this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="n">returns_option</span><span class="p">().</span><span class="n">is_some</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// do something
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>There&rsquo;s corresponding versions for the other values as well: <code>Result::{is_err, is_ok}</code>, <code>Option::{is_some, is_none}</code></p>
+
+<p>If you expect the error to never happen, or if it happens you can&rsquo;t handle it, you can just <code>unwrap</code> or <code>expect</code> it.</p>
+
+<ul>
+<li><code>unwrap</code> just panics over an error. So if you do this:</li>
+</ul>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_option</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>that would be equivalent to this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">returns_option</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&#34;some reason why it errored here&#34;</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">};</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<ul>
+<li><code>expect</code> allows you to change the panic message, you should write there what your expectation was for that error</li>
+</ul>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">retcode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">execute_file</span><span class="p">(</span><span class="s">&#34;path/to/file&#34;</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;file should be executable&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<h2>Propagating errors</h2>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// instead of:
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">returns_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">other</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">err</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// do:
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>Sometimes though, the Result or Option returns by the function might not be 1-to-1 with the functions you&rsquo;re propagating the error from, in those cases
+you can either use <code>let else</code> idiom:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">None</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>Or you can also convert from a Result to an Option or vice versa with these methods: <code>Result::{ok, err}</code> and <code>Option::ok_or</code> to convert to the appropriate type</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_result</span><span class="p">().</span><span class="n">ok</span><span class="p">()</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+<p>If these are not sufficient, you might want to change the Error or Ok values so you can &ldquo;massage&rdquo; it into working,
+ these functions are <code>Result::{map_err, map_ok}</code> and <code>Option::map_or</code>. You can use them like this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_result</span><span class="p">().</span><span class="n">map_err</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="cm">/* massage the value here */</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre><style>/* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+</style>
+        </div>
+      </div>
+  	</body>
+	</html>

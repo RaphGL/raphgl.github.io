@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"sync"
 
 	"github.com/alecthomas/chroma/v2"
 	formatterHtml "github.com/alecthomas/chroma/v2/formatters/html"
@@ -228,7 +229,8 @@ func main() {
 	defer func() {
 		targetDir, err := os.Open(TargetDirName)
 		if err != nil {
-			fmt.Println(targetDir)
+			fmt.Println(err)
+			return
 		}
 
 		dirnames, err := targetDir.Readdirnames(1)
@@ -241,16 +243,9 @@ func main() {
 		}
 	}()
 
-	files := make([]string, 1)
+	files := make([]string, 0)
 	filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			fmt.Println("Error:", err)
-			return nil
-		}
-		if d.IsDir() {
-			return nil
-		}
-		if filepath.Ext(path) != ".md" {
+		if err != nil || d.IsDir() || filepath.Ext(path) != ".md" {
 			return nil
 		}
 
@@ -258,10 +253,13 @@ func main() {
 		return nil
 	})
 
+	var wg sync.WaitGroup
 	for _, filePath := range files {
 		// for now all files are independent of each other so it's easily parallelized
 		// TODO: in the future we're going to build a blog list so we'll have to use a mutex for that
+		wg.Add(1)
 		go func() {
+			defer wg.Done()
 			htmlArtifact, err := compileToHTML(filePath)
 			if err != nil {
 				fmt.Println(err)
@@ -287,4 +285,5 @@ func main() {
 			}
 		}()
 	}
+	wg.Wait()
 }
