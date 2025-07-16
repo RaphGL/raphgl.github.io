@@ -4,7 +4,7 @@
   --bg: #222831; 
   --bg2: #31363F;
   --fg: #EEEEEE;
-  --fg2: #76ABAE;
+  --fg2: #9ECAD6;
 }
 
 body {
@@ -17,6 +17,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-style: bold;
   margin-top: 0.5em;  
+  color: var(--fg2);
 }
 
 h1 {

@@ -7,13 +7,19 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
 
+	"github.com/alecthomas/chroma/v2"
+	formatterHtml "github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/alecthomas/chroma/v2/lexers"
+	"github.com/alecthomas/chroma/v2/styles"
 	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 )
@@ -161,9 +167,44 @@ func compileToHTML(mdFile string) (template.HTML, error) {
 
 	parsedMd := p.Parse([]byte(contents))
 
-	// TODO: set more options
+	style := styles.Get("dracula")
+	if style == nil {
+		style = styles.Fallback
+	}
+	formatter := formatterHtml.New(formatterHtml.WithClasses(true))
+
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,
+		// TODO: separate closure from here to a potential file that has all of our ast checkers modifiers whatever
+		RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
+			if code, ok := node.(*ast.CodeBlock); ok && entering {
+				// we're trimming because if there's trailing spaces syntax highlighting stops working
+				lang := strings.TrimSpace(string(code.Info))
+				lexer := lexers.Get(lang)
+				if lexer == nil {
+					lexer = lexers.Fallback
+				}
+				lexer = chroma.Coalesce(lexer)
+
+				it, err := lexer.Tokenise(nil, string(code.Literal))
+				if err != nil {
+					return ast.GoToNext, false
+				}
+				if formatter.Format(w, style, it) != nil {
+					return ast.GoToNext, false
+				}
+
+				// TODO: refactor code so that we can append a single highlight CSS
+				// in the page's header
+				w.Write([]byte("<style>"))
+				formatter.WriteCSS(w, style)
+				w.Write([]byte("</style>"))
+
+				return ast.GoToNext, true
+			}
+
+			return ast.GoToNext, false
+		},
 	}
 
 	renderer := html.NewRenderer(htmlOpts)
