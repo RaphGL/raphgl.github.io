@@ -241,6 +241,7 @@ func main() {
 		}
 	}()
 
+	files := make([]string, 1)
 	filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			fmt.Println("Error:", err)
@@ -253,30 +254,37 @@ func main() {
 			return nil
 		}
 
-		htmlArtifact, err := compileToHTML(path)
-		if err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
-		pathComponents := strings.Split(path, string(filepath.Separator))[1:]
-		destComponents := slices.Insert(pathComponents, 0, TargetDirName)
-
-		destPath := strings.Join(destComponents, string(filepath.Separator))
-		destExt := filepath.Ext(destPath)
-		destPath = destPath[:len(destPath)-len(destExt)] + ".html"
-		parentDirPath := strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
-
-		if err := os.MkdirAll(parentDirPath, 0755); err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
-		if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
+		files = append(files, path)
 		return nil
 	})
+
+	for _, filePath := range files {
+		// for now all files are independent of each other so it's easily parallelized
+		// TODO: in the future we're going to build a blog list so we'll have to use a mutex for that
+		go func() {
+			htmlArtifact, err := compileToHTML(filePath)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			pathComponents := strings.Split(filePath, string(filepath.Separator))[1:]
+			destComponents := slices.Insert(pathComponents, 0, TargetDirName)
+
+			destPath := strings.Join(destComponents, string(filepath.Separator))
+			destExt := filepath.Ext(destPath)
+			destPath = destPath[:len(destPath)-len(destExt)] + ".html"
+			parentDirPath := strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
+
+			if err := os.MkdirAll(parentDirPath, 0755); err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
+				fmt.Println(err)
+				return
+			}
+		}()
+	}
 }
