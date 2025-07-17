@@ -1,6 +1,5 @@
 package main
 
-// TODO: generate blog list page
 // TODO: generate home page
 
 import (
@@ -119,9 +118,9 @@ func main() {
 	// === Generate posts ===
 	var wg sync.WaitGroup
 	renderedPosts := make([]Post, 0)
+	// locks writes to renderedPosts
+	var rendMux sync.Mutex
 	for _, filePath := range files {
-		// for now all files are independent of each other so it's easily parallelized
-		// TODO: in the future we're going to build a blog list so we'll have to use a mutex for that
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -149,7 +148,9 @@ func main() {
 				return
 			}
 
+			rendMux.Lock()
 			renderedPosts = append(renderedPosts, post)
+			rendMux.Unlock()
 		}()
 	}
 	wg.Wait()
@@ -165,7 +166,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	if err = os.WriteFile("./docs/blog.html", []byte(listHTML), 0644); err != nil {
+	if err = os.WriteFile("./docs/index.html", []byte(listHTML), 0644); err != nil {
 		fmt.Println(err)
 		return
 	}

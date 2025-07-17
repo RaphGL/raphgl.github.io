@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -14,7 +15,6 @@ type List struct {
 
 func NewList(posts []Post) (List, error) {
 	// sort in descending order
-	var err error
 	slices.SortFunc(posts, func(p1 Post, p2 Post) int {
 		date1, err := time.Parse("2006-01-02", p1.Date)
 		if err != nil {
@@ -36,17 +36,16 @@ func NewList(posts []Post) (List, error) {
 		return 0
 	})
 
-	if err != nil {
-		return List{}, err
-	}
-
-	for _, post := range posts {
-		_, destPath := GetCompiledTargetPath(post.SourceFilePath)
-		post.SourceFilePath = destPath
+	listPosts := make([]Post, len(posts))
+	for i := range len(posts) {
+		post := posts[i]
+		postComponents := strings.Split(post.SourceFilePath, string(filepath.Separator))
+		post.SourceFilePath = string(filepath.Separator) + strings.Join(postComponents[1:], string(filepath.Separator))
+		listPosts[i] = post
 	}
 
 	return List{
-		Posts: posts,
+		Posts: listPosts,
 	}, nil
 }
 
