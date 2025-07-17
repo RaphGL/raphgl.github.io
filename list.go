@@ -3,7 +3,6 @@ package main
 import (
 	"html/template"
 	"os"
-	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -39,8 +38,8 @@ func NewList(posts []Post) (List, error) {
 	listPosts := make([]Post, len(posts))
 	for i := range len(posts) {
 		post := posts[i]
-		postComponents := strings.Split(post.SourceFilePath, string(filepath.Separator))
-		post.SourceFilePath = string(filepath.Separator) + strings.Join(postComponents[1:], string(filepath.Separator))
+		_, destPath := GetCompiledTargetPath(post.SourceFilePath)
+		post.SourceFilePath = strings.TrimLeft(destPath, TargetDirName)
 		listPosts[i] = post
 	}
 
