@@ -3,12 +3,20 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>RaphGL</title>
+	  <title>RaphGL {{if .Post.Title}}| {{.Post.Title}}{{end}}</title>
+
+		{{if .StylesCSS}}
     <style>
       {{.StylesCSS}}
     </style>
+		{{end}}
 	</head>
 	<body>
-    <!-- TODO: generate index.html blog list / home page -->
+		{{.BodyHTML}}
+
+		<footer>
+			<div>©RaphGL {{.BuildYear}}</div>
+			<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
+		</footer>
 	</body>
 </html>

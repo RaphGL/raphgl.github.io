@@ -5,15 +5,51 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
 	"sync"
+	"time"
 )
 
 const TargetDirName = "docs"
+
+// contains the base html body to which the body will be added to
+type Base struct {
+	Post      Post
+	BodyHTML  template.HTML
+	StylesCSS template.CSS
+}
+
+func (b Base) Render() (template.HTML, error) {
+	indexTempl, err := os.ReadFile("./layout/index.html")
+	if err != nil {
+		return "", err
+	}
+	templ, err := template.New("index").Parse(string(indexTempl))
+	if err != nil {
+		return "", err
+	}
+
+	type BaseExt struct {
+		Base
+		BuildYear int
+	}
+
+	bExt := BaseExt{
+		Base:      b,
+		BuildYear: time.Now().Year(),
+	}
+
+	var indexBuilder strings.Builder
+	if err = templ.Execute(&indexBuilder, bExt); err != nil {
+		return "", err
+	}
+	return template.HTML(indexBuilder.String()), nil
+}
 
 func GetGlobalStyles() (string, error) {
 	cssReset, err := os.ReadFile("./layout/reset.css")

@@ -83,7 +83,7 @@ func NewPost(path string) (Post, error) {
 	return post, nil
 }
 
-func (p Post) GetStyles() (template.CSS, error) {
+func (p Post) getStyles() (template.CSS, error) {
 	styles, err := GetGlobalStyles()
 	if err != nil {
 		return "", err
@@ -93,7 +93,7 @@ func (p Post) GetStyles() (template.CSS, error) {
 	return template.CSS(finalStyles), nil
 }
 
-func (p Post) GetHeaderHTML() (template.HTML, error) {
+func (p Post) getHeaderHTML() (template.HTML, error) {
 	headerTempl, err := os.ReadFile("./layout/header.html")
 	if err != nil {
 		return "", err
@@ -110,28 +110,20 @@ func (p Post) GetHeaderHTML() (template.HTML, error) {
 	return template.HTML(headerBuilder.String()), nil
 }
 
-func (p Post) GetPostHTML() (template.HTML, error) {
+func (p Post) getPostHTML() (template.HTML, error) {
 	type Body struct {
-		Post       Post
 		HeaderHTML template.HTML
 		PostHTML   template.HTML
-		StylesCSS  template.CSS
 	}
 
-	headerHTML, err := p.GetHeaderHTML()
-	if err != nil {
-		return "", err
-	}
-	stylesCSS, err := p.GetStyles()
+	headerHTML, err := p.getHeaderHTML()
 	if err != nil {
 		return "", err
 	}
 
 	bodyFields := Body{
-		Post:       p,
 		HeaderHTML: headerHTML,
 		PostHTML:   template.HTML(p.Content),
-		StylesCSS:  stylesCSS,
 	}
 
 	indexTempl, err := os.ReadFile("./layout/post.html")
@@ -148,7 +140,21 @@ func (p Post) GetPostHTML() (template.HTML, error) {
 	if err := templ.Execute(&bodyBuilder, bodyFields); err != nil {
 		return "", err
 	}
-	return template.HTML(bodyBuilder.String()), nil
+
+	stylesCSS, err := p.getStyles()
+	if err != nil {
+		return "", err
+	}
+	page := Base{
+		Post:      p,
+		BodyHTML:  template.HTML(bodyBuilder.String()),
+		StylesCSS: stylesCSS,
+	}
+	pageHTML, err := page.Render()
+	if err != nil {
+		return "", err
+	}
+	return pageHTML, nil
 }
 
 func (post *Post) Render() (template.HTML, error) {
@@ -200,6 +206,6 @@ func (post *Post) Render() (template.HTML, error) {
 	parsedMd := p.Parse([]byte(post.Content))
 	postContents := string(markdown.Render(parsedMd, renderer))
 	post.Content = postContents
-	page, err := post.GetPostHTML()
+	page, err := post.getPostHTML()
 	return page, err
 }
