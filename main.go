@@ -51,7 +51,7 @@ func (b Base) Render() (template.HTML, error) {
 	return template.HTML(indexBuilder.String()), nil
 }
 
-func GetGlobalStyles() (string, error) {
+func GetGlobalStyles() (template.CSS, error) {
 	cssReset, err := os.ReadFile("./layout/reset.css")
 	if err != nil {
 		return "", err
@@ -61,7 +61,20 @@ func GetGlobalStyles() (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintln(string(cssReset), string(styles)), nil
+	return template.CSS(fmt.Sprintln(string(cssReset), string(styles))), nil
+}
+
+// TODO: make paths absolute and then do the resolution so that it works
+// consistently
+func GetCompiledTargetPath(path string) (parentPath, destPath string) {
+	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
+	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
+
+	destPath = strings.Join(destComponents, string(filepath.Separator))
+	destExt := filepath.Ext(destPath)
+	destPath = destPath[:len(destPath)-len(destExt)] + ".html"
+	parentPath = strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
+	return
 }
 
 func main() {
@@ -103,7 +116,9 @@ func main() {
 		return nil
 	})
 
+	// === Generate posts ===
 	var wg sync.WaitGroup
+	renderedPosts := make([]Post, 0)
 	for _, filePath := range files {
 		// for now all files are independent of each other so it's easily parallelized
 		// TODO: in the future we're going to build a blog list so we'll have to use a mutex for that
@@ -122,13 +137,7 @@ func main() {
 				return
 			}
 
-			pathComponents := strings.Split(filePath, string(filepath.Separator))[1:]
-			destComponents := slices.Insert(pathComponents, 0, TargetDirName)
-
-			destPath := strings.Join(destComponents, string(filepath.Separator))
-			destExt := filepath.Ext(destPath)
-			destPath = destPath[:len(destPath)-len(destExt)] + ".html"
-			parentDirPath := strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
+			parentDirPath, destPath := GetCompiledTargetPath(filePath)
 
 			if err := os.MkdirAll(parentDirPath, 0755); err != nil {
 				fmt.Println(err)
@@ -139,7 +148,25 @@ func main() {
 				fmt.Println(err)
 				return
 			}
+
+			renderedPosts = append(renderedPosts, post)
 		}()
 	}
 	wg.Wait()
+
+	// TODO: consider rendering different contents dirs separately
+	postList, err := NewList(renderedPosts)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	listHTML, err := postList.Render()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err = os.WriteFile("./docs/blog.html", []byte(listHTML), 0644); err != nil {
+		fmt.Println(err)
+		return
+	}
 }

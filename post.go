@@ -37,12 +37,12 @@ func NewPost(path string) (Post, error) {
 	const HeaderSeparator = "---"
 	const DashLen = len(HeaderSeparator)
 	if string(contents[:DashLen]) != HeaderSeparator {
-		return Post{}, errors.New("missing header")
+		return Post{}, errors.New("missing header in " + path)
 	}
 	contents = contents[DashLen:]
 	headerEnd := strings.Index(contents, HeaderSeparator)
 	if headerEnd == -1 {
-		return Post{}, errors.New("missing header terminator")
+		return Post{}, errors.New("missing header terminator in " + path)
 	}
 
 	headerStr := string(contents[:headerEnd])
@@ -63,7 +63,7 @@ func NewPost(path string) (Post, error) {
 
 		entrySep := strings.Index(entry, ":")
 		if entrySep == -1 {
-			return Post{}, fmt.Errorf("expected `:` separated key-values in metadata header in `%v`", post.SourceFilePath)
+			return Post{}, errors.New("expected `:` separated key-values in metadata header in " + post.SourceFilePath)
 		}
 		key := strings.ToLower(strings.TrimSpace(entry[:entrySep]))
 		value := strings.TrimSpace(entry[entrySep+1:])
@@ -76,7 +76,7 @@ func NewPost(path string) (Post, error) {
 		case "date":
 			post.Date = value
 		default:
-			return Post{}, errors.New("invalid key in metadata header")
+			return Post{}, errors.New("invalid key '" + key + "' in metadata header")
 		}
 	}
 
@@ -89,8 +89,8 @@ func (p Post) getStyles() (template.CSS, error) {
 		return "", err
 	}
 
-	finalStyles := fmt.Sprintln(styles, p.SyntaxHighlightCSS)
-	return template.CSS(finalStyles), nil
+	finalStyles := template.CSS(fmt.Sprintln(styles, p.SyntaxHighlightCSS))
+	return finalStyles, nil
 }
 
 func (p Post) getHeaderHTML() (template.HTML, error) {

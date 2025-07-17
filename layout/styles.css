@@ -59,6 +59,15 @@ pre code {
   margin: 0.5em 0;
 }
 
+a {
+  color: var(--fg2);
+  text-decoration: underline;
+
+  &:hover {
+   color: var(--fg); 
+  }
+}
+
 .post-header {
   margin: 1em auto 3em auto;
   display: flex;
@@ -77,6 +86,35 @@ pre code {
 .post-content {
   margin: 0 2em;
   margin-bottom: 1em;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  margin: 1em auto;
+
+  .item {
+    background-color: var(--bg2);
+    padding: 0.5em 1.5em;
+    border-radius: 10px;
+    width: 95%;
+    color: lightgrey;
+
+    a {
+      font-size: 1.1em;
+      text-decoration: none;
+      color: var(--fg);
+      &:hover {
+        color: var(--fg2);
+      }
+    }
+  }
+
+  .description {
+    
+  }
 }
 
 body > footer {

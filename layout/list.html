@@ -1,0 +1,12 @@
+<div class="list-container">
+  {{range .Posts}}
+    <div class="item">
+      <a href="{{.SourceFilePath}}">
+      {{.Title}} {{.Date}}
+      </a>
+      <div class="description">
+        {{.Description}}
+      </div>
+    </div>
+  {{end}}
+</div>
