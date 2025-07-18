@@ -63,8 +63,6 @@ func GetGlobalStyles() (template.CSS, error) {
 	return template.CSS(fmt.Sprintln(string(cssReset), string(styles))), nil
 }
 
-// TODO: make paths absolute and then do the resolution so that it works
-// consistently
 func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)

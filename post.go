@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/alecthomas/chroma/v2"
 	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
@@ -18,10 +19,21 @@ import (
 	"github.com/gomarkdown/markdown/parser"
 )
 
+func EstimateReadTime(content string) time.Duration {
+	const WordsPerMinute = 220
+	totalWords := 0
+	for range strings.SplitSeq(content, " ") {
+		totalWords += 1
+	}
+
+	return time.Duration(totalWords/WordsPerMinute) * time.Minute
+}
+
 type Post struct {
 	SourceFilePath     string
 	Title              string
 	Description        string
+	ReadDuration       string
 	Date               string
 	Content            string
 	SyntaxHighlightCSS template.CSS
@@ -54,6 +66,7 @@ func NewPost(path string) (Post, error) {
 		Content:        contents[headerEnd:],
 		SourceFilePath: path,
 	}
+	post.ReadDuration = fmt.Sprintf("%d min", EstimateReadTime(post.Content)/time.Minute)
 
 	for entry := range strings.SplitSeq(headerStr, "\n") {
 		entry = strings.TrimSpace(entry)
