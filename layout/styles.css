@@ -57,6 +57,7 @@ pre code {
   display: block;
   padding: 1em;
   margin: 0.5em 0;
+  overflow-x: auto;
 }
 
 a {
@@ -69,10 +70,10 @@ a {
 }
 
 .post-header {
-  margin: 1em auto 3em auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin: 1em ;
 
   #title {
     font-size: 2em;
