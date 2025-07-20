@@ -9,9 +9,16 @@
 
 body {
   font-family: "Merriweather", serif;
-  font-size: 14pt;
   background-color: var(--bg);
   color: var(--fg);
+
+  @media (width >= 810px) {
+    font-size: 14pt;
+  }
+
+  @media (width < 810px) {
+    font-size: 12pt;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
