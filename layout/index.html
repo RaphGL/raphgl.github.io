@@ -12,7 +12,21 @@
 		{{end}}
 	</head>
 	<body>
-		{{.BodyHTML}}
+		<div class="content-split">
+			<navbar>
+				<a href="/">
+					<img class="profile-pic" src="https://avatars.githubusercontent.com/u/28673457"/>
+					<div class="username">RaphGL</div>
+				<a/>
+				<ul>
+					<li><a href="https://github.com/RaphGL/">GitHub</a></li>
+					<li><a href="https://gitlab.com/RaphGL/">Codeberg</a></li>
+					<li><a href="https://codeberg.org/RaphGL/">Gitlab</a></li>
+				</ul>
+			</navbar>
+
+			{{.BodyHTML}}
+		</div>
 
 		<footer>
 			<div>©RaphGL {{.BuildYear}}</div>

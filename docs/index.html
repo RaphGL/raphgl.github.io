@@ -389,7 +389,7 @@ blockquote {
 
 body {
   font-family: "Merriweather", serif;
-  font-size: 13pt;
+  font-size: 14pt;
   background-color: var(--bg);
   color: var(--fg);
 }
@@ -424,6 +424,10 @@ h6 {
   font-size: 1.1em;
 }
 
+li {
+  list-style: "– " outside;
+}
+
 code {
   display: inline-block;
   background-color: var(--bg2);
@@ -449,23 +453,89 @@ a {
   }
 }
 
+.content-split {
+  display: flex;
+
+  @media (width < 810px) {
+      flex-direction: column;
+  }
+
+  @media(width >= 810px) {
+    margin: 0 5vw; 
+  }
+}
+
+
+navbar {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+
+  /* desktop navbar */
+  @media (width >= 810px) {
+    position: sticky;
+    top: 20%;
+    height: 100%;
+    margin-right: 2em;
+    flex-direction: column;
+
+    img {
+      width: 80px;
+    }
+  }
+
+  /* mobile navbar */
+  @media (width < 810px) {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.5em;
+    gap: 0.5em;
+
+    ul {
+      display: flex;
+      gap: 0.8em;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    img {
+      display: none;
+    }
+  }
+
+  .profile-pic {
+    border-radius: 50%;
+    height: auto;
+  }
+
+  .username {
+    font-weight: bold;
+    font-family: "JetBrains Mono";
+    color: var(--fg);
+    font-size: 1.2em;
+    text-align: center;
+  }
+}
+
 .post-header {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 1em ;
+  margin: 1em;
 
   #title {
     font-size: 2em;
   } 
 
   #date {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }
 
 .post-content {
-  margin: 0 2em;
+  margin: 0 1em;
   margin-bottom: 1em;
 }
 
@@ -474,7 +544,8 @@ a {
   flex-direction: column;
   gap: 1em;
   align-items: center;
-  margin: 1em auto;
+  margin: 2em auto;
+  width: 100%;
 
   .item {
     background-color: var(--bg2);
@@ -503,13 +574,13 @@ a {
   }
 }
 
-body > footer {
+footer {
   display: flex;
   justify-content: center;
   gap: 1.2em;
-  padding: 1em;
   color: var(--fg2);
   font-size: 1em;
+  padding: 1em;
 }
 
 
@@ -517,7 +588,20 @@ body > footer {
 		
 	</head>
 	<body>
-		<div class="list-container">
+		<div class="content-split">
+			<navbar>
+				<a href="/">
+					<img class="profile-pic" src="https://avatars.githubusercontent.com/u/28673457"/>
+					<div class="username">RaphGL</div>
+				<a/>
+				<ul>
+					<li><a href="https://github.com/RaphGL/">GitHub</a></li>
+					<li><a href="https://gitlab.com/RaphGL/">Codeberg</a></li>
+					<li><a href="https://codeberg.org/RaphGL/">Gitlab</a></li>
+				</ul>
+			</navbar>
+
+			<div class="list-container">
   
     <div class="item">
       <div class="title">
@@ -581,6 +665,7 @@ body > footer {
   
 </div>
 
+		</div>
 
 		<footer>
 			<div>©RaphGL 2025</div>
