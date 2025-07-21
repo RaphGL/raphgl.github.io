@@ -29,7 +29,12 @@ func EstimateReadTime(content string) time.Duration {
 	return time.Duration(totalWords/WordsPerMinute) * time.Minute
 }
 
+type CheckerHook func(string, ast.Node) error
+
 type Post struct {
+	// hooks that are used just to inspect and verify markdown tokens
+	checkerHooks []CheckerHook
+
 	SourceFilePath     string
 	Title              string
 	Description        string
@@ -94,6 +99,10 @@ func NewPost(path string) (Post, error) {
 	}
 
 	return post, nil
+}
+
+func (p *Post) AddCheckerHook(hook CheckerHook) {
+	p.checkerHooks = append(p.checkerHooks, hook)
 }
 
 func (p Post) getStyles() (template.CSS, error) {
@@ -188,7 +197,6 @@ func (post *Post) Render() (template.HTML, error) {
 
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,
-		// TODO: separate closure from here to a potential file that has all of our ast checkers modifiers whatever
 		RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
 			if code, ok := node.(*ast.CodeBlock); ok && entering {
 				// we're trimming because if there's trailing spaces syntax highlighting stops working
@@ -217,6 +225,27 @@ func (post *Post) Render() (template.HTML, error) {
 	// === convert post from Markdown to HTML ===
 	renderer := html.NewRenderer(htmlOpts)
 	parsedMd := p.Parse([]byte(post.Content))
+
+	// checker hooks
+	var allErrs error
+	ast.WalkFunc(parsedMd, func(node ast.Node, entering bool) ast.WalkStatus {
+		for _, hook := range post.checkerHooks {
+			if !entering {
+				return ast.GoToNext
+			}
+
+			if err := hook(post.SourceFilePath, node); err != nil {
+				allErrs = errors.Join(allErrs, err)
+				return ast.GoToNext
+			}
+		}
+
+		return ast.GoToNext
+	})
+	if allErrs != nil {
+		return "", allErrs
+	}
+
 	postContents := string(markdown.Render(parsedMd, renderer))
 	post.Content = postContents
 	page, err := post.getPostHTML()

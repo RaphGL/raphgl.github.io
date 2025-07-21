@@ -392,11 +392,11 @@ body {
   background-color: var(--bg);
   color: var(--fg);
 
-  @media (width >= 810px) {
+  @media (width >= 1024px) {
     font-size: 14pt;
   }
 
-  @media (width < 810px) {
+  @media (width < 1024px) {
     font-size: 12pt;
   }
 }
@@ -447,7 +447,7 @@ code {
 pre code {
   display: block;
   padding: 1em;
-  margin: 0.5em 0;
+  margin: 1em 0;
   overflow-x: auto;
 }
 
@@ -463,11 +463,11 @@ a {
 .content-split {
   display: flex;
 
-  @media (width < 810px) {
+  @media (width < 1024px) {
       flex-direction: column;
   }
 
-  @media(width >= 810px) {
+  @media(width >= 1024px) {
     margin: 0 5vw; 
   }
 }
@@ -479,7 +479,7 @@ navbar {
     align-items: center;
 
   /* desktop navbar */
-  @media (width >= 810px) {
+  @media (width >= 1024px) {
     position: sticky;
     top: 20%;
     height: 100%;
@@ -492,7 +492,7 @@ navbar {
   }
 
   /* mobile navbar */
-  @media (width < 810px) {
+  @media (width < 1024px) {
     flex-direction: row;
     justify-content: center;
     padding: 0.5em;
@@ -670,8 +670,8 @@ footer {
 				<a/>
 				<ul>
 					<li><a href="https://github.com/RaphGL/">GitHub</a></li>
-					<li><a href="https://gitlab.com/RaphGL/">Codeberg</a></li>
-					<li><a href="https://codeberg.org/RaphGL/">Gitlab</a></li>
+					<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
+					<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
 				</ul>
 			</navbar>
 

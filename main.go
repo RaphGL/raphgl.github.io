@@ -1,6 +1,7 @@
 package main
 
-// TODO: generate home page
+// TODO: figure out a way to use images and whatnot with /static/ or any other way
+// TODO: add flag to disable deadlink checker so that we don't get limited by servers while developing this generator
 
 import (
 	"fmt"
@@ -126,6 +127,10 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 				return
+			}
+			// Post Hooks
+			{
+				post.AddCheckerHook(CheckLinkIsReachable)
 			}
 
 			htmlArtifact, err := post.Render()
