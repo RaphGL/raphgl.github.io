@@ -3,7 +3,7 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>RaphGL | Poetry is a saner package manager for Python</title>
+	  <title>RaphGL | Helix tutorial for Vim plebs</title>
 
 		
     <style>
@@ -730,58 +730,174 @@ footer {
     <div class="post-header">
 	
 		<div id="title">
-			Poetry is a saner package manager for Python
+			Helix tutorial for Vim plebs
 		</div>
 	
 
 	
+		<div id="description">
+			A walk through vim and helix differences and the various helix modes for people that are familiar with vim motions
+		</div>
+	
 
 	
 	<div id="date">
-		<i>Posted on: 2022-10-10</i>
+		<i>Posted on: 2025-07-21</i>
 	</div>
 	
 </div>
 
   </div>
   <div class="post-content">
-  	<p>Like many, I enjoy Python and the versatility and speed of development it provides. But, to me Python tooling is a big deal breaker. It&rsquo;s insane, there&rsquo;s way too many ways to do things. Not to mention that documentation in the official python website is kind of convoluted, you end up going through hoops to understand whatever you need or relying on other people&rsquo;s tutorials, videos, etc, to understand them, even then it can be overwhelming the amount of choices there are in python. For python bundling you have: wheels, pyinstaller, py2exe. For configuration you have: setup.py, setup.cfg, pyproject.toml. Then you need to configure your environment: pyenv, pipenv, virtualenv. This goes on and on and the recommended approach seems to change every few years and we get a conflict between all of these being used in production.</p>
+  	<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
+So every time I suggest someone tries Helix, if they&rsquo;ve used or use vim or vim mode on other editors, they almost alway complain about
+the keybindings being different being an impediment to them using the editor. So this is my attempt at trying to make the transition less painful
+by drawing parallels between Helix and Vim bindings.</p>
 
-<p>For people that have come from other languages, this seems pure insanity and learning that you actually need all of these to actually spin up your project for prodution because python was never that well thought out to work in this way is kind of insane. I truly wished python had sane tooling and a de facto way of doing things, unfortunately that isn&rsquo;t the case and will continue to be like this for a while, thankfully (for me at least) there&rsquo;s a solution.</p>
+<h2>The low-hanging fruits</h2>
 
-<p>Someone recommended me to look at Poetry. Poetry is a third party package manager that&rsquo;s better than Pip and actually does what it&rsquo;s supposed to do, it wraps around all the insanity in python and let&rsquo;s you focus on what&rsquo;s important, packaging and developing software.</p>
+<h4>Basic Motions</h4>
 
-<p>The advantages of using Poetry:</p>
+<p>The main difference between Helix and Vim is that Helix is selection based and reverses the motions. A lot of the actions are actually the same.
+So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</code> is <code>ec</code> and so on. The reason for this is that Helix selects text before doing anything with it.</p>
+
+<p>You can think of the Helix binding as just Vim but entering visual mode before doing anything. So <code>de</code> would be <code>ved</code> and <code>ce</code> would be <code>vec</code>, the end result on
+Vim would be the exact same as what would happen on Helix.</p>
+
+<p></p>
+
+<p>It&rsquo;s very common to move to the beginning or ending of the line or the file, this is slightly different in Helix.
+Helix has a &ldquo;goto mode&rdquo; which is under the <code>g</code> key.</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">Vim</th>
+<th align="center">Helix</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">gg</td>
+<td align="center">gg</td>
+</tr>
+
+<tr>
+<td align="center">G</td>
+<td align="center">ge</td>
+</tr>
+
+<tr>
+<td align="center">$</td>
+<td align="center">gl</td>
+</tr>
+
+<tr>
+<td align="center">0</td>
+<td align="center">gh</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Doing selections</h4>
+
+<p>A cursor in Helix is essentially a one character selection, so if you attempt to use <code>dd</code> or <code>cc</code> or <code>yy</code> or any other double action to apply it to the entire line,
+it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the most common selections:</p>
 
 <ul>
-<li>Saner environment</li>
-<li>The virtual environment is dealt with for you</li>
-<li>Dependency management is actually enjoyable and you can pin and track dependencies&rsquo; versions</li>
-<li>Building and publishing projects is a joy</li>
+<li><code>x</code>: select the current line (if you keep pressing it it&rsquo;ll keep adding more lines to the selection)</li>
+<li><code>%</code>: select the entire file</li>
+<li><code>e</code>, <code>E</code>, <code>b</code>, <code>B</code>, <code>w</code>, <code>W</code>: essentially the same as in vim, select from the current cursor position until where they stop</li>
 </ul>
 
-<h2>Getting started with Poetry</h2>
+<h2>Helix modes and macros</h2>
 
-<p>To initialize Poetry:</p>
-<pre class="chroma"><code><span class="line"><span class="cl">$ poetry new your_project
-</span></span></code></pre>
-<p>You&rsquo;ll get something like:</p>
-<pre class="chroma"><code><span class="line"><span class="cl">your_project
-</span></span><span class="line"><span class="cl">├── pyproject.toml
-</span></span><span class="line"><span class="cl">├── README.rst
-</span></span><span class="line"><span class="cl">├── tests
-</span></span><span class="line"><span class="cl">│   ├── __init__.py
-</span></span><span class="line"><span class="cl">│   └── test_your_project.py
-</span></span><span class="line"><span class="cl">└── your_project
-</span></span><span class="line"><span class="cl">    └── __init__.py
-</span></span></code></pre>
-<p>There there is a pyproject.toml that you can add some metadata about your project. If you try and install a program:</p>
-<pre class="chroma"><code><span class="line"><span class="cl">$ poetry add requests
-</span></span></code></pre>
-<p>You&rsquo;ll see that poetry adds a virtual environment and installs your dependency. If you look into the <code>pyproject.toml</code> file you should find that a dependency was added. To run your code you can either just enter the virtual environment (like you would normally do in normal python) by running <code>poetry shell</code> or you could ask poetry to run the commands for you like so:</p>
-<pre class="chroma"><code><span class="line"><span class="cl">$ poetry run python main.py
-</span></span></code></pre>
-<p>There&rsquo;s many cool things that poetry can do that makes managing a python project much easier but that are beyond the scope of this blog. Make sure to check out poetry <a href="https://python-poetry.org/docs/basic-usage/">here</a>.</p>
+<h4>Macros</h4>
+
+<p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
+By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
+For example you could do <code>&quot;mQ</code> to record a macro in a custom register <code>m</code>. <code>&quot;&lt;register&gt;</code> is the syntax for changing registers.</p>
+
+<p>You can also delete all macros by doing <code>:clear-register</code>.
+Registers can also be used to save your selection (text) so if you use <code>d</code>, <code>y</code> and so on, they&rsquo;re also saved in registers.
+<br>
+Helix has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
+
+<h4>Space mode</h4>
+
+<p>Helix heavily relies on pickers to provide a lot of interactive features all these can be accessed by pressing space:</p>
+
+<ul>
+<li><code>&lt;space&gt;b</code>: Buffer picker</li>
+<li><code>&lt;space&gt;e</code>: File explorer</li>
+<li><code>&lt;space&gt;s</code>: Symbol search</li>
+<li><code>&lt;space&gt;/</code>: Global search</li>
+<li><code>&lt;space&gt;d</code>: LSP diagnostics</li>
+<li><code>&lt;space&gt;a</code>: Code actions</li>
+</ul>
+
+<p>It has a few other features as well. You can check what if can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
+
+<h4>Window mode</h4>
+
+<p>Window mode allows you to manage splits in  Helix, you can enter window mode with <code>&lt;space&gt;w</code>.
+Once in window mode, to create the splits you can use <code>s</code> for vertical splits and <code>v</code> for vertical splits.
+Then you can use window mode to manage your splits. Such as moving between them (using hjkl in window mode), swapping them (using HJKL),
+<br>
+You can change windows between vertical and horizontal using <code>t</code> (t stands for transpose), and you can quit the window with <code>q</code>.</p>
+
+<h4>Match mode</h4>
+
+<p>Match mode allows you to select text, in Vim you would usually use <code>gi</code> and <code>ga</code>, match mode is the Helix equivalent.</p>
+
+<p>For example <code>giw</code> would be <code>miw</code> in helix (though for this case going back and forth or the other way around with the <code>w</code>, <code>b</code> and <code>e</code> keys is one less keystroke).
+If you&rsquo;re inside of a <code>()</code> or a <code>{}</code> or some other pair and you have an LSP configured you can do <code>mim</code> or <code>mam</code> to select everything inside them.
+If you don&rsquo;t have an LSP or you want to match something else you can just type them for example you could do <code>mi(</code> to match everything inside of a parenthesis.
+<br>
+You can also swap a <code>()</code> for a <code>{}</code> or vice verse with <code>mr({</code>. Or you could delete the surrounding parenthesis with <code>md(</code></p>
+
+<h4>Command mode</h4>
+
+<p>Basic commands are mostly the same as in Vim. You can enter the command mode with <code>:</code>.</p>
+
+<p>Common commands shared by Helix and Vim:</p>
+
+<ul>
+<li><code>:q</code>: quit</li>
+<li><code>:q!</code>: force quit</li>
+<li><code>:w</code>: save</li>
+<li><code>:w!</code>: force save</li>
+<li><code>:x</code>: save and quit</li>
+<li><code>:|</code>: pipe selection to command and substitute with command output</li>
+<li><code>:o</code>/<code>:open</code>: open file</li>
+</ul>
+
+<p>Common commands that are different:</p>
+
+<ul>
+<li><code>:!</code>: required a space in helix as it&rsquo;s an alias to <code>:sh</code></li>
+<li><code>:lsp-restart</code>: (re)start LSP</li>
+<li><code>:lsp-stop</code>: stop LSP</li>
+<li><code>:log-open</code>: read logs</li>
+<li><code>set-language</code>: equivalent to <code>:lang</code> in Vim</li>
+<li><code>:format</code>: format text with language formatter</li>
+</ul>
+
+<h4>Multicursors</h4>
+
+<p>Helix supports multiple cursors. These can be created by using <code>&lt;shift&gt;C</code> the cursors can be disabled with <code>,</code>.</p>
+
+<p>But the most powerful thing about it is being to spawn multiple cursors on certain locations based on their content.
+To do this you can do a selection of the region where you want the cursors to spawn then you press <code>s</code> and type what you&rsquo;re looking for,
+after you&rsquo;ve matched the content you can press enter and continue editing.</p>
+
+<p>To disable a selection you can use <code>;</code>.</p>
+
+<hr/>
+
+<p>If you want to learn more give the <a href="https://docs.helix-editor.com/">official docs</a> a try.
+You might also want to try the helix tutor by running <code>helix --tutor</code>.</p>
 
   </div>
 </div>

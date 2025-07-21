@@ -401,6 +401,56 @@ body {
   }
 }
 
+hr {
+  margin: 1em 2em;
+  border: 2px solid var(--bg2);
+  border-radius: 2px;
+}
+
+/* no idea how this works, I just adapted it to my website lol */
+table { 
+    margin: 1em auto;
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 4px;
+    border-spacing: 0px;
+    min-width: 20em;
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        border-collapse: separate;
+        color: var(--fg2)
+    }
+
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    th, td {
+        padding: 5px 4px 6px 4px; 
+        vertical-align: top;
+        border-left: 2px solid #ddd;    
+    }
+
+    td {
+        border-top: 2px solid #ddd;    
+        padding: 0.5em 1em;
+    }
+
+    thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+        border-radius: 4px 0 0 0;
+    }
+
+    thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+        border-radius: 0 0 0 4px;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-style: bold;
   margin-top: 0.5em;  
@@ -441,7 +491,7 @@ code {
   border-radius: 6px;
   padding: 0 0.2em;
   font-family: "JetBrains Mono", monospace;
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 pre code {
@@ -612,6 +662,21 @@ footer {
   
     <div class="item">
       <div class="title">
+        <a href="/blog/helix-tutorial.html">
+          Helix tutorial for Vim plebs 
+        </a>
+        <div>
+          4 min | 2025-07-21
+        </div>
+      </div>
+
+      <div class="description">
+        A walk through vim and helix differences and the various helix modes for people that are familiar with vim motions
+      </div>
+    </div>
+  
+    <div class="item">
+      <div class="title">
         <a href="/blog/rust-error-handling-patterns.html">
           Error handling patterns in Rust 
         </a>
@@ -637,6 +702,21 @@ footer {
 
       <div class="description">
         A dotfile manager heavily inspired by GNU Stow
+      </div>
+    </div>
+  
+    <div class="item">
+      <div class="title">
+        <a href="/blog/poetry-is-saner.html">
+          Poetry is a saner package manager for Python 
+        </a>
+        <div>
+          2 min | 2022-10-10
+        </div>
+      </div>
+
+      <div class="description">
+        
       </div>
     </div>
   
