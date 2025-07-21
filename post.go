@@ -68,8 +68,10 @@ func NewPost(path string) (Post, error) {
 
 	post := Post{
 		// content without header
-		Content:        contents[headerEnd:],
 		SourceFilePath: path,
+	}
+	if len(contents) > headerEnd {
+		post.Content = contents[headerEnd:]
 	}
 	post.ReadDuration = fmt.Sprintf("%d min", EstimateReadTime(post.Content)/time.Minute)
 
