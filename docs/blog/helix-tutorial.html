@@ -750,8 +750,8 @@ footer {
   </div>
   <div class="post-content">
   	<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
-So every time I suggest someone tries Helix, if they&rsquo;ve used or use vim or vim mode on other editors, they almost alway complain about
-the keybindings being different being an impediment to them using the editor. So this is my attempt at trying to make the transition less painful
+So every time I suggest someone tries Helix, if they&rsquo;ve used or use (neo)vim or vim mode on other editors, they almost alway complain about
+the different keybindings being an impediment to them using the editor. So this is my attempt at trying to make the transition less painful
 by drawing parallels between Helix and Vim bindings.</p>
 
 <h2>The low-hanging fruits</h2>
@@ -764,10 +764,49 @@ So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</cod
 <p>You can think of the Helix binding as just Vim but entering visual mode before doing anything. So <code>de</code> would be <code>ved</code> and <code>ce</code> would be <code>vec</code>, the end result on
 Vim would be the exact same as what would happen on Helix.</p>
 
-<p></p>
+<h4>Doing selections</h4>
 
-<p>It&rsquo;s very common to move to the beginning or ending of the line or the file, this is slightly different in Helix.
-Helix has a &ldquo;goto mode&rdquo; which is under the <code>g</code> key.</p>
+<p>A cursor in Helix is essentially a one character selection, so if you attempt to use <code>dd</code> or <code>cc</code> or <code>yy</code> or any other double verb to apply it to the entire line,
+it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the most common selections:</p>
+
+<ul>
+<li><code>x</code>: select the current line (if you keep pressing it it&rsquo;ll keep adding more lines to the selection)</li>
+<li><code>%</code>: select the entire file</li>
+<li><code>e</code>, <code>E</code>, <code>b</code>, <code>B</code>, <code>w</code>, <code>W</code>: essentially the same as in vim, select from the current cursor position until where they stop</li>
+</ul>
+
+<h2>Helix modes and macros</h2>
+
+<h4>Macros</h4>
+
+<p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
+By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
+For example you could do <code>&quot;mQ</code> to record a macro in a custom register <code>m</code>. <code>&quot;&lt;register&gt;</code> is the syntax for changing registers.</p>
+
+<p>You can also delete all macros by doing <code>:clear-register</code>.
+Registers can also be used to save your selection (text) so if you use <code>d</code>, <code>y</code> and so on, they&rsquo;re also saved in registers.
+This also allows you to have multiple things saved at once by just changing the register before doing something.
+<br>
+Helix also has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
+
+<h4>Space mode</h4>
+
+<p>Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:</p>
+
+<ul>
+<li><code>&lt;space&gt;b</code>: Buffer picker</li>
+<li><code>&lt;space&gt;e</code>: File explorer</li>
+<li><code>&lt;space&gt;s</code>: Symbol search</li>
+<li><code>&lt;space&gt;/</code>: Global search</li>
+<li><code>&lt;space&gt;d</code>: LSP diagnostics</li>
+<li><code>&lt;space&gt;a</code>: Code actions</li>
+</ul>
+
+<p>Space mode has a few other features as well. You can check what else it can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
+
+<h4>Goto mode</h4>
+
+<p>Moving around the file is very common. Vim users are used to using <code>g</code> to move around. Helix also has this keybinding.</p>
 
 <table>
 <thead>
@@ -799,45 +838,10 @@ Helix has a &ldquo;goto mode&rdquo; which is under the <code>g</code> key.</p>
 </tr>
 </tbody>
 </table>
+<p>Besides these, there&rsquo;s other ways to move around, for example jumping around references, definitions, or between buffers, they all happen through the goto mode.
+One of the most useful ones for moving around is <code>gw</code>, this creates labels in your text that once you type them, your cursor jumps straight to where the label was.</p>
 
-<h4>Doing selections</h4>
-
-<p>A cursor in Helix is essentially a one character selection, so if you attempt to use <code>dd</code> or <code>cc</code> or <code>yy</code> or any other double action to apply it to the entire line,
-it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the most common selections:</p>
-
-<ul>
-<li><code>x</code>: select the current line (if you keep pressing it it&rsquo;ll keep adding more lines to the selection)</li>
-<li><code>%</code>: select the entire file</li>
-<li><code>e</code>, <code>E</code>, <code>b</code>, <code>B</code>, <code>w</code>, <code>W</code>: essentially the same as in vim, select from the current cursor position until where they stop</li>
-</ul>
-
-<h2>Helix modes and macros</h2>
-
-<h4>Macros</h4>
-
-<p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
-By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
-For example you could do <code>&quot;mQ</code> to record a macro in a custom register <code>m</code>. <code>&quot;&lt;register&gt;</code> is the syntax for changing registers.</p>
-
-<p>You can also delete all macros by doing <code>:clear-register</code>.
-Registers can also be used to save your selection (text) so if you use <code>d</code>, <code>y</code> and so on, they&rsquo;re also saved in registers.
-<br>
-Helix has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
-
-<h4>Space mode</h4>
-
-<p>Helix heavily relies on pickers to provide a lot of interactive features all these can be accessed by pressing space:</p>
-
-<ul>
-<li><code>&lt;space&gt;b</code>: Buffer picker</li>
-<li><code>&lt;space&gt;e</code>: File explorer</li>
-<li><code>&lt;space&gt;s</code>: Symbol search</li>
-<li><code>&lt;space&gt;/</code>: Global search</li>
-<li><code>&lt;space&gt;d</code>: LSP diagnostics</li>
-<li><code>&lt;space&gt;a</code>: Code actions</li>
-</ul>
-
-<p>It has a few other features as well. You can check what if can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
+<p>If you want to learn more about gotos you can check the docs <a href="https://docs.helix-editor.com/keymap.html#goto-mode">here</a></p>
 
 <h4>Window mode</h4>
 
@@ -849,13 +853,14 @@ You can change windows between vertical and horizontal using <code>t</code> (t s
 
 <h4>Match mode</h4>
 
-<p>Match mode allows you to select text, in Vim you would usually use <code>gi</code> and <code>ga</code>, match mode is the Helix equivalent.</p>
+<p>Match mode allows you to select text, in Vim you would usually use <code>gi</code> and <code>ga</code> for this, match mode is the Helix equivalent.
+To enter the window mode you can press <code>m</code> while in normal mode.</p>
 
 <p>For example <code>giw</code> would be <code>miw</code> in helix (though for this case going back and forth or the other way around with the <code>w</code>, <code>b</code> and <code>e</code> keys is one less keystroke).
-If you&rsquo;re inside of a <code>()</code> or a <code>{}</code> or some other pair and you have an LSP configured you can do <code>mim</code> or <code>mam</code> to select everything inside them.
-If you don&rsquo;t have an LSP or you want to match something else you can just type them for example you could do <code>mi(</code> to match everything inside of a parenthesis.
+If you&rsquo;re inside of a <code>()</code> or a <code>{}</code> or some other pair and you have an LSP configured you can do <code>mim</code> to select everything inside of a pair or <code>mam</code> to select everything including the pair.
+If you don&rsquo;t have an LSP or you want to match something else you can just type one of the pairs for example you could do <code>mi(</code> to match everything inside of a parenthesis.
 <br>
-You can also swap a <code>()</code> for a <code>{}</code> or vice verse with <code>mr({</code>. Or you could delete the surrounding parenthesis with <code>md(</code></p>
+You can also swap a <code>()</code>, <code>{}</code> or any pair with the syntax <code>mr&lt;original_pair&gt;&lt;new_pair&gt;</code> so for <code>()</code> to <code>{}</code> you can do <code>mr({</code>. Or you could delete the pairs <code>md(</code>.</p>
 
 <h4>Command mode</h4>
 
