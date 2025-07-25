@@ -381,16 +381,21 @@ blockquote {
  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
 
 :root {
-  --bg: #222831; 
-  --bg2: #31363F;
+  --bg: #212730; 
+  --bg2: #363b44;
+  --bg3: #63676e;
   --fg: #EEEEEE;
   --fg2: #9ECAD6;
+  --radius: 6px;
 }
 
 body {
   font-family: "Merriweather", serif;
   background-color: var(--bg);
   color: var(--fg);
+
+  font-size-adjust: ex-height: 0.5;
+  box-sizing: border-box;
 
   @media (width >= 1024px) {
     font-size: 14pt;
@@ -458,23 +463,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.2em;
+  font-size: 2em;
 }
 
 h2 {
- font-size: 2em; 
+ font-size: 1.8em; 
 }
 
 h3 {
-  font-size: 1.8em;
+  font-size: 1.6em;
 }
 
 h4 {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 h5 {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 h6 {
@@ -488,7 +493,8 @@ li {
 code {
   display: inline-block;
   background-color: var(--bg2);
-  border-radius: 6px;
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
   padding: 0 0.2em;
   font-family: "JetBrains Mono", monospace;
   font-size: 11pt;
@@ -524,9 +530,9 @@ a {
 
 
 navbar {
-    display: flex;
-    justify-items: center;
-    align-items: center;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 
   /* desktop navbar */
   @media (width >= 1024px) {
@@ -580,7 +586,10 @@ navbar {
   display: flex;
   align-items: center;
   flex-direction: column;
+  border-bottom: 2px solid var(--bg3);
+  padding: 2em;
   margin: 1em;
+  margin-bottom: 2em;
 
   #title {
     font-size: 2em;
@@ -607,13 +616,24 @@ navbar {
   .item {
     background-color: var(--bg2);
     padding: 0.5em 1.5em;
-    border-radius: 10px;
+    border: 1px solid var(--bg3);
+    border-radius: var(--radius);
     width: 95%;
     color: lightgrey;
 
     .title {
       display: flex;
       justify-content: space-between;
+      gap: 1em;
+      @media (width < 1024px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .metadata {
+      display: flex;
+      gap: 1em;
     }
 
     a {
@@ -665,8 +685,9 @@ footer {
         <a href="/blog/helix-tutorial.html">
           Helix tutorial for Vim plebs 
         </a>
-        <div>
-          4 min | 2025-07-21
+        <div class="metadata">
+          <div>4 min</div>
+          <div>2025-07-21</div>
         </div>
       </div>
 
@@ -680,8 +701,9 @@ footer {
         <a href="/blog/rust-error-handling-patterns.html">
           Error handling patterns in Rust 
         </a>
-        <div>
-          1 min | 2025-01-09
+        <div class="metadata">
+          <div>1 min</div>
+          <div>2025-01-09</div>
         </div>
       </div>
 
@@ -695,8 +717,9 @@ footer {
         <a href="/projects/tuckr.html">
           Tuckr 
         </a>
-        <div>
-          2 min | 2022-11-08
+        <div class="metadata">
+          <div>2 min</div>
+          <div>2022-11-08</div>
         </div>
       </div>
 
@@ -710,8 +733,9 @@ footer {
         <a href="/blog/poetry-is-saner.html">
           Poetry is a saner package manager for Python 
         </a>
-        <div>
-          2 min | 2022-10-10
+        <div class="metadata">
+          <div>2 min</div>
+          <div>2022-10-10</div>
         </div>
       </div>
 
@@ -725,8 +749,9 @@ footer {
         <a href="/blog/godot-with-nvim.html">
           Setting up NeoVim for Godot 
         </a>
-        <div>
-          1 min | 2022-09-23
+        <div class="metadata">
+          <div>1 min</div>
+          <div>2022-09-23</div>
         </div>
       </div>
 
