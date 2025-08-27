@@ -64,6 +64,14 @@ func GetGlobalStyles() (template.CSS, error) {
 	return template.CSS(fmt.Sprintln(string(cssReset), string(styles))), nil
 }
 
+func GetTargetPath(path string) (parentPath, destPath string) {
+	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
+	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
+	parentPath = strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
+	destPath = strings.Join(destComponents, string(filepath.Separator))
+	return
+}
+
 func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -104,13 +112,19 @@ func main() {
 		}
 	}()
 
-	files := make([]string, 0)
+	mdFiles := make([]string, 0)
+	staticFiles := make([]string, 0)
 	filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
-		if err != nil || d.IsDir() || filepath.Ext(path) != ".md" {
+		if err != nil || d.IsDir() {
 			return nil
 		}
 
-		files = append(files, path)
+		if filepath.Ext(path) != ".md" {
+			staticFiles = append(staticFiles, path)
+			return nil
+		}
+
+		mdFiles = append(mdFiles, path)
 		return nil
 	})
 
@@ -119,7 +133,7 @@ func main() {
 	renderedPosts := make([]Post, 0)
 	// locks writes to renderedPosts
 	var rendMux sync.Mutex
-	for _, filePath := range files {
+	for _, filePath := range mdFiles {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -172,5 +186,49 @@ func main() {
 	if err = os.WriteFile("./docs/index.html", []byte(listHTML), 0644); err != nil {
 		fmt.Println(err)
 		return
+	}
+
+	// === Copy static files ===
+	copyStaticFile := func(path string) error {
+		contents, err := os.ReadFile(path)
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		parentPath, destPath := GetTargetPath(path)
+		if err := os.MkdirAll(parentPath, 0755); err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		if err := os.WriteFile(destPath, contents, 0755); err != nil {
+			fmt.Println(err)
+			return nil
+		}
+
+		return nil
+	}
+
+	filepath.WalkDir("./static", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		if d.IsDir() {
+			os.MkdirAll(path, 0)
+			return nil
+		}
+
+		if err := copyStaticFile(path); err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		return nil
+	})
+	for _, file := range staticFiles {
+		if err := copyStaticFile(file); err != nil {
+			fmt.Println(err)
+		}
 	}
 }
