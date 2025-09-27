@@ -397,13 +397,7 @@ body {
   font-size-adjust: ex-height: 0.5;
   box-sizing: border-box;
 
-  @media (width >= 1024px) {
-    font-size: 14pt;
-  }
-
-  @media (width < 1024px) {
-    font-size: 12pt;
-  }
+  font-size: 12pt;
 }
 
 hr {
@@ -493,7 +487,6 @@ li {
 code {
   display: inline-block;
   background-color: var(--bg2);
-  border: 1px solid var(--bg3);
   border-radius: var(--radius);
   padding: 0 0.2em;
   font-family: "JetBrains Mono", monospace;
@@ -516,55 +509,35 @@ a {
   }
 }
 
-.content-split {
-  display: flex;
-
-  @media (width < 1024px) {
-      flex-direction: column;
-  }
-
-  @media(width >= 1024px) {
-    margin: 0 5vw; 
-  }
+main {
+  margin: 2em 10%;
 }
-
 
 navbar {
   display: flex;
+  flex-direction: row;
   justify-items: center;
+  justify-content: center;
   align-items: center;
+  padding: 0.5em;
+  gap: 0.5em;
+  background-color: var(--bg2);
 
-  /* desktop navbar */
-  @media (width >= 1024px) {
-    position: sticky;
-    top: 20%;
-    height: 100%;
-    margin-right: 2em;
-    flex-direction: column;
-
-    img {
-      width: 80px;
-    }
+  ul {
+    display: flex;
+    gap: 0.8em;
   }
 
-  /* mobile navbar */
-  @media (width < 1024px) {
-    flex-direction: row;
-    justify-content: center;
-    padding: 0.5em;
-    gap: 0.5em;
+  li {
+    list-style: none;
 
-    ul {
-      display: flex;
-      gap: 0.8em;
+    a {
+      text-decoration: none;
+      transition: text-decoration ease-in;
     }
 
-    li {
-      list-style: none;
-    }
-
-    img {
-      display: none;
+    a:hover {
+      text-decoration: underline;
     }
   }
 
@@ -616,7 +589,6 @@ navbar {
   .item {
     background-color: var(--bg2);
     padding: 0.5em 1.5em;
-    border: 1px solid var(--bg3);
     border-radius: var(--radius);
     width: 95%;
     color: lightgrey;
@@ -732,19 +704,18 @@ footer {
 		
 	</head>
 	<body>
-		<div class="content-split">
-			<navbar>
-				<a href="/">
-					<img class="profile-pic" src="https://avatars.githubusercontent.com/u/28673457"/>
-					<div class="username">RaphGL</div>
-				<a/>
-				<ul>
-					<li><a href="https://github.com/RaphGL/">GitHub</a></li>
-					<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
-					<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
-				</ul>
-			</navbar>
+		<navbar>
+			<a href="/">
+				<div class="username">RaphGL</div>
+			<a/>
+			<ul>
+				<li><a href="https://github.com/RaphGL/">GitHub</a></li>
+				<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
+				<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
+			</ul>
+		</navbar>
 
+		<main>
 			<div class="post-container">
   <div>
     <div class="post-header">
@@ -829,7 +800,7 @@ you can either use <code>let else</code> idiom:</p>
   </div>
 </div>
 
-		</div>
+		</main>
 
 		<footer>
 			<div>©RaphGL 2025</div>
