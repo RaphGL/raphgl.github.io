@@ -585,6 +585,7 @@ navbar {
   align-items: center;
   margin: 2em auto;
   width: 100%;
+  max-width: 800px;
 
   .item {
     background-color: var(--bg2);
@@ -595,6 +596,7 @@ navbar {
 
     .title {
       display: flex;
+      font-weight: 500;
       justify-content: space-between;
       gap: 1em;
       @media (width < 1024px) {
@@ -608,6 +610,10 @@ navbar {
       gap: 1em;
     }
 
+    .description {
+      margin: 0.5em auto;
+    }
+
     a {
       font-size: 1.1em;
       text-decoration: none;
@@ -617,13 +623,11 @@ navbar {
       }
     }
   }
-
-  .description {
-    
-  }
 }
 
 footer {
+  margin-top: auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   gap: 1.2em;
@@ -770,9 +774,11 @@ footer {
 
 		</main>
 
-		<footer>
-			<div>©RaphGL 2025</div>
-			<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
-		</footer>
+		<div class="footer-container">
+			<footer>
+				<div>©RaphGL 2025</div>
+				<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
+			</footer>
+		</div>
 	</body>
 </html>
