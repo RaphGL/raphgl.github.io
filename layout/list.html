@@ -1,14 +1,14 @@
 <div class="list-container">
   {{range .Posts}}
     <div class="item">
+      <div class="metadata">
+        <div>{{.Date}}</div>
+        <div>{{.ReadDuration}} read</div>
+      </div>
       <div class="title">
         <a href="{{.SourceFilePath}}">
           {{.Title}} 
         </a>
-        <div class="metadata">
-          <div>{{.ReadDuration}}</div>
-          <div>{{.Date}}</div>
-        </div>
       </div>
 
       <div class="description">
