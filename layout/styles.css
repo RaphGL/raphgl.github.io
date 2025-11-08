@@ -137,7 +137,6 @@ navbar {
   align-items: center;
   padding: 0.5em;
   gap: 0.5em;
-  background-color: var(--bg2);
 
   ul {
     display: flex;
@@ -180,10 +179,9 @@ navbar {
     display: flex;
     align-items: center;
     flex-direction: column;
-    color: lightgrey;
+    color: var(--fg);
     background-color: var(--bg2);
-    padding: 1em;
-    padding-bottom: 2em;
+    padding: 2em;
   }
 
   .post-header {
