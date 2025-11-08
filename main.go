@@ -1,6 +1,5 @@
 package main
 
-// TODO: figure out a way to use images and whatnot with /static/ or any other way
 // TODO: add flag to disable deadlink checker so that we don't get limited by servers while developing this generator
 
 import (
@@ -84,6 +83,10 @@ func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 }
 
 func main() {
+	// we remove all files in target dir first to prevent previous
+	// compilation items from being left in the final website artifacts
+	os.RemoveAll(TargetDirName)
+
 	dir := "./content"
 	dirStat, err := os.Stat(dir)
 	if err != nil {
@@ -140,6 +143,9 @@ func main() {
 			post, err := NewPost(filePath)
 			if err != nil {
 				fmt.Println(err)
+				return
+			}
+			if post.Draft {
 				return
 			}
 			// Post Hooks

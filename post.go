@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -40,6 +41,7 @@ type Post struct {
 	Description        string
 	ReadDuration       string
 	Date               string
+	Draft              bool
 	Content            string
 	SyntaxHighlightCSS template.CSS
 }
@@ -95,6 +97,12 @@ func NewPost(path string) (Post, error) {
 			post.Description = value
 		case "date":
 			post.Date = value
+		case "draft":
+			isDraft, err := strconv.ParseBool(value)
+			if err != nil {
+				return Post{}, fmt.Errorf("expected `draft` to be a bool, found `%v`", value)
+			}
+			post.Draft = isDraft
 		default:
 			return Post{}, errors.New("invalid key '" + key + "' in metadata header")
 		}
