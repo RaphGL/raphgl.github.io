@@ -1,5 +1,6 @@
 ---
 title: Error handling patterns in Rust
+description: Common error handling patterns that help reduce verbosity in Rust
 date: 2025-01-09
 ---
 

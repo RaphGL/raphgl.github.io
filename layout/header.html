@@ -1,4 +1,10 @@
 <div class="post-header">
+	{{if .Date}}
+	<div id="date">
+		<i>{{.Date}}</i>
+	</div>
+	{{end}}
+
 	{{if .Title}}
 		<div id="title">
 			{{.Title}}
@@ -9,11 +15,5 @@
 		<div id="description">
 			{{.Description}}
 		</div>
-	{{end}}
-
-	{{if .Date}}
-	<div id="date">
-		<i>Posted on: {{.Date}}</i>
-	</div>
 	{{end}}
 </div>

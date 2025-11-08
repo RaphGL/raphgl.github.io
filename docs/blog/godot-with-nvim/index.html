@@ -401,7 +401,7 @@ body {
 }
 
 hr {
-  margin: 1em 2em;
+  margin: 1em 0;
   border: 2px solid var(--bg2);
   border-radius: 2px;
 }
@@ -509,10 +509,6 @@ a {
   }
 }
 
-main {
-  margin: 2em 10%;
-}
-
 navbar {
   display: flex;
   flex-direction: row;
@@ -555,27 +551,41 @@ navbar {
   }
 }
 
-.post-header {
+.post-container {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  border-bottom: 2px solid var(--bg3);
-  padding: 2em;
-  margin: 1em;
-  margin-bottom: 2em;
+  gap: 1em;
 
-  #title {
-    font-size: 2em;
-  } 
-
-  #date {
-    font-size: 1em;
+  .post-header-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: lightgrey;
+    background-color: var(--bg2);
+    padding: 1em;
+    padding-bottom: 2em;
   }
-}
 
-.post-content {
-  margin: 0 1em;
-  margin-bottom: 1em;
+  .post-header {
+    max-width: 80ch;
+
+    #title {
+      font-weight: bold;
+      font-size: 2em;
+    } 
+
+    #date {
+      font-size: 1em;
+    }
+  }
+
+  .post-content {
+    padding: 1em;
+    width: 100%;
+    max-width: 80ch;
+    margin: auto;
+    margin-bottom: 1em;
+  }
 }
 
 .list-container {
@@ -611,7 +621,7 @@ navbar {
     }
 
     .description {
-      margin: 0.5em auto;
+      margin: 0.25em auto;
     }
 
     a {
@@ -721,20 +731,20 @@ footer {
 
 		<main>
 			<div class="post-container">
-  <div>
+  <div class="post-header-wrapper">
     <div class="post-header">
+	
+	<div id="date">
+		<i>2022-09-23</i>
+	</div>
+	
+
 	
 		<div id="title">
 			Setting up NeoVim for Godot
 		</div>
 	
 
-	
-
-	
-	<div id="date">
-		<i>Posted on: 2022-09-23</i>
-	</div>
 	
 </div>
 
