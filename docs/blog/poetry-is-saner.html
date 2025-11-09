@@ -452,24 +452,25 @@ table {
 
 h1, h2, h3, h4, h5, h6 {
   font-style: bold;
-  margin-top: 0.5em;  
+  margin: 0.5em 0;  
+  text-indent: 0;
   color: var(--fg2);
 }
 
 h1 {
-  font-size: 2em;
+ font-size: 1.9em; 
 }
 
 h2 {
- font-size: 1.8em; 
+  font-size: 1.7em;
 }
 
 h3 {
-  font-size: 1.6em;
+  font-size: 1.5em;
 }
 
 h4 {
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 
 h5 {
@@ -583,6 +584,11 @@ navbar {
     max-width: 80ch;
     margin: auto;
     margin-bottom: 1em;
+    text-align: justify;
+    text-wrap: pretty;
+    hyphens: auto;
+    hyphenate-limit-chars: 7;
+    text-indent: 1em;
   }
 }
 
