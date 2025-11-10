@@ -112,6 +112,7 @@ code {
   padding: 0 0.2em;
   font-family: "JetBrains Mono", monospace;
   font-size: 11pt;
+  text-indent: 0;
 }
 
 pre code {
