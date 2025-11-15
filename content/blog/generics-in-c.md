@@ -70,7 +70,7 @@ To do this, we'll have to rely on a small macro trick, but other than that, ever
 With the `VEC_SUFFIX` being optional.
 
 Once instantiated this would give you a `vector_push_num` function you could use.
-To do this we need to be able to append `_num` to our symbol names. For we create a `G` function-like macro.
+To do this we need to be able to append `_num` to our symbol names. So we create a `G` function-like macro.
 
 ```c
 #define G(name) name##_##VEC_ITEM_TYPE
@@ -99,9 +99,9 @@ We can use it to define our functions and structs like this: `struct G(something
 #endif
 ```
 
-Now we can emit an error if `VEC_ITEM_TYPE` and we know that if this header is compiled it means we have a `VEC_ITEM_TYPE` defined.
+Now we can emit an error if `VEC_ITEM_TYPE` is not defined.
 
-This fixes wrong use of the header but what if we want to use something like `long long` or `atomic int`? It won't work.
+This fixes wrong uses of the header but what if we want to use something like `long long` or `atomic int`? It won't work.
 So we have to introduce a way of programmatically overriding the suffix that's added to functions. So we'll introduce a `VEC_SUFFIX`:
 
 ```c
@@ -183,8 +183,8 @@ And then on your C files you can tell it that you need the implementations insta
 
 --- 
 
-Side Note: if you include the header in another header, you can still just call `#define VEC_IMPLEMENTION` without reincluding the file to get the implementation.
-Which is a nice side effect of this method, but it can end up looking a bit implicit because the include is hidden in another include. It's up to you what you like.
+Side Note: if you include the header in another header, you can still just call `#define VEC_IMPLEMENTION` without reincluding the generic header library to get the implementation.
+Which is a nice side effect of this approach to generics, but it can end up looking a bit implicit because the include is hidden in another include.
 
 Example:
 ```c
@@ -205,16 +205,16 @@ We'll have a redeclaration error, because both includes see `VEC_ITEM_TYPE` as `
 #undef VEC_ITEM_TYPE
 #undef VEC_SUFFIX
 ```
-This way we still get a "undeclared VEC_ITEM_TYPE" error if we include vector again and forget to tell it what type we want instantiated.
+This way we still get a "undeclared VEC_ITEM_TYPE" error if we include the vector again and forget to tell it what type we want instantiated.
 
-NOTE: We don't undefine `VEC_IMPLEMENTATION` so that we can just declare it once in our `.c` for convenience.
+NOTE: We don't undefine `VEC_IMPLEMENTATION` so that we can just declare it once in our `.c` files for convenience's sake.
 
 #### Include guards
 You might be asking about the missing include guard, but you don't need it! The reason is that we actually want to be able to include the same header multiple times.
-Each time for a different type.
+Each time with a different type.
 
 ## Putting everything together
-The final header would look something like this:
+The final header should look something like this:
 
 ```c
 #ifndef VEC_ITEM_TYPE
