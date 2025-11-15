@@ -32,11 +32,29 @@ You might also run into UB.
 
 DECLARE_VECTOR(int)
 ```
+Con: Everything is wrapped in a macro and might break autocomplete
 
+\
 \
 
 The approach I recommend is not really novel, but it's the one I've found to be the nicest to use and to work better with existing tooling.
 Since it doesn't rely on type erasure and everything isn't wrapped in macros.
+
+\
+\
+
+Pros:
+
+- Type safe
+- Doesn't have to use pointers
+- Minimal use of Macros
+- Can be deduplicated by linkers
+- Can be entirely put in a single file to reduce changes triggering compilation for multiple files
+
+Cons:
+
+- Relies on a macro trick
+- Can be a bit verbose
 
 ## Achieving generics through header instantiation
 

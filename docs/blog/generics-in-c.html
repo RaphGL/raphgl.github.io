@@ -787,10 +787,33 @@ You might also run into UB.</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">DECLARE_VECTOR</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>
 </span></span></code></pre>
-<p></p>
+<p>Con: Everything is wrapped in a macro and might break autocomplete</p>
+
+<p><br>
+</p>
 
 <p>The approach I recommend is not really novel, but it&rsquo;s the one I&rsquo;ve found to be the nicest to use and to work better with existing tooling.
 Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped in macros.</p>
+
+<p><br>
+</p>
+
+<p>Pros:</p>
+
+<ul>
+<li>Type safe</li>
+<li>Doesn&rsquo;t have to use pointers</li>
+<li>Minimal use of Macros</li>
+<li>Can be deduplicated by linkers</li>
+<li>Can be entirely put in a single file to reduce changes triggering compilation for multiple files</li>
+</ul>
+
+<p>Cons:</p>
+
+<ul>
+<li>Relies on a macro trick</li>
+<li>Can be a bit verbose</li>
+</ul>
 
 <h2>Achieving generics through header instantiation</h2>
 
