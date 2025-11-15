@@ -826,7 +826,7 @@ To do this, we&rsquo;ll have to rely on a small macro trick, but other than that
 <p>With the <code>VEC_SUFFIX</code> being optional.</p>
 
 <p>Once instantiated this would give you a <code>vector_push_num</code> function you could use.
-To do this we need to be able to append <code>_num</code> to our symbol names. For we create a <code>G</code> function-like macro.</p>
+To do this we need to be able to append <code>_num</code> to our symbol names. So we create a <code>G</code> function-like macro.</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define G(name) name##_##VEC_ITEM_TYPE
 </span></span></span></code></pre>
 <p>Except, this doesn&rsquo;t work. You can&rsquo;t just expand and append them like that. We need to expand the definitions first and then append them, so we&rsquo;ll rely on the following trick:</p>
@@ -846,9 +846,9 @@ We can use it to define our functions and structs like this: <code>struct G(some
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define VEC_SUFFIX VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp">#endif
 </span></span></span></code></pre>
-<p>Now we can emit an error if <code>VEC_ITEM_TYPE</code> and we know that if this header is compiled it means we have a <code>VEC_ITEM_TYPE</code> defined.</p>
+<p>Now we can emit an error if <code>VEC_ITEM_TYPE</code> is not defined.</p>
 
-<p>This fixes wrong use of the header but what if we want to use something like <code>long long</code> or <code>atomic int</code>? It won&rsquo;t work.
+<p>This fixes wrong uses of the header but what if we want to use something like <code>long long</code> or <code>atomic int</code>? It won&rsquo;t work.
 So we have to introduce a way of programmatically overriding the suffix that&rsquo;s added to functions. So we&rsquo;ll introduce a <code>VEC_SUFFIX</code>:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#error VEC_ITEM_TYPE was not defined
@@ -919,8 +919,8 @@ using this generic library on <code>.c</code> and <code>.h</code> files.</p>
 </span></span></span></code></pre>
 <hr>
 
-<p>Side Note: if you include the header in another header, you can still just call <code>#define VEC_IMPLEMENTION</code> without reincluding the file to get the implementation.
-Which is a nice side effect of this method, but it can end up looking a bit implicit because the include is hidden in another include. It&rsquo;s up to you what you like.</p>
+<p>Side Note: if you include the header in another header, you can still just call <code>#define VEC_IMPLEMENTION</code> without reincluding the generic header library to get the implementation.
+Which is a nice side effect of this approach to generics, but it can end up looking a bit implicit because the include is hidden in another include.</p>
 
 <p>Example:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
@@ -938,18 +938,18 @@ If we do:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
 </span></span></span></code></pre>
-<p>This way we still get a &ldquo;undeclared VEC_ITEM_TYPE&rdquo; error if we include vector again and forget to tell it what type we want instantiated.</p>
+<p>This way we still get a &ldquo;undeclared VEC_ITEM_TYPE&rdquo; error if we include the vector again and forget to tell it what type we want instantiated.</p>
 
-<p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> for convenience.</p>
+<p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> files for convenience&rsquo;s sake.</p>
 
 <h4>Include guards</h4>
 
 <p>You might be asking about the missing include guard, but you don&rsquo;t need it! The reason is that we actually want to be able to include the same header multiple times.
-Each time for a different type.</p>
+Each time with a different type.</p>
 
 <h2>Putting everything together</h2>
 
-<p>The final header would look something like this:</p>
+<p>The final header should look something like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>   <span class="cp">#error VEC_ITEM_TYPE was not defined
 </span></span></span><span class="line"><span class="cl"><span class="cp">#endif
