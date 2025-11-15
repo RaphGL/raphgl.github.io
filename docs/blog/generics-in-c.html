@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>RaphGL | How to write generics in C</title>
+
+		
+    <style>
+      *,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Normalize font features
+*/
+
+:root {
+  line-height: 1.5; /* 1 */
+  text-size-adjust: 100%; /* 2: -webkit-text-size-adjust */
+  tab-size: 4; /* 3: -moz-tab-size */
+  font-feature-settings: normal; /* 4 */
+  font-variation-settings: normal; /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Correct the odd `em` font sizing in all browsers.
+2. Use a web-safe monospace font.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-size: 1em; /* 1 */
+  font-family: 'Courier New', Courier, monospace; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  appearance: button; /* -webkit-appearance */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  appearance: textfield; /* -webkit-appearance */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  appearance: none; /* -webkit-appeaance */
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  appearance: button; /* -webkit-appearance */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to gray.
+*/
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default.
+  (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default.
+  (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio.
+(https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
+/*
+  Helps prevent single words on a newline,
+  which can make a title seem unbalanced.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  text-wrap: balance;
+}
+ @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+
+:root {
+  --bg: #212730; 
+  --bg2: #363b44;
+  --bg3: #63676e;
+  --fg: #EEEEEE;
+  --fg2: #9ECAD6;
+  --radius: 6px;
+}
+
+body {
+  font-family: "TikTok Sans", sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+
+  font-size-adjust: ex-height: 0.5;
+  box-sizing: border-box;
+
+  font-size: 12pt;
+}
+
+hr {
+  margin: 1em 0;
+  border: 2px solid var(--bg2);
+  border-radius: 2px;
+}
+
+/* no idea how this works, I just adapted it to my website lol */
+table { 
+    margin: 1em auto;
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 4px;
+    border-spacing: 0px;
+    min-width: 20em;
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        border-collapse: separate;
+        color: var(--fg2)
+    }
+
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    th, td {
+        padding: 5px 4px 6px 4px; 
+        vertical-align: top;
+        border-left: 2px solid #ddd;    
+    }
+
+    td {
+        border-top: 2px solid #ddd;    
+        padding: 0.5em 1em;
+    }
+
+    thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+        border-radius: 4px 0 0 0;
+    }
+
+    thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+        border-radius: 0 0 0 4px;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-style: bold;
+  margin: 0.5em 0;  
+  text-indent: 0;
+  color: var(--fg2);
+}
+
+h1 {
+ font-size: 1.9em; 
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.3em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+li {
+  list-style: "– " outside;
+}
+
+code {
+  display: inline-block;
+  background-color: var(--bg2);
+  border-radius: var(--radius);
+  padding: 0 0.2em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11pt;
+  text-indent: 0;
+}
+
+pre code {
+  display: block;
+  padding: 1em;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--fg2);
+  text-decoration: underline;
+
+  &:hover {
+   color: var(--fg); 
+  }
+}
+
+navbar {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+  gap: 0.5em;
+
+  ul {
+    display: flex;
+    gap: 0.8em;
+  }
+
+  li {
+    list-style: none;
+
+    a {
+      text-decoration: none;
+      transition: text-decoration ease-in;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .profile-pic {
+    border-radius: 50%;
+    height: auto;
+  }
+
+  .username {
+    font-weight: bold;
+    font-family: "JetBrains Mono";
+    color: var(--fg);
+    font-size: 1.2em;
+    text-align: center;
+  }
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .post-header-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--fg);
+    background-color: var(--bg2);
+    padding: 2em;
+  }
+
+  .post-header {
+    max-width: 80ch;
+
+    #title {
+      font-weight: bold;
+      font-size: 2em;
+    } 
+
+    #date {
+      font-size: 1em;
+    }
+  }
+
+  .post-content {
+    padding: 1em;
+    width: 100%;
+    max-width: 80ch;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: justify;
+    text-wrap: pretty;
+    hyphens: auto;
+    hyphenate-limit-chars: 7;
+    text-indent: 1em;
+  }
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  margin: 2em auto;
+  width: 100%;
+  max-width: 800px;
+
+  .item {
+    background-color: var(--bg2);
+    padding: 0.5em 1.5em;
+    border-radius: var(--radius);
+    width: 95%;
+    color: lightgrey;
+
+    .title {
+      display: flex;
+      font-weight: 500;
+      justify-content: space-between;
+      gap: 1em;
+      @media (width < 1024px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .metadata {
+      display: flex;
+      gap: 1em;
+    }
+
+    .description {
+      margin: 0.25em auto;
+    }
+
+    a {
+      font-size: 1.1em;
+      text-decoration: none;
+      color: var(--fg);
+      &:hover {
+        color: var(--fg2);
+      }
+    }
+  }
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+  color: var(--fg2);
+  font-size: 1em;
+  padding: 1em;
+}
+
+ /* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+
+
+    </style>
+		
+	</head>
+	<body>
+		<navbar>
+			<a href="/">
+				<div class="username">RaphGL</div>
+			<a/>
+			<ul>
+				<li><a href="https://github.com/RaphGL/">GitHub</a></li>
+				<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
+				<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
+			</ul>
+		</navbar>
+
+		<main>
+			<div class="post-container">
+  <div class="post-header-wrapper">
+    <div class="post-header">
+	
+	<div id="date">
+		<i>2025-11-15</i>
+	</div>
+	
+
+	
+		<div id="title">
+			How to write generics in C
+		</div>
+	
+
+	
+		<div id="description">
+			Implementing type-safe generics in C step by step
+		</div>
+	
+</div>
+
+  </div>
+  <div class="post-content">
+  	<p>C is barebones and &ldquo;doesn&rsquo;t support&rdquo; generics, but it&rsquo;s actually quite easy to implement with the tools we already have.
+There&rsquo;s many ways you might find them being implemented in the wild. Some of the common ones are:</p>
+
+<ul>
+<li><strong>Using function-like macros</strong></li>
+</ul>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define vector_push(vector, item) vector.buf[vector.idx++] = item;
+</span></span></span></code></pre>
+<p>Con: This will cause everything to be inlined and loosely typed.</p>
+
+<ul>
+<li><strong>Using void pointers</strong></li>
+</ul>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">vector_push</span><span class="p">(</span><span class="n">Vector</span> <span class="n">vec</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">item</span><span class="p">);</span>
+</span></span></code></pre>
+<p>Con: You rely on type erasure to achieve generics, so you&rsquo;ll have to recast everything back to access them.
+You might also run into UB.</p>
+
+<ul>
+<li><strong>Dispatch specializations through a function-like macro</strong></li>
+</ul>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define DECLARE_VECTOR(type) \
+</span></span></span><span class="line"><span class="cl"><span class="cp">  void vector_push(Vector##_##type, type item) {\
+</span></span></span><span class="line"><span class="cl"><span class="cp">    </span><span class="c1">// do stuff here \
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">DECLARE_VECTOR</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>
+</span></span></code></pre>
+<p></p>
+
+<p>The approach I recommend is not really novel, but it&rsquo;s the one I&rsquo;ve found to be the nicest to use and to work better with existing tooling.
+Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped in macros.</p>
+
+<h2>Achieving generics through header instantiation</h2>
+
+<p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if the that type is not a valid name for an identifier.
+To do this, we&rsquo;ll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE long long
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define VEC_SUFFIX num
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
+</span></span></span></code></pre>
+<p>With the <code>VEC_SUFFIX</code> being optional.</p>
+
+<p>Once instantiated this would give you a <code>vector_push_num</code> function you could use.
+To do this we need to be able to append <code>_num</code> to our symbol names. For we create a <code>G</code> function-like macro.</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define G(name) name##_##VEC_ITEM_TYPE
+</span></span></span></code></pre>
+<p>Except, this doesn&rsquo;t work. You can&rsquo;t just expand and append them like that. We need to expand the definitions first and then append them, so we&rsquo;ll rely on the following trick:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define __G(name, type) name##_##type
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _G(name, type) __G(name, type)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define G(name) _G(name, VEC_ITEM_TYPE)
+</span></span></span></code></pre>
+<p>It works now! Now we can wrap our identifier names in a <code>G</code> macro so that they&rsquo;re <a href="https://en.wikipedia.org/wiki/Name_mangling"><em>name mangled</em></a> for the types they&rsquo;re for.<br>
+We can use it to define our functions and structs like this: <code>struct G(something)</code>, <code>void G(do_something)()</code>.</p>
+
+<h3>Enforcing type definition and allowing custom suffixes</h3>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#error VEC_ITEM_TYPE was not defined
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_SUFFIX
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define VEC_SUFFIX VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre>
+<p>Now we can emit an error if <code>VEC_ITEM_TYPE</code> and we know that if this header is compiled it means we have a <code>VEC_ITEM_TYPE</code> defined.</p>
+
+<p>This fixes wrong use of the header but what if we want to use something like <code>long long</code> or <code>atomic int</code>? It won&rsquo;t work.
+So we have to introduce a way of programmatically overriding the suffix that&rsquo;s added to functions. So we&rsquo;ll introduce a <code>VEC_SUFFIX</code>:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#error VEC_ITEM_TYPE was not defined
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_SUFFIX
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#define VEC_SUFFIX VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define __G(name, type) name##_##type
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _G(name, type) __G(name, type)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define G(name) _G(name, VEC_SUFFIX)
+</span></span></span></code></pre>
+<p>Now we&rsquo;re free to implement our library. For example, here&rsquo;s a generic <code>vec_pop</code> implementation:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="n">vec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre>
+<p>As you can see, every time we call anything generic we need to wrap it in <code>G</code> so that it can be specialized and name mangled properly.</p>
+
+<h3>The elephants in the room</h3>
+
+<h4>Redeclaration error</h4>
+
+<p>You can try and use this implementation but unless you only have one C file and nothing else, you&rsquo;re likely to eventually run into a redeclaration error especially if you&rsquo;re
+using this generic library on <code>.c</code> and <code>.h</code> files.</p>
+
+<p>A potential fix is to make everything <code>static</code> but then you would end up duplicating everything throughout many translation units in your program.</p>
+
+<p>The actual fix is to be able to choose when to forward declare and when to use the implementation:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_IMPLEMENTATION
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">     <span class="p">}</span>
+</span></span><span class="line"><span class="cl">     <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="n">vec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre>
+<p>You can then just include the header in header files</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="c1">// included like any other header
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#define VEC_ITEM_TYPE int
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span></code></pre>
+<p>And then on your C files you can tell it that you need the implementations instantiated</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE int
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
+</span></span></span></code></pre>
+<hr>
+
+<p>Side Note: if you include the header in another header, you can still just call <code>#define VEC_IMPLEMENTION</code> without reincluding the file to get the implementation.
+Which is a nice side effect of this method, but it can end up looking a bit implicit because the include is hidden in another include. It&rsquo;s up to you what you like.</p>
+
+<p>Example:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;flag.h&#34;</span><span class="cp">
+</span></span></span></code></pre>
+<h4>Multiple includes inheriting types</h4>
+
+<p>Since we&rsquo;re relying on preprocessor definitions to define our types.
+If we do:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE int
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
+</span></span></span></code></pre>
+<p>We&rsquo;ll have a redeclaration error, because both includes see <code>VEC_ITEM_TYPE</code> as <code>int</code>. We can fix it by undefining it at the end of our generic vector header:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
+</span></span></span></code></pre>
+<p>This way we still get a &ldquo;undeclared VEC_ITEM_TYPE&rdquo; error if we include vector again and forget to tell it what type we want instantiated.</p>
+
+<p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> for convenience.</p>
+
+<h4>Include guards</h4>
+
+<p>You might be asking about the missing include guard, but you don&rsquo;t need it! The reason is that we actually want to be able to include the same header multiple times.
+Each time for a different type.</p>
+
+<h2>Putting everything together</h2>
+
+<p>The final header would look something like this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>   <span class="cp">#error VEC_ITEM_TYPE was not defined
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_SUFFIX
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>   <span class="cp">#define VEC_SUFFIX VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#define __G(name, type) name##_##type
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define _G(name, type) __G(name, type)
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define G(name) _G(name, VEC_SUFFIX)
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_vector</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">size_t</span> <span class="n">capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">vec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_IMPLEMENTATION
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#else
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Initializes a new vector with items of sizeof(T)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">vector</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vector</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="p">(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">vec</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="n">vector</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Resizes vector to fit length
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">const</span> <span class="kt">size_t</span> <span class="n">power</span> <span class="o">=</span> <span class="nf">ceilf</span><span class="p">(</span><span class="nf">log2f</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">   <span class="k">const</span> <span class="kt">size_t</span> <span class="n">new_capacity</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="nf">powf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">power</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="n">new_capacity</span> <span class="o">&lt;</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">||</span> <span class="n">new_capacity</span> <span class="o">&gt;</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kt">void</span> <span class="o">*</span><span class="n">tmp</span> <span class="o">=</span> <span class="nf">realloc</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">,</span> <span class="n">new_capacity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">tmp</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">new_capacity</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Pushes a value to vector
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">         <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="n">vec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
+</span></span></span></code></pre>
+  </div>
+</div>
+
+		</main>
+
+		<div class="footer-container">
+			<footer>
+				<div>©RaphGL 2025</div>
+				<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
+			</footer>
+		</div>
+	</body>
+</html>
