@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>RaphGL | C compiler flags you ought to know</title>
+
+		
+    <style>
+      *,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Normalize font features
+*/
+
+:root {
+  line-height: 1.5; /* 1 */
+  text-size-adjust: 100%; /* 2: -webkit-text-size-adjust */
+  tab-size: 4; /* 3: -moz-tab-size */
+  font-feature-settings: normal; /* 4 */
+  font-variation-settings: normal; /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Correct the odd `em` font sizing in all browsers.
+2. Use a web-safe monospace font.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-size: 1em; /* 1 */
+  font-family: 'Courier New', Courier, monospace; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  appearance: button; /* -webkit-appearance */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  appearance: textfield; /* -webkit-appearance */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  appearance: none; /* -webkit-appeaance */
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  appearance: button; /* -webkit-appearance */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to gray.
+*/
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default.
+  (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default.
+  (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio.
+(https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
+/*
+  Helps prevent single words on a newline,
+  which can make a title seem unbalanced.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  text-wrap: balance;
+}
+ @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+
+:root {
+  --bg: #212730; 
+  --bg2: #363b44;
+  --bg3: #63676e;
+  --fg: #EEEEEE;
+  --fg2: #9ECAD6;
+  --radius: 6px;
+}
+
+body {
+  font-family: "TikTok Sans", sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+
+  font-size-adjust: ex-height: 0.5;
+  box-sizing: border-box;
+
+  font-size: 12pt;
+}
+
+hr {
+  margin: 1em 0;
+  border: 2px solid var(--bg2);
+  border-radius: 2px;
+}
+
+/* no idea how this works, I just adapted it to my website lol */
+table { 
+    margin: 1em auto;
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 4px;
+    border-spacing: 0px;
+    min-width: 20em;
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        border-collapse: separate;
+        color: var(--fg2)
+    }
+
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    th, td {
+        padding: 5px 4px 6px 4px; 
+        vertical-align: top;
+        border-left: 2px solid #ddd;    
+    }
+
+    td {
+        border-top: 2px solid #ddd;    
+        padding: 0.5em 1em;
+    }
+
+    thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+        border-radius: 4px 0 0 0;
+    }
+
+    thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+        border-radius: 0 0 0 4px;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-style: bold;
+  margin: 0.5em 0;  
+  text-indent: 0;
+  color: var(--fg2);
+}
+
+h1 {
+ font-size: 1.9em; 
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.3em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+li {
+  list-style: "– " outside;
+}
+
+code {
+  display: inline-block;
+  background-color: var(--bg2);
+  border-radius: var(--radius);
+  padding: 0 0.2em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11pt;
+  text-indent: 0;
+}
+
+pre code {
+  display: block;
+  padding: 1em;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--fg2);
+  text-decoration: underline;
+
+  &:hover {
+   color: var(--fg); 
+  }
+}
+
+navbar {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+  gap: 0.5em;
+
+  ul {
+    display: flex;
+    gap: 0.8em;
+  }
+
+  li {
+    list-style: none;
+
+    a {
+      text-decoration: none;
+      transition: text-decoration ease-in;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .profile-pic {
+    border-radius: 50%;
+    height: auto;
+  }
+
+  .username {
+    font-weight: bold;
+    font-family: "JetBrains Mono";
+    color: var(--fg);
+    font-size: 1.2em;
+    text-align: center;
+  }
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  .post-header-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--fg);
+    background-color: var(--bg2);
+    padding: 2em;
+  }
+
+  .post-header {
+    max-width: 80ch;
+
+    #title {
+      font-weight: bold;
+      font-size: 2em;
+    } 
+
+    #date {
+      font-size: 1em;
+    }
+  }
+
+  .post-content {
+    padding: 1em;
+    width: 100%;
+    max-width: 80ch;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: justify;
+    text-wrap: pretty;
+    hyphens: auto;
+    hyphenate-limit-chars: 7;
+    text-indent: 1em;
+  }
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  margin: 2em auto;
+  width: 100%;
+  max-width: 800px;
+
+  .item {
+    background-color: var(--bg2);
+    padding: 0.5em 1.5em;
+    border-radius: var(--radius);
+    width: 95%;
+    color: lightgrey;
+
+    .title {
+      display: flex;
+      font-weight: 500;
+      justify-content: space-between;
+      gap: 1em;
+      @media (width < 1024px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .metadata {
+      display: flex;
+      gap: 1em;
+    }
+
+    .description {
+      margin: 0.25em auto;
+    }
+
+    a {
+      font-size: 1.1em;
+      text-decoration: none;
+      color: var(--fg);
+      &:hover {
+        color: var(--fg2);
+      }
+    }
+  }
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+  color: var(--fg2);
+  font-size: 1em;
+  padding: 1em;
+}
+
+ /* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+
+
+    </style>
+		
+	</head>
+	<body>
+		<navbar>
+			<a href="/">
+				<div class="username">RaphGL</div>
+			<a/>
+			<ul>
+				<li><a href="https://github.com/RaphGL/">GitHub</a></li>
+				<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
+				<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
+			</ul>
+		</navbar>
+
+		<main>
+			<div class="post-container">
+  <div class="post-header-wrapper">
+    <div class="post-header">
+	
+	<div id="date">
+		<i>2025-11-17</i>
+	</div>
+	
+
+	
+		<div id="title">
+			C compiler flags you ought to know
+		</div>
+	
+
+	
+		<div id="description">
+			A compiled list of compiler flags that make development and catching errors easier
+		</div>
+	
+</div>
+
+  </div>
+  <div class="post-content">
+  	<p>C compilers have bad defaults due to the need to be &ldquo;backwards compatible&rdquo;.
+This means that despite improvements in C compilers, you just have to know what to use.
+If you&rsquo;re not in the know, you might subject yourself to pain needlessly.</p>
+
+<p>This is a compiled list of flags you might want to use.
+Heavily inspired by <a href="https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html">Compiler Options Hardening Guide for C and C++</a>.
+I felt that this adaptation was needed because that post suffered from &ldquo;too much yapping&rdquo;.</p>
+
+<h2>The Essentials</h2>
+
+<p>No matter what you do, always enable <code>-Wall -Wextra -pedantic</code>, these flags are actually a group of other flags that enable other errors.
+If you want to see what they can do you can check the manpage for them:</p>
+<pre class="chroma"><code><span class="line"><span class="cl">-Wall
+</span></span><span class="line"><span class="cl">  This enables all the warnings about constructions that some users consider questionable, and that are easy to avoid (or modify to prevent the warning), even in conjunction with
+</span></span><span class="line"><span class="cl">  macros.  This also enables some language-specific warnings described in C++ Dialect Options and Objective-C and Objective-C++ Dialect Options.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -Wall turns on the following warning flags:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -Waddress -Waligned-new (C++ and Objective-C++ only) -Warray-bounds=1 (only with -O2) -Warray-compare -Warray-parameter=2 -Wbool-compare -Wbool-operation -Wc++11-compat
+</span></span><span class="line"><span class="cl">  -Wc++14-compat  -Wc++17compat  -Wc++20compat -Wcatch-value (C++ and Objective-C++ only) -Wchar-subscripts -Wclass-memaccess (C++ and Objective-C++ only) -Wcomment -Wdangling-else
+</span></span><span class="line"><span class="cl">  -Wdangling-pointer=2 -Wdelete-non-virtual-dtor (C++ and Objective-C++ only) -Wduplicate-decl-specifier (C and Objective-C only) -Wenum-compare (in C/ObjC; this is on by default in
+</span></span><span class="line"><span class="cl">  C++) -Wenum-int-mismatch (C and Objective-C only) -Wformat=1 -Wformat-contains-nul -Wformat-diag -Wformat-extra-args -Wformat-overflow=1 -Wformat-truncation=1 -Wformat-zero-length
+</span></span><span class="line"><span class="cl">  -Wframe-address -Wimplicit (C and Objective-C only) -Wimplicit-function-declaration (C and Objective-C only) -Wimplicit-int (C and Objective-C only) -Winfinite-recursion
+</span></span><span class="line"><span class="cl">  -Winit-self (C++ and Objective-C++ only) -Wint-in-bool-context -Wlogical-not-parentheses -Wmain (only for C/ObjC and unless -ffreestanding) -Wmaybe-uninitialized -Wmemset-elt-size
+</span></span><span class="line"><span class="cl">  -Wmemset-transposed-args -Wmisleading-indentation (only for C/C++) -Wmismatched-dealloc -Wmismatched-new-delete (C++ and Objective-C++ only) -Wmissing-attributes -Wmissing-braces
+</span></span><span class="line"><span class="cl">  (only for C/ObjC) -Wmultistatement-macros -Wnarrowing  (C++ and Objective-C++ only) -Wnonnull -Wnonnull-compare -Wopenmp-simd (C and C++ only) -Woverloaded-virtual=1 (C++ and
+</span></span><span class="line"><span class="cl">  Objective-C++ only) -Wpacked-not-aligned -Wparentheses -Wpessimizing-move (C++ and Objective-C++ only) -Wpointer-sign (only for C/ObjC) -Wrange-loop-construct (C++ and
+</span></span><span class="line"><span class="cl">  Objective-C++ only) -Wreorder (C++ and Objective-C++ only) -Wrestrict -Wreturn-type -Wself-move (C++ and Objective-C++ only) -Wsequence-point -Wsign-compare (C++ and Objective-C++
+</span></span><span class="line"><span class="cl">  only) -Wsizeof-array-div -Wsizeof-pointer-div -Wsizeof-pointer-memaccess -Wstrict-aliasing -Wstrict-overflow=1 -Wswitch -Wtautological-compare -Wtrigraphs -Wuninitialized
+</span></span><span class="line"><span class="cl">  -Wunknown-pragmas -Wunused -Wunused-but-set-variable -Wunused-const-variable=1 (only for C/ObjC) -Wunused-function -Wunused-label -Wunused-local-typedefs -Wunused-value
+</span></span><span class="line"><span class="cl">  -Wunused-variable -Wuse-after-free=2 -Wvla-parameter -Wvolatile-register-var -Wzero-length-bounds
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Note that some warning flags are not implied by -Wall.  Some of them warn about constructions that users generally do not consider questionable, but which occasionally you might
+</span></span><span class="line"><span class="cl">  wish to check for; others warn about constructions that are necessary or hard to avoid in some cases, and there is no simple way to modify the code to suppress the warning. Some of
+</span></span><span class="line"><span class="cl">  them are enabled by -Wextra but many of them must be enabled individually.
+</span></span></code></pre><pre class="chroma"><code><span class="line"><span class="cl">-Wextra
+</span></span><span class="line"><span class="cl">  This enables some extra warning flags that are not enabled by -Wall. (This option used to be called -W.  The older name is still supported, but the newer name is more descriptive.)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  -Wabsolute-value (only for C/ObjC) -Walloc-size -Wcalloc-transposed-args -Wcast-function-type -Wclobbered -Wdangling-reference (C++ only) -Wdeprecated-copy (C++ and Objective-C++
+</span></span><span class="line"><span class="cl">  only) -Wempty-body -Wenum-conversion (only for C/ObjC) -Wexpansion-to-defined -Wignored-qualifiers  (only for C/C++) -Wimplicit-fallthrough=3 -Wmaybe-uninitialized
+</span></span><span class="line"><span class="cl">  -Wmissing-field-initializers -Wmissing-parameter-name (C/ObjC only) -Wmissing-parameter-type (C/ObjC only) -Wold-style-declaration (C/ObjC only) -Woverride-init (C/ObjC only)
+</span></span><span class="line"><span class="cl">  -Wredundant-move (C++ and Objective-C++ only) -Wshift-negative-value (in C++11 to C++17 and in C99 and newer) -Wsign-compare (C++ and Objective-C++ only) -Wsized-deallocation (C++
+</span></span><span class="line"><span class="cl">  and Objective-C++ only) -Wstring-compare -Wtype-limits -Wuninitialized -Wunterminated-string-initialization -Wunused-parameter (only with -Wunused or -Wall)
+</span></span><span class="line"><span class="cl">  -Wunused-but-set-parameter (only with -Wunused or -Wall)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  The option -Wextra also prints warning messages for the following cases:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   A pointer is compared against integer zero with &#34;&lt;&#34;, &#34;&lt;=&#34;, &#34;&gt;&#34;, or &#34;&gt;=&#34;.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   (C++ only) An enumerator and a non-enumerator both appear in a conditional expression.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   (C++ only) Ambiguous virtual bases.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   (C++ only) Subscripting an array that has been declared &#34;register&#34;.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   (C++ only) Taking the address of a variable that has been declared &#34;register&#34;.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  *   (C++ only) A base class is not initialized in the copy constructor of a derived class.
+</span></span></code></pre><pre class="chroma"><code><span class="line"><span class="cl">-pedantic
+</span></span><span class="line"><span class="cl">  Issue all the warnings demanded by strict ISO C and ISO C++; diagnose all programs that use forbidden extensions, and some other programs that do not follow ISO C and ISO C++.
+</span></span><span class="line"><span class="cl">  This follows the version of the ISO C or C++ standard specified by any -std option used.
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  Valid ISO C and ISO C++ programs should compile properly with or without this option (though a rare few require -ansi or a -std option specifying the version of the standard).
+</span></span><span class="line"><span class="cl">  However, without this option, certain GNU extensions and traditional C and C++ features are supported as well.  With this option, they are diagnosed (or rejected with
+</span></span><span class="line"><span class="cl">  -pedantic-errors).
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  -Wpedantic does not cause warning messages for use of the alternate keywords whose names begin and end with __.  This alternate format can also be used to disable warnings for
+</span></span><span class="line"><span class="cl">  non-ISO __intN types, i.e. __intN__.  Pedantic warnings are also disabled in the expression that follows &#34;__extension__&#34;.  However, only system header files should use these escape
+</span></span><span class="line"><span class="cl">  routes; application programs should avoid them.
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  Some warnings about non-conforming programs are controlled by options other than -Wpedantic; in many cases they are implied by -Wpedantic but can be disabled separately by their
+</span></span><span class="line"><span class="cl">  specific option, e.g. -Wpedantic -Wno-pointer-sign.
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  Where the standard specified with -std represents a GNU extended dialect of C, such as gnu90 or gnu99, there is a corresponding base standard, the version of ISO C on which the GNU
+</span></span><span class="line"><span class="cl">  extended dialect is based.  Warnings from -Wpedantic are given where they are required by the base standard.  (It does not make sense for such warnings to be given only for
+</span></span><span class="line"><span class="cl">  features not in the specified GNU C dialect, since by definition the GNU dialects of C include all features the compiler supports with the given option, and there would be nothing
+</span></span><span class="line"><span class="cl">  to warn about.)
+</span></span></code></pre>
+<p>Some people recommend adding <code>-Werror</code> which turns every warning into an error, but I don&rsquo;t really think that&rsquo;s reasonable. When you&rsquo;re iterating on a project, being forced to
+fix any minutia slows you down. If you&rsquo;re going to enable it at all, I suggest you enable it for release builds.</p>
+
+<h4>Sanitizers</h4>
+
+<p>Sanitizers are your friend. They&rsquo;ll help you with detecting memory leaks, undefined behavior and other common bugs. They can be enabled with the <code>-fsanitize</code> flag.
+Also don&rsquo;t forget to add <code>-g</code> when compiling to add debug symbols, otherwise the sanitization errors might not be as useful.
+(You can also use valgrind but I won&rsquo;t get into it in this post).</p>
+
+<p>There&rsquo;s many sanitizers you can use. I recommend looking at the manpage and seeing what sanitizers are available. Bear in mind that not all sanitizers can be used together.
+So you might have to compile your code and test it with each sanitizer individually. As far as I know, you can use <code>-fsanitize=leak,undefined,address</code> and these 3 can work together just fine.
+So I recommend using this at least on your debug builds. (do not that if you use a library that has many leaks and was never used with sanitizers, you might have to add an ignore list so that you
+can sanitize your own code, it&rsquo;s just the state of things sadly)</p>
+
+<h4>C Standard</h4>
+
+<p>A lot of people swear by C89 but personally I&rsquo;m not a fan. I recommend C99+. C99 is a nice standard if you want to support as many compilers as possible and/or you don&rsquo;t need atomics.
+If you do need atomics, C11 is fine, Linux for example defaults to it (technically gnu11, but still).</p>
+
+<p>I recommend you always set your standard with <code>-std=c99</code> or whatever version you&rsquo;re using. GCC defaults to their own dialect which has a bunch of extensions. I&rsquo;d rather use the standard
+and not a dialect, only use it if you know you need the extensions (for some reason).</p>
+
+<h2>Compiler Flags</h2>
+
+<p>The following are flags that you might benefit from, they either add compile-time or runtime checks to make the compiler/program even stricter.</p>
+
+<p>Flags that enable compile-time checks:</p>
+
+<table>
+<thead>
+<tr>
+<th>Compiler Flag</th>
+<th>Supported since</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>-Wformat <br/>-Wformat=2</td>
+<td>GCC 2.95.3Clang 4.0.0</td>
+<td>Enable additional format function warnings</td>
+</tr>
+
+<tr>
+<td>-Wconversion <br/>-Wsign-conversion</td>
+<td>GCC 2.95.3Clang 4.0.0</td>
+<td>Enable implicit conversion warnings</td>
+</tr>
+
+<tr>
+<td>-Wtrampolines</td>
+<td>GCC 4.3.0</td>
+<td>Enable warnings about trampolines that require executable stacks</td>
+</tr>
+
+<tr>
+<td>-Wimplicit-fallthrough</td>
+<td>GCC 7.0.0Clang 4.0.0</td>
+<td>Warn when a switch case falls through</td>
+</tr>
+
+<tr>
+<td>-Wbidi-chars=any</td>
+<td>GCC 12.0.0</td>
+<td>Enable warnings for possibly misleading Unicode bidirectional control characters</td>
+</tr>
+
+<tr>
+<td>-Werror <br/>-Werror=<warning-flag></td>
+<td>GCC 2.95.3Clang 2.6.0</td>
+<td>Treat all or selected compiler warnings as errors. Use the blanket form  <br/>-Werror only during development, not in source distribution.</td>
+</tr>
+
+<tr>
+<td>-Werror=format-security</td>
+<td>GCC 2.95.3Clang 4.0.0</td>
+<td>Treat format strings that are not string literals and used without arguments as errors</td>
+</tr>
+
+<tr>
+<td>-Werror=implicit <br/>-Werror=incompatible-pointer-types <br/>-Werror=int-conversion</td>
+<td>GCC 2.95.3Clang 2.6.0</td>
+<td>Treat obsolete C constructs as errors</td>
+</tr>
+</tbody>
+</table>
+<p>Flags that enable runtime checks:</p>
+
+<table>
+<thead>
+<tr>
+<th>Compiler Flag</th>
+<th>Supported since</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>-D_FORTIFY_SOURCE=3</td>
+<td>GCC 12.0.0Clang 9.0.02</td>
+<td>Fortify sources with compile- and run-time checks for unsafe libc usage and buffer overflows. Some fortification levels can impact performance. Requires -O1 or higher, may require prepending -U_FORTIFY_SOURCE.</td>
+</tr>
+
+<tr>
+<td>-D_GLIBCXX_ASSERTIONS</td>
+<td>libstdc++ 6.0.0</td>
+<td>Precondition checks for C++ standard library calls. Can impact performance.</td>
+</tr>
+
+<tr>
+<td>-fstrict-flex-arrays=3</td>
+<td>GCC 13.0.0Clang 16.0.0</td>
+<td>Consider a trailing array in a struct as a flexible array if declared as []</td>
+</tr>
+
+<tr>
+<td>-fstack-clash-protection</td>
+<td>GCC 8.0.0Clang 11.0.0</td>
+<td>Enable run-time checks for variable-size stack allocation validity. Can impact performance.</td>
+</tr>
+
+<tr>
+<td>-fstack-protector-strong</td>
+<td>GCC 4.9.0Clang 6.0.0</td>
+<td>Enable run-time checks for stack-based buffer overflows. Can impact performance.</td>
+</tr>
+
+<tr>
+<td>-fcf-protection=full</td>
+<td>GCC 8.0.0Clang 7.0.0</td>
+<td>Enable control-flow protection against return-oriented programming (ROP) and jump-oriented programming (JOP) attacks on x86_64</td>
+</tr>
+
+<tr>
+<td>-mbranch-protection=standard</td>
+<td>GCC 9.0.0Clang 8.0.0</td>
+<td>Enable branch protection against ROP and JOP attacks on AArch64</td>
+</tr>
+
+<tr>
+<td><br/>-Wl,-z,nodlopen</td>
+<td>Binutils 2.10.0</td>
+<td>Restrict dlopen(3) calls to shared objects</td>
+</tr>
+
+<tr>
+<td><br/>-Wl,-z,noexecstack</td>
+<td>Binutils 2.14.0</td>
+<td>Enable data execution prevention by marking stack memory as non-executable</td>
+</tr>
+
+<tr>
+<td><br/>-Wl,-z,relro <br/>-Wl,-z,now</td>
+<td>Binutils 2.15.0</td>
+<td>Mark relocation table entries resolved at load-time as read-only.  <br/>-Wl,-z,now can impact startup performance.</td>
+</tr>
+
+<tr>
+<td>-fPIE -pie</td>
+<td>Binutils 2.16.0Clang 5.0.0</td>
+<td>Build as position-independent executable. Can impact performance on 32-bit architectures.</td>
+</tr>
+
+<tr>
+<td>-fPIC -shared</td>
+<td>&lt; Binutils 2.6.0Clang 5.0.0</td>
+<td>Build as position-independent code. Can impact performance on 32-bit architectures.</td>
+</tr>
+
+<tr>
+<td>-fno-delete-null-pointer-checks</td>
+<td>GCC 3.0.0Clang 7.0.0</td>
+<td>Force retention of null pointer checks</td>
+</tr>
+
+<tr>
+<td>-fno-strict-overflow</td>
+<td>GCC 4.2.0</td>
+<td>Define behavior for signed integer and pointer arithmetic overflows</td>
+</tr>
+
+<tr>
+<td>-fno-strict-aliasing</td>
+<td>GCC 2.95.3Clang 2.9.0</td>
+<td>Do not assume strict aliasing</td>
+</tr>
+
+<tr>
+<td>-ftrivial-auto-var-init</td>
+<td>GCC 12.0.0Clang 8.0.0</td>
+<td>Initialize automatic variables that lack explicit initializers</td>
+</tr>
+
+<tr>
+<td>-fexceptions</td>
+<td>GCC 2.95.3Clang 2.6.0</td>
+<td>Enable exception propagation to harden multi-threaded C code</td>
+</tr>
+
+<tr>
+<td>-fhardened</td>
+<td>GCC 14.0.0</td>
+<td>Enable pre-determined set of hardening options in GCC</td>
+</tr>
+
+<tr>
+<td><br/>-Wl,&ndash;as-needed <br/>-Wl,&ndash;no-copy-dt-needed-entries</td>
+<td>Binutils 2.20.0</td>
+<td>Allow linker to omit libraries specified on the command line to link against if they are not used</td>
+</tr>
+
+<tr>
+<td>-fzero-init-padding-bits=all</td>
+<td>GCC 15.0.0</td>
+<td>Guarantee zero initialization of padding bits in all automatic variable initializers</td>
+</tr>
+</tbody>
+</table>
+<p>I suggest you read the manpages and search online for the flags you&rsquo;re interested in using.</p>
+
+  </div>
+</div>
+
+		</main>
+
+		<div class="footer-container">
+			<footer>
+				<div>©RaphGL 2025</div>
+				<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
+	"unicode/utf8"
 
 	"github.com/alecthomas/chroma/v2"
 	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
@@ -23,7 +25,22 @@ import (
 func EstimateReadTime(content string) time.Duration {
 	const WordsPerMinute = 220
 	totalWords := 0
-	for range strings.SplitSeq(content, " ") {
+	for word := range strings.SplitSeq(content, " ") {
+		if len(word) == 0 {
+			continue
+		}
+
+		r, rSize := utf8.DecodeRuneInString(word)
+		if len(word) == 1 && rSize >= 1 {
+			if unicode.IsSymbol(r) {
+				continue
+			}
+
+			if unicode.IsSpace(r) {
+				continue
+			}
+		}
+
 		totalWords += 1
 	}
 
