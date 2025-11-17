@@ -1,7 +1,6 @@
 ---
 title: C compiler flags you ought to know
 description: A compiled list of compiler flags that make development and catching errors easier
-date: 2025-11-17
 ---
 
 C compilers have bad defaults due to the need to be "backwards compatible".

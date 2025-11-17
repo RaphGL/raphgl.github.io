@@ -108,6 +108,11 @@ func NewPost(path string) (Post, error) {
 		}
 	}
 
+	_, err = time.Parse("2006-01-02", post.Date)
+	if err != nil || len(post.Date) == 0 {
+		return Post{}, fmt.Errorf("`%v` is missing date of in the format YYYY-MM-DD: %v", path, err)
+	}
+
 	return post, nil
 }
 
