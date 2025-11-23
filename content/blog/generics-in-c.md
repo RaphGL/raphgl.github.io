@@ -58,7 +58,7 @@ Cons:
 
 ## Achieving generics through header instantiation
 
-The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if the that type is not a valid name for an identifier.
+The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid name for an identifier.
 To do this, we'll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:
 
 ```c
@@ -183,7 +183,7 @@ And then on your C files you can tell it that you need the implementations insta
 
 --- 
 
-Side Note: if you include the header in another header, you can still just call `#define VEC_IMPLEMENTION` without reincluding the generic header library to get the implementation.
+Side Note: if you include the header in another header, you can still just call `#define VEC_IMPLEMENTATION` without reincluding the generic header library to get the implementation.
 Which is a nice side effect of this approach to generics, but it can end up looking a bit implicit because the include is hidden in another include.
 
 Example:

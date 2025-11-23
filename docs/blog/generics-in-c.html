@@ -817,7 +817,7 @@ Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped i
 
 <h2>Achieving generics through header instantiation</h2>
 
-<p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if the that type is not a valid name for an identifier.
+<p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid name for an identifier.
 To do this, we&rsquo;ll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE long long
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define VEC_SUFFIX num
@@ -919,7 +919,7 @@ using this generic library on <code>.c</code> and <code>.h</code> files.</p>
 </span></span></span></code></pre>
 <hr>
 
-<p>Side Note: if you include the header in another header, you can still just call <code>#define VEC_IMPLEMENTION</code> without reincluding the generic header library to get the implementation.
+<p>Side Note: if you include the header in another header, you can still just call <code>#define VEC_IMPLEMENTATION</code> without reincluding the generic header library to get the implementation.
 Which is a nice side effect of this approach to generics, but it can end up looking a bit implicit because the include is hidden in another include.</p>
 
 <p>Example:</p>
