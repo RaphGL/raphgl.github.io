@@ -1,19 +1,11 @@
 <div class="post-header">
-	{{if .Date}}
-	<div id="date">
-		<i>{{.Date}}</i>
-	</div>
-	{{end}}
-
-	{{if .Title}}
-		<div id="title">
-			{{.Title}}
-		</div>
-	{{end}}
-
-	{{if .Description}}
-		<div id="description">
-			{{.Description}}
-		</div>
-	{{end}}
+    {{if .Date}}
+    <div id="date">
+        <i>{{.Date}}</i>
+    </div>
+    {{end}} {{if .Title}}
+    <div id="title">{{.Title}}</div>
+    {{end}} {{if .Description}}
+    <div id="description">{{.Description}}</div>
+    {{end}}
 </div>

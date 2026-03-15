@@ -381,7 +381,7 @@ blockquote {
  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
 
 :root {
-  --bg: #212730; 
+  --bg: #212730;
   --bg2: #363b44;
   --bg3: #63676e;
   --fg: #EEEEEE;
@@ -407,7 +407,7 @@ hr {
 }
 
 /* no idea how this works, I just adapted it to my website lol */
-table { 
+table {
     margin: 1em auto;
     border: 1px solid #ddd;
     border-collapse: separate;
@@ -431,13 +431,13 @@ table {
     }
 
     th, td {
-        padding: 5px 4px 6px 4px; 
+        padding: 5px 4px 6px 4px;
         vertical-align: top;
-        border-left: 2px solid #ddd;    
+        border-left: 2px solid #ddd;
     }
 
     td {
-        border-top: 2px solid #ddd;    
+        border-top: 2px solid #ddd;
         padding: 0.5em 1em;
     }
 
@@ -452,13 +452,13 @@ table {
 
 h1, h2, h3, h4, h5, h6 {
   font-style: bold;
-  margin: 0.5em 0;  
+  margin: 0.5em 0;
   text-indent: 0;
   color: var(--fg2);
 }
 
 h1 {
- font-size: 1.9em; 
+ font-size: 1.9em;
 }
 
 h2 {
@@ -507,7 +507,7 @@ a {
   text-decoration: underline;
 
   &:hover {
-   color: var(--fg); 
+   color: var(--fg);
   }
 }
 
@@ -545,8 +545,8 @@ navbar {
 
   .username {
     font-weight: bold;
-    font-family: "JetBrains Mono";
     color: var(--fg);
+    text-decoration: none;
     font-size: 1.2em;
     text-align: center;
   }
@@ -560,9 +560,8 @@ navbar {
   .post-header-wrapper {
     display: flex;
     align-items: center;
+    text-align: center;
     flex-direction: column;
-    color: var(--fg);
-    background-color: var(--bg2);
     padding: 2em;
   }
 
@@ -572,7 +571,7 @@ navbar {
     #title {
       font-weight: bold;
       font-size: 2em;
-    } 
+    }
 
     #date {
       font-size: 1em;
@@ -582,7 +581,9 @@ navbar {
   .post-content {
     padding: 1em;
     width: 100%;
-    max-width: 80ch;
+    @media (width > 600px) {
+        max-width: 80vw;
+    }
     margin: auto;
     margin-bottom: 1em;
     text-align: justify;
@@ -632,10 +633,6 @@ navbar {
     a {
       font-size: 1.1em;
       text-decoration: none;
-      color: var(--fg);
-      &:hover {
-        color: var(--fg2);
-      }
     }
   }
 }
@@ -724,8 +721,8 @@ footer {
 	</head>
 	<body>
 		<navbar>
-			<a href="/">
-				<div class="username">RaphGL</div>
+			<a href="/" class="username">
+				RaphGL
 			<a/>
 			<ul>
 				<li><a href="https://github.com/RaphGL/">GitHub</a></li>
@@ -738,23 +735,15 @@ footer {
 			<div class="post-container">
   <div class="post-header-wrapper">
     <div class="post-header">
-	
-	<div id="date">
-		<i>2025-11-17</i>
-	</div>
-	
-
-	
-		<div id="title">
-			C compiler flags you ought to know
-		</div>
-	
-
-	
-		<div id="description">
-			A compiled list of compiler flags that make development and catching errors easier
-		</div>
-	
+    
+    <div id="date">
+        <i>2025-11-17</i>
+    </div>
+     
+    <div id="title">C compiler flags you ought to know</div>
+     
+    <div id="description">A compiled list of compiler flags that make development and catching errors easier</div>
+    
 </div>
 
   </div>
@@ -1066,7 +1055,7 @@ and not a dialect, only use it if you know you need the extensions (for some rea
 
 		<div class="footer-container">
 			<footer>
-				<div>©RaphGL 2025</div>
+				<div>©RaphGL 2026</div>
 				<div><a href="https://github.com/RaphGL/raphgl.github.io">Source Code</a></div>
 			</footer>
 		</div>
