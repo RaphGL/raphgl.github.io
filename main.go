@@ -79,6 +79,10 @@ func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	destExt := filepath.Ext(destPath)
 	destPath = destPath[:len(destPath)-len(destExt)] + ".html"
 	parentPath = strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
+
+	// if on windows it will use backslash instead so we need to convert it
+	parentPath = filepath.ToSlash(parentPath)
+	destPath = filepath.ToSlash(destPath)
 	return
 }
 
