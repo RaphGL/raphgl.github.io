@@ -831,7 +831,7 @@ Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped i
 
 <h2>Achieving generics through header instantiation</h2>
 
-<p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid name for an identifier.
+<p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid identifier name.
 To do this, we&rsquo;ll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE long long
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define VEC_SUFFIX num
@@ -877,7 +877,7 @@ So we have to introduce a way of programmatically overriding the suffix that&rsq
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define G(name) _G(name, VEC_SUFFIX)
 </span></span></span></code></pre>
 <p>Now we&rsquo;re free to implement our library. For example, here&rsquo;s a generic <code>vec_pop</code> implementation:</p>
-<pre class="chroma"><code><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">   <span class="p">}</span>
@@ -890,7 +890,7 @@ So we have to introduce a way of programmatically overriding the suffix that&rsq
 </span></span><span class="line"><span class="cl">   <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre>
-<p>As you can see, every time we call anything generic we need to wrap it in <code>G</code> so that it can be specialized and name mangled properly.</p>
+<p>As you can see, every time we call anything generic we need to wrap it in <code>G</code> so that it can properly call the generic function.</p>
 
 <h3>The elephants in the room</h3>
 
@@ -903,9 +903,9 @@ using this generic library on <code>.c</code> and <code>.h</code> files.</p>
 
 <p>The actual fix is to be able to choose when to forward declare and when to use the implementation:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_IMPLEMENTATION
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">);</span>
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="cp">#else
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_pop</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">     <span class="p">}</span>
@@ -926,7 +926,7 @@ using this generic library on <code>.c</code> and <code>.h</code> files.</p>
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span></span></span></code></pre>
-<p>And then on your C files you can tell it that you need the implementations instantiated</p>
+<p>And then on your C files you can tell it that you need the implementations, not the declarations.</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define VEC_ITEM_TYPE int
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;vector.h&#34;</span><span class="cp">
@@ -952,7 +952,7 @@ If we do:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
 </span></span></span></code></pre>
-<p>This way we still get a &ldquo;undeclared VEC_ITEM_TYPE&rdquo; error if we include the vector again and forget to tell it what type we want instantiated.</p>
+<p>This way we still get a &ldquo;VEC_ITEM_TYPE is not defined&rdquo; error if we include the vector again and forget to tell it what type we want instantiated.</p>
 
 <p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> files for convenience&rsquo;s sake.</p>
 
@@ -960,6 +960,21 @@ If we do:</p>
 
 <p>You might be asking about the missing include guard, but you don&rsquo;t need it! The reason is that we actually want to be able to include the same header multiple times.
 Each time with a different type.</p>
+
+<p>You might still want to have an include guard for a section of the header if you want to declare some types or code
+that is not generic in the header. A good example of this would be if your allocator would receive an allocator context
+which does not care about types. For example, you might want to have something like this:</p>
+<pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VECTOR_H
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define VECTOR_H
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">vec_allocator</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">malloc</span><span class="p">)(</span><span class="kt">size_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">free</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">VecAllocator</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span></code></pre>
+<p>That way, every single vector could still share the same allocator type.</p>
 
 <h2>Putting everything together</h2>
 
@@ -983,27 +998,27 @@ Each time with a different type.</p>
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_IMPLEMENTATION
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_vector</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">   <span class="kt">size_t</span> <span class="n">capacity</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">   <span class="kt">size_t</span> <span class="n">len</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">   <span class="n">VEC_ITEM_TYPE</span> <span class="o">*</span><span class="n">vec</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="cp">#ifndef VEC_IMPLEMENTATION
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">#else
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1">// Initializes a new vector with items of sizeof(T)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">   <span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">vector</span><span class="p">));</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_new</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">vector</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vector</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">   <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">   <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="p">(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="o">*</span><span class="n">vector</span> <span class="o">=</span> <span class="p">(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">))</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">      <span class="p">.</span><span class="n">vec</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">,</span>
@@ -1013,7 +1028,7 @@ Each time with a different type.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// Resizes vector to fit length
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_fit</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">   <span class="k">const</span> <span class="kt">size_t</span> <span class="n">power</span> <span class="o">=</span> <span class="nf">ceilf</span><span class="p">(</span><span class="nf">log2f</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">   <span class="k">const</span> <span class="kt">size_t</span> <span class="n">new_capacity</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="nf">powf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">power</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
@@ -1029,7 +1044,7 @@ Each time with a different type.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// Pushes a value to vector
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">vec_Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">bool</span> <span class="nf">G</span><span class="p">(</span><span class="n">vec_push</span><span class="p">)(</span><span class="nf">G</span><span class="p">(</span><span class="n">Vector</span><span class="p">)</span> <span class="o">*</span><span class="n">vec</span><span class="p">,</span> <span class="n">VEC_ITEM_TYPE</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">   <span class="k">if</span> <span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span> <span class="o">=</span> <span class="nf">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
 </span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vec</span><span class="o">-&gt;</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
@@ -1049,7 +1064,8 @@ Each time with a different type.</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="cp">#endif
-</span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
 </span></span></span></code></pre>
   </div>

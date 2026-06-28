@@ -58,7 +58,7 @@ Cons:
 
 ## Achieving generics through header instantiation
 
-The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid name for an identifier.
+The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid identifier name.
 To do this, we'll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:
 
 ```c
@@ -121,7 +121,7 @@ So we have to introduce a way of programmatically overriding the suffix that's a
 Now we're free to implement our library. For example, here's a generic `vec_pop` implementation:
 
 ```c
-bool G(vec_pop)(G(vec_Vector) *vec, VEC_ITEM_TYPE *dest) {
+bool G(vec_pop)(G(Vector) *vec, VEC_ITEM_TYPE *dest) {
    if (!vec->vec || vec->len <= 0 || vec->capacity <= 0) {
       return false;
    }
@@ -135,7 +135,7 @@ bool G(vec_pop)(G(vec_Vector) *vec, VEC_ITEM_TYPE *dest) {
 }
 ```
 
-As you can see, every time we call anything generic we need to wrap it in `G` so that it can be specialized and name mangled properly.
+As you can see, every time we call anything generic we need to wrap it in `G` so that it can properly call the generic function.
 
 ### The elephants in the room
 #### Redeclaration error
@@ -149,9 +149,9 @@ The actual fix is to be able to choose when to forward declare and when to use t
 
 ```c
 #ifndef VEC_IMPLEMENTATION
-  bool G(vec_pop)(G(vec_Vector) *vec, VEC_ITEM_TYPE *dest);
+  bool G(vec_pop)(G(Vector) *vec, VEC_ITEM_TYPE *dest);
 #else
-  bool G(vec_pop)(G(vec_Vector) *vec, VEC_ITEM_TYPE *dest) {
+  bool G(vec_pop)(G(Vector) *vec, VEC_ITEM_TYPE *dest) {
      if (!vec->vec || vec->len <= 0 || vec->capacity <= 0) {
         return false;
      }
@@ -174,7 +174,7 @@ You can then just include the header in header files
 #include <stdio.h>
 #include <stdlib.h>
 ```
-And then on your C files you can tell it that you need the implementations instantiated
+And then on your C files you can tell it that you need the implementations, not the declarations.
 ```c
 #define VEC_IMPLEMENTATION
 #define VEC_ITEM_TYPE int
@@ -205,13 +205,31 @@ We'll have a redeclaration error, because both includes see `VEC_ITEM_TYPE` as `
 #undef VEC_ITEM_TYPE
 #undef VEC_SUFFIX
 ```
-This way we still get a "undeclared VEC_ITEM_TYPE" error if we include the vector again and forget to tell it what type we want instantiated.
+This way we still get a "VEC_ITEM_TYPE is not defined" error if we include the vector again and forget to tell it what type we want instantiated.
 
 NOTE: We don't undefine `VEC_IMPLEMENTATION` so that we can just declare it once in our `.c` files for convenience's sake.
 
 #### Include guards
 You might be asking about the missing include guard, but you don't need it! The reason is that we actually want to be able to include the same header multiple times.
 Each time with a different type.
+
+You might still want to have an include guard for a section of the header if you want to declare some types or code
+that is not generic in the header. A good example of this would be if your allocator would receive an allocator context
+which does not care about types. For example, you might want to have something like this:
+
+```c
+#ifndef VECTOR_H
+#define VECTOR_H
+
+typedef struct vec_allocator {
+   void *(*malloc)(size_t);
+   void (*free)(void *);
+} VecAllocator;
+
+#endif
+```
+
+That way, every single vector could still share the same allocator type.
 
 ## Putting everything together
 The final header should look something like this:
@@ -236,27 +254,27 @@ The final header should look something like this:
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef VEC_IMPLEMENTATION
+
 typedef struct G(vec_vector) {
    size_t capacity;
    size_t len;
    VEC_ITEM_TYPE *vec;
-} G(vec_Vector);
+} G(Vector);
 
-#ifndef VEC_IMPLEMENTATION
-
-G(vec_Vector) * G(vec_new)(void);
-bool G(vec_push)(G(vec_Vector) *vec, VEC_ITEM_TYPE item);
+G(Vector) * G(vec_new)(void);
+bool G(vec_push)(G(Vector) *vec, VEC_ITEM_TYPE item);
 
 #else
 
 // Initializes a new vector with items of sizeof(T)
-G(vec_Vector) * G(vec_new)(void) {
-   G(vec_Vector) *vector = malloc(sizeof(*vector));
+G(Vector) * G(vec_new)(void) {
+   G(Vector) *vector = malloc(sizeof(*vector));
    if (!vector) {
       return NULL;
    }
 
-   *vector = (G(vec_Vector)) {
+   *vector = (G(Vector)) {
       .capacity = 0,
       .len = 0,
       .vec = NULL,
@@ -266,7 +284,7 @@ G(vec_Vector) * G(vec_new)(void) {
 }
 
 // Resizes vector to fit length
-bool G(vec_fit)(G(vec_Vector) *vec) {
+bool G(vec_fit)(G(Vector) *vec) {
    const size_t power = ceilf(log2f(vec->len + 1));
    const size_t new_capacity = sizeof(vec->vec[0]) * powf(2, power);
 
@@ -282,7 +300,7 @@ bool G(vec_fit)(G(vec_Vector) *vec) {
 }
 
 // Pushes a value to vector
-bool G(vec_push)(G(vec_Vector) *vec, VEC_ITEM_TYPE item) {
+bool G(vec_push)(G(Vector) *vec, VEC_ITEM_TYPE item) {
    if (vec->len == 0 && vec->capacity == 0) {
       vec->vec = malloc(sizeof(vec->vec[0]));
       if (!vec->vec) {
@@ -302,6 +320,7 @@ bool G(vec_push)(G(vec_Vector) *vec, VEC_ITEM_TYPE item) {
 }
 
 #endif
+
 #undef VEC_ITEM_TYPE
 #undef VEC_SUFFIX
 ```

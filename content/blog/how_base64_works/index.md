@@ -1,5 +1,6 @@
 ---
 title: How base64 works
+description: A step by step guide into implementing base64 in C
 date: 2024-11-01
 ---
 
