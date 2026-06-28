@@ -378,19 +378,20 @@ h6,
 blockquote {
   text-wrap: balance;
 }
- @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Viga&display=swap');
 
 :root {
   --bg: #212730;
-  --bg2: #363b44;
-  --bg3: #63676e;
+  --bg2: #1f242b;
+  --bg3: #323945;
   --fg: #EEEEEE;
   --fg2: #9ECAD6;
-  --radius: 6px;
+  --fg3: #c0c0c1;
+  --radius: 20px;
 }
 
 body {
-  font-family: "TikTok Sans", sans-serif;
+  font-family: "Fira Sans", sans-serif;
   background-color: var(--bg);
   color: var(--fg);
 
@@ -454,7 +455,7 @@ h1, h2, h3, h4, h5, h6 {
   font-style: bold;
   margin: 0.5em 0;
   text-indent: 0;
-  color: var(--fg2);
+  color: var(--fg);
 }
 
 h1 {
@@ -489,6 +490,7 @@ code {
   display: inline-block;
   background-color: var(--bg2);
   border-radius: var(--radius);
+  border: 1px solid var(--bg3);
   padding: 0 0.2em;
   font-family: "JetBrains Mono", monospace;
   font-size: 11pt;
@@ -505,10 +507,6 @@ pre code {
 a {
   color: var(--fg2);
   text-decoration: underline;
-
-  &:hover {
-   color: var(--fg);
-  }
 }
 
 navbar {
@@ -517,8 +515,18 @@ navbar {
   justify-items: center;
   justify-content: center;
   align-items: center;
-  padding: 0.5em;
-  gap: 0.5em;
+
+  background-color: var(--bg2);
+  border-bottom: 1px solid var(--bg3);
+  padding: 1em;
+
+  .items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 920px;    
+  }
 
   ul {
     display: flex;
@@ -529,6 +537,7 @@ navbar {
     list-style: none;
 
     a {
+      color: var(--fg);
       text-decoration: none;
       transition: text-decoration ease-in;
     }
@@ -544,6 +553,7 @@ navbar {
   }
 
   .username {
+    font-family: "Viga", sans-serif;
     font-weight: bold;
     color: var(--fg);
     text-decoration: none;
@@ -556,13 +566,14 @@ navbar {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding: 3em 1em;
 
   .post-header-wrapper {
     display: flex;
     align-items: center;
     text-align: center;
     flex-direction: column;
-    padding: 2em;
+    margin: 2em 0;
   }
 
   .post-header {
@@ -571,26 +582,33 @@ navbar {
     #title {
       font-weight: bold;
       font-size: 2em;
+      color: var(--fg2);
     }
 
     #date {
       font-size: 1em;
     }
+
+    #description {
+      color: var(--fg3);
+    }
   }
 
   .post-content {
-    padding: 1em;
     width: 100%;
     @media (width > 600px) {
-        max-width: 80vw;
+        max-width: 1080px;
     }
     margin: auto;
     margin-bottom: 1em;
-    text-align: justify;
-    text-wrap: pretty;
-    hyphens: auto;
-    hyphenate-limit-chars: 7;
     text-indent: 1em;
+
+    h2 {
+      color: var(--fg2);
+      border-bottom: 2px solid var(--bg3);
+      border-spacing: 0.5em;
+      padding-bottom: 0.5em;
+    }
   }
 }
 
@@ -601,18 +619,19 @@ navbar {
   align-items: center;
   margin: 2em auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 920px;
 
   .item {
     background-color: var(--bg2);
-    padding: 0.5em 1.5em;
+    padding: 1em 2em;
     border-radius: var(--radius);
+    border: 1px solid var(--bg3);
     width: 95%;
-    color: lightgrey;
+    color: var(--fg3);
 
     .title {
       display: flex;
-      font-weight: 500;
+      font-weight: 600;
       justify-content: space-between;
       gap: 1em;
       @media (width < 1024px) {
@@ -623,7 +642,7 @@ navbar {
 
     .metadata {
       display: flex;
-      gap: 1em;
+      gap: 0.5em;
     }
 
     .description {
@@ -643,9 +662,15 @@ footer {
   display: flex;
   justify-content: center;
   gap: 1.2em;
-  color: var(--fg2);
   font-size: 1em;
-  padding: 1em;
+  padding: 1.5em;
+  background-color: var(--bg2);
+  border-top: 1px solid var(--bg3);
+  color: var(--fg);
+
+  a {
+    text-decoration: none;
+  }
 }
 
  /* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
@@ -721,6 +746,7 @@ footer {
 	</head>
 	<body>
 		<navbar>
+			<div class="items">
 			<a href="/" class="username">
 				RaphGL
 			<a/>
@@ -729,6 +755,7 @@ footer {
 				<li><a href="https://codeberg.org/RaphGL/">Codeberg</a></li>
 				<li><a href="https://gitlab.com/RaphGL/">Gitlab</a></li>
 			</ul>
+			</div>
 		</navbar>
 
 		<main>
@@ -736,9 +763,7 @@ footer {
   <div class="post-header-wrapper">
     <div class="post-header">
     
-    <div id="date">
-        <i>2022-10-10</i>
-    </div>
+    <div id="date">2022-10-10</div>
      
     <div id="title">Poetry is a saner package manager for Python</div>
      
