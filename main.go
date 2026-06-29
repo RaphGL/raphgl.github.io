@@ -86,6 +86,27 @@ func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	return
 }
 
+func CopyStaticFile(path string) error {
+	contents, err := os.ReadFile(path)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	parentPath, destPath := GetTargetPath(path)
+	if err := os.MkdirAll(parentPath, 0755); err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	if err := os.WriteFile(destPath, contents, 0755); err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return nil
+}
+
 func main() {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
@@ -119,6 +140,7 @@ func main() {
 		}
 	}()
 
+	// === Taxonomize all website files ===
 	mdFiles := make([]string, 0)
 	staticFiles := make([]string, 0)
 	filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
@@ -132,6 +154,18 @@ func main() {
 		}
 
 		mdFiles = append(mdFiles, path)
+		return nil
+	})
+	filepath.WalkDir("./static", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		if d.IsDir() {
+			return nil
+		}
+
+		staticFiles = append(staticFiles, path)
 		return nil
 	})
 
@@ -198,46 +232,8 @@ func main() {
 		return
 	}
 
-	// === Copy static files ===
-	copyStaticFile := func(path string) error {
-		contents, err := os.ReadFile(path)
-		if err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
-		parentPath, destPath := GetTargetPath(path)
-		if err := os.MkdirAll(parentPath, 0755); err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
-		if err := os.WriteFile(destPath, contents, 0755); err != nil {
-			fmt.Println(err)
-			return nil
-		}
-
-		return nil
-	}
-
-	filepath.WalkDir("./static", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			fmt.Println(err)
-			return nil
-		}
-		if d.IsDir() {
-			os.MkdirAll(path, 0)
-			return nil
-		}
-
-		if err := copyStaticFile(path); err != nil {
-			fmt.Println(err)
-			return nil
-		}
-		return nil
-	})
 	for _, file := range staticFiles {
-		if err := copyStaticFile(file); err != nil {
+		if err := CopyStaticFile(file); err != nil {
 			fmt.Println(err)
 		}
 	}

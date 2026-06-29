@@ -188,6 +188,10 @@ navbar {
   gap: 1em;
   padding: 3em 1em;
 
+  img {
+    margin: 1em auto;
+  }
+
   .post-header-wrapper {
     display: flex;
     align-items: center;

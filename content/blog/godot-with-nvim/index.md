@@ -26,8 +26,8 @@ You probably want syntax highlighting, for that you have 2 options: you could in
 
 To set up the editor go to `Editor > Editor Settings > Text Editor` and change the `Exec Path` to the terminal of your liking (kitty in my case) and on `Exec Flags` put `nvim {file}`.  
 
-![Editor settings > External Editor](/blog/nvim-for-godot/godot.png)
+![Editor settings > External Editor](./godot.png)
 
 Now everything should be working correctly and when you click to open a script on the engine it should open nvim on the correct file.  
 
-![Neovim opened with Godot](/blog/nvim-for-godot/vim.png)
+![Neovim opened with Godot](./vim.png)
