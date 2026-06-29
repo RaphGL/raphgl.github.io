@@ -391,6 +391,12 @@ blockquote {
 }
 
 body {
+  /*
+    iPhones are stupid and will do text inflation on code snippets.
+    This prevents apple's stupidity.
+  */
+  -webkit-text-size-adjust: 100%
+
   font-family: "Fira Sans", sans-serif;
   background-color: var(--bg);
   color: var(--fg);
