@@ -634,6 +634,11 @@ navbar {
     border: 1px solid var(--bg3);
     width: 95%;
     color: var(--fg3);
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--bg2) 100%, var(--fg2) 5%);
+    }
 
     .title {
       display: flex;
