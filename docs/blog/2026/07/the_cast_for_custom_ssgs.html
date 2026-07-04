@@ -3,7 +3,7 @@
 	<head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>RaphGL </title>
+	  <title>RaphGL | The case for custom static site generators</title>
 
 		
     <style>
@@ -684,6 +684,73 @@ footer {
   }
 }
 
+ /* Background */ .bg { color: #f8f8f2; background-color: #282a36; }
+/* PreWrapper */ .chroma { color: #f8f8f2; background-color: #282a36; }
+/* LineLink */ .chroma .lnlinks { outline: none; text-decoration: none; color: inherit }
+/* LineTableTD */ .chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+/* LineTable */ .chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+/* LineHighlight */ .chroma .hl { background-color: #3d3f4a }
+/* LineNumbersTable */ .chroma .lnt { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* LineNumbers */ .chroma .ln { white-space: pre; -webkit-user-select: none; user-select: none; margin-right: 0.4em; padding: 0 0.4em 0 0.4em;color: #7f7f7f }
+/* Line */ .chroma .line { display: flex; }
+/* Keyword */ .chroma .k { color: #ff79c6 }
+/* KeywordConstant */ .chroma .kc { color: #ff79c6 }
+/* KeywordDeclaration */ .chroma .kd { color: #8be9fd; font-style: italic }
+/* KeywordNamespace */ .chroma .kn { color: #ff79c6 }
+/* KeywordPseudo */ .chroma .kp { color: #ff79c6 }
+/* KeywordReserved */ .chroma .kr { color: #ff79c6 }
+/* KeywordType */ .chroma .kt { color: #8be9fd }
+/* NameAttribute */ .chroma .na { color: #50fa7b }
+/* NameClass */ .chroma .nc { color: #50fa7b }
+/* NameLabel */ .chroma .nl { color: #8be9fd; font-style: italic }
+/* NameTag */ .chroma .nt { color: #ff79c6 }
+/* NameBuiltin */ .chroma .nb { color: #8be9fd; font-style: italic }
+/* NameBuiltinPseudo */ .chroma .bp { font-style: italic }
+/* NameVariable */ .chroma .nv { color: #8be9fd; font-style: italic }
+/* NameVariableClass */ .chroma .vc { color: #8be9fd; font-style: italic }
+/* NameVariableGlobal */ .chroma .vg { color: #8be9fd; font-style: italic }
+/* NameVariableInstance */ .chroma .vi { color: #8be9fd; font-style: italic }
+/* NameVariableMagic */ .chroma .vm { color: #8be9fd; font-style: italic }
+/* NameFunction */ .chroma .nf { color: #50fa7b }
+/* NameFunctionMagic */ .chroma .fm { color: #50fa7b }
+/* LiteralString */ .chroma .s { color: #f1fa8c }
+/* LiteralStringAffix */ .chroma .sa { color: #f1fa8c }
+/* LiteralStringBacktick */ .chroma .sb { color: #f1fa8c }
+/* LiteralStringChar */ .chroma .sc { color: #f1fa8c }
+/* LiteralStringDelimiter */ .chroma .dl { color: #f1fa8c }
+/* LiteralStringDoc */ .chroma .sd { color: #f1fa8c }
+/* LiteralStringDouble */ .chroma .s2 { color: #f1fa8c }
+/* LiteralStringEscape */ .chroma .se { color: #f1fa8c }
+/* LiteralStringHeredoc */ .chroma .sh { color: #f1fa8c }
+/* LiteralStringInterpol */ .chroma .si { color: #f1fa8c }
+/* LiteralStringOther */ .chroma .sx { color: #f1fa8c }
+/* LiteralStringRegex */ .chroma .sr { color: #f1fa8c }
+/* LiteralStringSingle */ .chroma .s1 { color: #f1fa8c }
+/* LiteralStringSymbol */ .chroma .ss { color: #f1fa8c }
+/* LiteralNumber */ .chroma .m { color: #bd93f9 }
+/* LiteralNumberBin */ .chroma .mb { color: #bd93f9 }
+/* LiteralNumberFloat */ .chroma .mf { color: #bd93f9 }
+/* LiteralNumberHex */ .chroma .mh { color: #bd93f9 }
+/* LiteralNumberInteger */ .chroma .mi { color: #bd93f9 }
+/* LiteralNumberIntegerLong */ .chroma .il { color: #bd93f9 }
+/* LiteralNumberOct */ .chroma .mo { color: #bd93f9 }
+/* Operator */ .chroma .o { color: #ff79c6 }
+/* OperatorWord */ .chroma .ow { color: #ff79c6 }
+/* Comment */ .chroma .c { color: #6272a4 }
+/* CommentHashbang */ .chroma .ch { color: #6272a4 }
+/* CommentMultiline */ .chroma .cm { color: #6272a4 }
+/* CommentSingle */ .chroma .c1 { color: #6272a4 }
+/* CommentSpecial */ .chroma .cs { color: #6272a4 }
+/* CommentPreproc */ .chroma .cp { color: #ff79c6 }
+/* CommentPreprocFile */ .chroma .cpf { color: #ff79c6 }
+/* GenericDeleted */ .chroma .gd { color: #ff5555 }
+/* GenericEmph */ .chroma .ge { text-decoration: underline }
+/* GenericHeading */ .chroma .gh { font-weight: bold }
+/* GenericInserted */ .chroma .gi { color: #50fa7b; font-weight: bold }
+/* GenericOutput */ .chroma .go { color: #44475a }
+/* GenericSubheading */ .chroma .gu { font-weight: bold }
+/* GenericUnderline */ .chroma .gl { text-decoration: underline }
+
 
     </style>
 		
@@ -703,144 +770,43 @@ footer {
 		</navbar>
 
 		<main>
-			<div class="list-container">
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2026-07-04</div>
-        <div>&#9474;</div>
-        <div>1 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/2026/07/the_cast_for_custom_ssgs.html">
-          The case for custom static site generators 
-        </a>
-      </div>
+			<div class="post-container">
+  <div class="post-header-wrapper">
+    <div class="post-header">
+    
+    <div id="date">2026-07-04</div>
+     
+    <div id="title">The case for custom static site generators</div>
+     
+    <div id="description">Some reasons to ditch static site generators and write your own</div>
+    
+</div>
 
-      <div class="description">
-        Some reasons to ditch static site generators and write your own
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2025-11-23</div>
-        <div>&#9474;</div>
-        <div>3 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/stop-abusing-regex.html">
-          Stop (ab)using regex 
-        </a>
-      </div>
+  </div>
+  <div class="post-content">
+  	<p>Static site generators (SSGs) are fairly popular. Some of the most common ones out there are:
+<a href="https://gohugo.io/">Hugo</a>, <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://www.gatsbyjs.com/">Gatsby</a>, <a href="https://www.getzola.org/">Zola</a></p>
 
-      <div class="description">
-        Stop it, get some help!
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2025-11-17</div>
-        <div>&#9474;</div>
-        <div>7 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/recommended-c-compiler-flags.html">
-          C compiler flags you ought to know 
-        </a>
-      </div>
+<p>These generators usually rely on some form of directory structure to make sense of your website.
+They also try to be very generic and provide as much functionality as possible out of the box.
+In this quest for broad utility they all end up making generating a static site more complicated than it should be.
+There&rsquo;s many functions, many taxonomies, you need to learn <em>their</em> templating language (or use a javascript frontend framework which is then prerendered),
+know which block thingy to wrap your html around, etc.</p>
 
-      <div class="description">
-        A compiled list of compiler flags that make development and catching errors easier
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2025-11-15</div>
-        <div>&#9474;</div>
-        <div>5 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/generics-in-c.html">
-          How to write generics in C 
-        </a>
-      </div>
+<p>All this rigmarole is simply a waste of time. All you wanted to do was render some html and display some information but now you&rsquo;re forced to understand all this machinery,
+possibly debug why you can&rsquo;t get it to do exactly what you wanted, and they might&rsquo;ve broken the API and now you&rsquo;re forced
+to go and update your website&rsquo;s template just because of someone else&rsquo;s whims.</p>
 
-      <div class="description">
-        Implementing type-safe generics in C step by step
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2025-07-21</div>
-        <div>&#9474;</div>
-        <div>4 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/helix-tutorial.html">
-          Helix tutorial for Vim plebs 
-        </a>
-      </div>
+<h2>You do not need a general purpose static site generator</h2>
 
-      <div class="description">
-        A walk through vim and helix differences and the various helix modes for people that are familiar with vim motions
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2025-01-09</div>
-        <div>&#9474;</div>
-        <div>1 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/rust-error-handling-patterns.html">
-          Error handling patterns in Rust 
-        </a>
-      </div>
+<p>What you want is to be able to write some markdown or some other format of your choice and have it be translated to the verbose html equivalent with a little bit of styling.
+Static site generators are glorified string appenders. You can write your own in half an hour and just add more functionality as you need them.</p>
 
-      <div class="description">
-        Common error handling patterns that help reduce verbosity in Rust
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2024-11-01</div>
-        <div>&#9474;</div>
-        <div>0 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/how_base64_works/index.html">
-          How base64 works 
-        </a>
-      </div>
+<p>The initial set up might be slightly annoying but once you have the base built, building on top of it is way easier.
+There&rsquo;s no more arbitrary breaking changes because of things you never even cared about.
+You no longer have to spend time digging documentation and forums for answers on how to do something, you can just do it. You&rsquo;re in total control.</p>
 
-      <div class="description">
-        A step by step guide into implementing base64 in C
-      </div>
-    </div>
-  
-    <div class="item">
-      <div class="metadata">
-        <div>2022-09-23</div>
-        <div>&#9474;</div>
-        <div>1 min read</div>
-      </div>
-      <div class="title">
-        <a href="/blog/godot-with-nvim/index.html">
-          Setting up NeoVim for Godot 
-        </a>
-      </div>
-
-      <div class="description">
-        
-      </div>
-    </div>
-  
+  </div>
 </div>
 
 		</main>
