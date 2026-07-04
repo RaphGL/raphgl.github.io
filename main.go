@@ -15,6 +15,7 @@ import (
 )
 
 const TargetDirName = "docs"
+const WebURL = "https://raphgl.github.io"
 
 // contains the base html body to which the body will be added to
 type Base struct {
@@ -105,6 +106,58 @@ func CopyStaticFile(path string) error {
 	}
 
 	return nil
+}
+
+func ConvertToRSS(posts []Post) string {
+	var rss strings.Builder
+	rss.WriteString(`<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>`)
+	{
+		rss.WriteString(`<atom:link href="`)
+		rss.WriteString(WebURL + "/rss.xml")
+		rss.WriteString(`" rel="self" type="application/rss+xml" />`)
+
+		rss.WriteString("<title>RaphGL</title>")
+		rss.WriteString("<link>" + WebURL + "</link>")
+		rss.WriteString("<description>RaphGL's Blog</description>")
+
+		rss.WriteString("<pubDate>")
+		rss.WriteString(time.Now().UTC().Format(time.RFC1123Z))
+		rss.WriteString("</pubDate>")
+
+		for _, post := range posts {
+			rss.WriteString("<item>")
+			{
+				rss.WriteString("<title>")
+				rss.WriteString(post.Title)
+				rss.WriteString("</title>")
+
+				postURL := WebURL + post.SourceFilePath
+				rss.WriteString("<link>")
+				rss.WriteString(postURL)
+				rss.WriteString("</link>")
+
+				rss.WriteString("<guid>")
+				rss.WriteString(postURL)
+				rss.WriteString("</guid>")
+
+				parsedDate, err := time.Parse("2006-01-02", post.Date)
+				if err == nil {
+					rss.WriteString("<pubDate>")
+					rss.WriteString(parsedDate.UTC().Format(time.RFC1123Z))
+					rss.WriteString("</pubDate>")
+				}
+
+				if len(post.Description) != 0 {
+					rss.WriteString("<description>")
+					rss.WriteString(post.Description)
+					rss.WriteString("</description>")
+				}
+			}
+			rss.WriteString("</item>")
+		}
+	}
+	rss.WriteString("</channel></rss>")
+	return rss.String()
 }
 
 func main() {
@@ -222,12 +275,16 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
+	rssFeed := ConvertToRSS(postList.Posts)
+	os.WriteFile(TargetDirName+"/rss.xml", []byte(rssFeed), 0664)
+
 	listHTML, err := postList.Render()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	if err = os.WriteFile("./docs/index.html", []byte(listHTML), 0644); err != nil {
+	if err = os.WriteFile(TargetDirName+"/index.html", []byte(listHTML), 0644); err != nil {
 		fmt.Println(err)
 		return
 	}
