@@ -110,7 +110,8 @@ func CopyStaticFile(path string) error {
 
 func ConvertToRSS(posts []Post) string {
 	var rss strings.Builder
-	rss.WriteString(`<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>`)
+	rss.WriteString(`<?xml version="1.0" encoding="UTF-8" ?>`)
+	rss.WriteString(`<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>`)
 	{
 		rss.WriteString(`<atom:link href="`)
 		rss.WriteString(WebURL + "/rss.xml")
@@ -124,7 +125,12 @@ func ConvertToRSS(posts []Post) string {
 		rss.WriteString(time.Now().UTC().Format(time.RFC1123Z))
 		rss.WriteString("</pubDate>")
 
-		for _, post := range posts {
+		for idx, post := range posts {
+			// to avoid rss bloating the feed only the most recent posts are shown
+			if idx >= 20 {
+				break
+			}
+
 			rss.WriteString("<item>")
 			{
 				rss.WriteString("<title>")
@@ -147,11 +153,13 @@ func ConvertToRSS(posts []Post) string {
 					rss.WriteString("</pubDate>")
 				}
 
-				if len(post.Description) != 0 {
-					rss.WriteString("<description>")
-					rss.WriteString(post.Description)
-					rss.WriteString("</description>")
-				}
+				rss.WriteString("<description>")
+				rss.WriteString(post.Description)
+				rss.WriteString("</description>")
+
+				rss.WriteString("<content:encoded><![CDATA[")
+				rss.WriteString(post.Content)
+				rss.WriteString("]]></content:encoded>")
 			}
 			rss.WriteString("</item>")
 		}
