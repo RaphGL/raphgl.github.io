@@ -791,20 +791,19 @@ footer {
 They also try to be very generic and provide as much functionality as possible out of the box.
 In this quest for broad utility they all end up making generating a static site more complicated than it should be.
 There&rsquo;s many functions, many taxonomies, you need to learn <em>their</em> templating language (or use a javascript frontend framework which is then prerendered),
-know which block thingy to wrap your html around, etc.</p>
+know which block thingy to wrap your HTML around, etc.</p>
 
-<p>All this rigmarole is simply a waste of time. All you wanted to do was render some html and display some information but now you&rsquo;re forced to understand all this machinery,
-possibly debug why you can&rsquo;t get it to do exactly what you wanted, and they might&rsquo;ve broken the API and now you&rsquo;re forced
-to go and update your website&rsquo;s template just because of someone else&rsquo;s whims.</p>
+<p>This makes using many (most?) static site generators complicated..
+All you wanted to do was render some HTML and display some information in the exact way you wanted it, but now you have to debug your templates.
+These tools also often break APIs behind your back so you have to keep up with the changes.</p>
 
 <h2>You do not need a general purpose static site generator</h2>
 
-<p>What you want is to be able to write some markdown or some other format of your choice and have it be translated to the verbose html equivalent with a little bit of styling.
-Static site generators are glorified string appenders. You can write your own in half an hour and just add more functionality as you need them.</p>
+<p>Static site generators are glorified string appenders. You can write your own in half an hour and just add more functionality as you need them.</p>
 
-<p>The initial set up might be slightly annoying but once you have the base built, building on top of it is way easier.
-There&rsquo;s no more arbitrary breaking changes because of things you never even cared about.
-You no longer have to spend time digging documentation and forums for answers on how to do something, you can just do it. You&rsquo;re in total control.</p>
+<p>The initial set up is slightly annoying but once you have a base to build on, it gets much easier.
+You don&rsquo;t have to keep up with breaking changes anymore and you can implement whatever you want in whatever way you want to very easily
+since the code base is yours and you completely understand it.</p>
 
   </div>
 </div>
