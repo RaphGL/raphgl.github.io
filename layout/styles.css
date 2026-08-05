@@ -248,13 +248,17 @@ navbar {
 
   .item {
     padding: 1em 2em;
-    border-radius: inherit inherit 0 0;
     width: 100%;
     color: var(--fg3);
-    transition: background-color 0.2s;
+    transition: background-color 0.05s;
     border-bottom: 1px solid var(--bg3);
 
+    &:first-child {
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
     &:last-child {
+      border-radius: 0 0 var(--radius) var(--radius);
       border-bottom: none;
     }
 
