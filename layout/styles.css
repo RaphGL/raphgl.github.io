@@ -268,7 +268,7 @@ navbar {
 
     .title {
       display: flex;
-      font-weight: 600;
+      font-weight: 500;
       justify-content: space-between;
       gap: 1em;
       @media (width < 1024px) {

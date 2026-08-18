@@ -63,13 +63,8 @@ func (l List) Render() (template.HTML, error) {
 		return "", err
 	}
 
-	styles, err := GetGlobalStyles()
-	if err != nil {
-		return "", err
-	}
 	b := Base{
-		BodyHTML:  template.HTML(listBuilder.String()),
-		StylesCSS: styles,
+		BodyHTML: template.HTML(listBuilder.String()),
 	}
 
 	page, err := b.Render()

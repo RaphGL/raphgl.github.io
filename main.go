@@ -19,9 +19,8 @@ const WebURL = "https://raphgl.github.io"
 
 // contains the base html body to which the body will be added to
 type Base struct {
-	Post      Post
-	BodyHTML  template.HTML
-	StylesCSS template.CSS
+	Post     Post
+	BodyHTML template.HTML
 }
 
 func (b Base) Render() (template.HTML, error) {
@@ -51,7 +50,7 @@ func (b Base) Render() (template.HTML, error) {
 	return template.HTML(indexBuilder.String()), nil
 }
 
-func GetGlobalStyles() (template.CSS, error) {
+func GetStyles() (string, error) {
 	cssReset, err := os.ReadFile("./layout/reset.css")
 	if err != nil {
 		return "", err
@@ -61,7 +60,7 @@ func GetGlobalStyles() (template.CSS, error) {
 		return "", err
 	}
 
-	return template.CSS(fmt.Sprintln(string(cssReset), string(styles))), nil
+	return fmt.Sprintln(string(cssReset), string(styles)), nil
 }
 
 func GetTargetPath(path string) (parentPath, destPath string) {
@@ -108,7 +107,7 @@ func CopyStaticFile(path string) error {
 	return nil
 }
 
-func ConvertToRSS(posts []Post) string {
+func GenerateRSSFromPosts(posts []Post) string {
 	var rss strings.Builder
 	rss.WriteString(`<?xml version="1.0" encoding="UTF-8" ?>`)
 	rss.WriteString(`<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>`)
@@ -284,7 +283,7 @@ func main() {
 		return
 	}
 
-	rssFeed := ConvertToRSS(postList.Posts)
+	rssFeed := GenerateRSSFromPosts(postList.Posts)
 	os.WriteFile(TargetDirName+"/rss.xml", []byte(rssFeed), 0664)
 
 	listHTML, err := postList.Render()
@@ -301,5 +300,15 @@ func main() {
 		if err := CopyStaticFile(file); err != nil {
 			fmt.Println(err)
 		}
+	}
+
+	styles, err := GetStyles()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err := os.WriteFile(TargetDirName+"/styles.css", []byte(styles), 0644); err != nil {
+		fmt.Println(err)
+		return
 	}
 }

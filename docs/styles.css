@@ -1,0 +1,685 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Normalize font features
+*/
+
+:root {
+  line-height: 1.5; /* 1 */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  tab-size: 4; /* 3: -moz-tab-size */
+  font-feature-settings: normal; /* 4 */
+  font-variation-settings: normal; /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Correct the odd `em` font sizing in all browsers.
+2. Use a web-safe monospace font.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-size: 1em; /* 1 */
+  font-family: 'Courier New', Courier, monospace; /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  appearance: button; /* -webkit-appearance */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  appearance: textfield; /* -webkit-appearance */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  appearance: none; /* -webkit-appeaance */
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  appearance: button; /* -webkit-appearance */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to gray.
+*/
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role='button'] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default.
+  (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default.
+  (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio.
+(https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden] {
+  display: none;
+}
+
+/*
+  Helps prevent single words on a newline,
+  which can make a title seem unbalanced.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  text-wrap: balance;
+}
+ @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Viga&display=swap');
+
+:root {
+  --bg: #212730;
+  --bg2: #1f242b;
+  --bg3: #323945;
+  --fg: #EEEEEE;
+  --fg2: #9ECAD6;
+  --fg3: #c0c0c1;
+  --radius: 20px;
+}
+
+body {
+  font-family: "Fira Sans", sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+
+  font-size-adjust: ex-height: 0.5;
+  box-sizing: border-box;
+
+  font-size: 12pt;
+}
+
+hr {
+  margin: 1em 0;
+  border: 2px solid var(--bg2);
+  border-radius: 2px;
+}
+
+/* no idea how this works, I just adapted it to my website lol */
+table {
+    margin: 1em auto;
+    border: 1px solid #ddd;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 4px;
+    border-spacing: 0px;
+    min-width: 20em;
+
+    thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        border-collapse: separate;
+        color: var(--fg2)
+    }
+
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+
+    th, td {
+        padding: 5px 4px 6px 4px;
+        vertical-align: top;
+        border-left: 2px solid #ddd;
+    }
+
+    td {
+        border-top: 2px solid #ddd;
+        padding: 0.5em 1em;
+    }
+
+    thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+        border-radius: 4px 0 0 0;
+    }
+
+    thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+        border-radius: 0 0 0 4px;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-style: bold;
+  margin: 0.5em 0;
+  text-indent: 0;
+  color: var(--fg2);
+}
+
+h1 {
+ font-size: 1.9em;
+}
+
+h2 {
+  font-size: 1.7em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.3em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
+li {
+  list-style: "– " outside;
+}
+
+code {
+  display: inline-block;
+  background-color: var(--bg2);
+  border-radius: var(--radius);
+  border: 1px solid var(--bg3);
+  padding: 0 0.2em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11pt;
+  text-indent: 0;
+}
+
+pre code {
+  display: block;
+  padding: 1em;
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+a {
+  color: var(--fg2);
+  text-decoration: underline;
+}
+
+navbar {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--bg2);
+  border-bottom: 1px solid var(--bg3);
+  padding: 1em;
+
+  .items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 920px;    
+  }
+
+  ul {
+    display: flex;
+    gap: 0.8em;
+  }
+
+  li {
+    list-style: none;
+
+    a {
+      color: var(--fg);
+      text-decoration: none;
+      transition: text-decoration ease-in;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .profile-pic {
+    border-radius: 50%;
+    height: auto;
+  }
+
+  .username {
+    font-family: "Viga", sans-serif;
+    font-weight: bold;
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 1.2em;
+    text-align: center;
+  }
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 3em 1em;
+
+  img {
+    margin: 1em auto;
+  }
+
+  .post-header-wrapper {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 2em 0;
+  }
+
+  .post-header {
+    max-width: 80ch;
+
+    #title {
+      font-weight: bold;
+      font-size: 2em;
+      color: var(--fg2);
+    }
+
+    #date {
+      font-size: 1em;
+    }
+
+    #description {
+      color: var(--fg3);
+    }
+  }
+
+  .post-content {
+    width: 100%;
+    @media (width > 600px) {
+        max-width: 1080px;
+    }
+    margin: auto;
+    margin-bottom: 1em;
+    text-indent: 1em;
+
+    h2 {
+      border-bottom: 2px solid var(--bg3);
+      border-spacing: 0.5em;
+      padding-bottom: 0.5em;
+    }
+  }
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em auto;
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  background-color: var(--bg2);
+  width: 95%;
+  max-width: 920px;
+
+  .item {
+    padding: 1em 2em;
+    width: 100%;
+    color: var(--fg3);
+    transition: background-color 0.05s;
+    border-bottom: 1px solid var(--bg3);
+
+    &:first-child {
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 var(--radius) var(--radius);
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--bg2) 100%, var(--fg2) 5%);
+    }
+
+    .title {
+      display: flex;
+      font-weight: 500;
+      justify-content: space-between;
+      gap: 1em;
+      @media (width < 1024px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .metadata {
+      display: flex;
+      gap: 0.5em;
+    }
+
+    .description {
+      margin: 0.25em auto;
+    }
+
+    a {
+      font-size: 1.1em;
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+  font-size: 1em;
+  padding: 1.5em;
+  background-color: var(--bg2);
+  border-top: 1px solid var(--bg3);
+  color: var(--fg);
+
+  a {
+    text-decoration: none;
+  }
+}
+

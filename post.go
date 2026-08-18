@@ -137,16 +137,6 @@ func (p *Post) AddCheckerHook(hook CheckerHook) {
 	p.checkerHooks = append(p.checkerHooks, hook)
 }
 
-func (p Post) getStyles() (template.CSS, error) {
-	styles, err := GetGlobalStyles()
-	if err != nil {
-		return "", err
-	}
-
-	finalStyles := template.CSS(fmt.Sprintln(styles, p.SyntaxHighlightCSS))
-	return finalStyles, nil
-}
-
 func (p Post) getHeaderHTML() (template.HTML, error) {
 	headerTempl, err := os.ReadFile("./layout/header.html")
 	if err != nil {
@@ -195,14 +185,9 @@ func (p Post) getPostHTML() (template.HTML, error) {
 		return "", err
 	}
 
-	stylesCSS, err := p.getStyles()
-	if err != nil {
-		return "", err
-	}
 	page := Base{
-		Post:      p,
-		BodyHTML:  template.HTML(bodyBuilder.String()),
-		StylesCSS: stylesCSS,
+		Post:     p,
+		BodyHTML: template.HTML(bodyBuilder.String()),
 	}
 	pageHTML, err := page.Render()
 	if err != nil {
