@@ -13,9 +13,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/alecthomas/chroma/v2"
-	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/lexers"
-	"github.com/alecthomas/chroma/v2/styles"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/ast"
 	"github.com/gomarkdown/markdown/html"
@@ -201,16 +199,7 @@ func (post *Post) Render() (template.HTML, error) {
 	p := parser.NewWithExtensions(extensions)
 
 	// === Add syntax highlighting for code blocks ===
-	style := styles.Get("dracula")
-	if style == nil {
-		style = styles.Fallback
-	}
-	formatter := formatterHTML.New(formatterHTML.WithClasses(true))
-	var cssBuilder strings.Builder
-	if err := formatter.WriteCSS(&cssBuilder, style); err != nil {
-		return "", err
-	}
-	post.SyntaxHighlightCSS = template.CSS(cssBuilder.String())
+	formatter, style := GetSyntaxHighlighter()
 
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,

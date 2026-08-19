@@ -12,6 +12,10 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/alecthomas/chroma/v2"
+	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
+	"github.com/alecthomas/chroma/v2/styles"
 )
 
 const TargetDirName = "docs"
@@ -50,17 +54,31 @@ func (b Base) Render() (template.HTML, error) {
 	return template.HTML(indexBuilder.String()), nil
 }
 
+func GetSyntaxHighlighter() (*formatterHTML.Formatter, *chroma.Style) {
+	style := styles.Get("dracula")
+	if style == nil {
+		style = styles.Fallback
+	}
+	return formatterHTML.New(formatterHTML.WithClasses(true)), style
+}
+
 func GetStyles() (string, error) {
 	cssReset, err := os.ReadFile("./layout/reset.css")
 	if err != nil {
 		return "", err
 	}
-	styles, err := os.ReadFile("./layout/styles.css")
+	bodyStyles, err := os.ReadFile("./layout/styles.css")
 	if err != nil {
 		return "", err
 	}
 
-	return fmt.Sprintln(string(cssReset), string(styles)), nil
+	formatter, style := GetSyntaxHighlighter()
+	var cssBuilder strings.Builder
+	if err := formatter.WriteCSS(&cssBuilder, style); err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintln(string(cssReset), string(bodyStyles), cssBuilder.String()), nil
 }
 
 func GetTargetPath(path string) (parentPath, destPath string) {
