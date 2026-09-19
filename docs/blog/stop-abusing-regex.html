@@ -35,12 +35,18 @@
 
   </div>
   <div class="post-content">
-  	<p>Due to how widespread support for regex is in many languages, people feel like regex is a good tool to reach out for when you need to match over some text.
+  	<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#how-your-regex-is-ran">How your regex is ran</a></li><li><a href="#regex-is-bad">Regex is bad</a></li><ul><li><a href="#regex-is-unmaintainable">Regex is unmaintainable</a></li><li><a href="#regex-can't-give-good-error-messages">Regex can't give good error messages</a></li><li><a href="#regex-is-good-actually">Regex is good actually</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>Due to how widespread support for regex is in many languages, people feel like regex is a good tool to reach out for when you need to match over some text.
 Whether it be while writing a parser, validating some input or whatever else. I&rsquo;m here to argue that while there are some small valid uses for regex that are very useful,
 most uses of regex are an abuse of them. This is because people writing regex usually don&rsquo;t really know how to parse themselves.
 So they just use whatever tool they know how to use.</p>
 
-<h3>How your regex is ran</h3>
+<h3 id="how-your-regex-is-ran">How your regex is ran</h3>
 
 <p>To be run, your regex first goes through a few steps:</p>
 
@@ -54,13 +60,13 @@ So they just use whatever tool they know how to use.</p>
 <p>By the time all of this is done your program has run through a couple thousand lines of code.
 Now you have a compiled regex expression and can run it through the regex virtual machine.</p>
 
-<h2>Regex is bad</h2>
+<h2 id="regex-is-bad">Regex is bad</h2>
 
 <p>From a performance standpoint, doing all those steps already is much slower than calling any small function. Running through a virtual machine means at least a few levels
 of indirection which is likely to thrash the cache and just runs a lot more code to do the same thing. So just by using regex, you&rsquo;re letting go of performance.
 But ok, you don&rsquo;t care about performance. I get it, no one cares about performance anymore. So let&rsquo;s look at the other reason why regex is bad.</p>
 
-<h4>Regex is unmaintainable</h4>
+<h4 id="regex-is-unmaintainable">Regex is unmaintainable</h4>
 
 <p>Comprehending any reasonable complex regex expression is a huge waste of time. Let&rsquo;s look at this example
 I copied <a href="https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a">from stackoverflow</a>:</p>
@@ -100,12 +106,12 @@ Here&rsquo;s what it does:</p>
 Meanwhile for the regex version it might take you a couple tries and you might even need to completely scrap your current implementation. Even if you were a regex wizard,
 other people aren&rsquo;t. So your regex is just objectively harder to understand and maintain.</p>
 
-<h4>Regex can&rsquo;t give good error messages</h4>
+<h4 id="regex-can't-give-good-error-messages">Regex can&rsquo;t give good error messages</h4>
 
 <p>The only thing you get from using a regex is a match or not a match. You can&rsquo;t really give good error messages with it.
 If you write the parser yourself and you know what is and isn&rsquo;t expected, you can give more meaningful error messages than &ldquo;password doesn&rsquo;t match regex&rdquo; or whatever.</p>
 
-<h4>Regex is good actually</h4>
+<h4 id="regex-is-good-actually">Regex is good actually</h4>
 
 <p>Regex is not a good tool for validation and parsing. People use them as such but they&rsquo;re not a good tool for that. It&rsquo;s not a replacement for knowing how to parse.
 If your program requires user interactivity to do matches, then regex is a good tool. Things like search functionality in text editors,

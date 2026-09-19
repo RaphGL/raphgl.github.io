@@ -35,7 +35,13 @@
 
   </div>
   <div class="post-content">
-  	<p>C is barebones and &ldquo;doesn&rsquo;t support&rdquo; generics, but it&rsquo;s actually quite easy to implement with the tools we already have.
+  	<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#achieving-generics-through-header-instantiation">Achieving generics through header instantiation</a></li><ul><li><a href="#enforcing-type-definition-and-allowing-custom-suffixes">Enforcing type definition and allowing custom suffixes</a></li><li><a href="#the-elephants-in-the-room">The elephants in the room</a></li><ul><li><a href="#redeclaration-error">Redeclaration error</a></li><li><a href="#multiple-includes-inheriting-types">Multiple includes inheriting types</a></li><li><a href="#include-guards">Include guards</a></li><li><a href="#putting-everything-together">Putting everything together</a></li></ul></ul></ul></ul>
+  </details>
+</div>
+<p>C is barebones and &ldquo;doesn&rsquo;t support&rdquo; generics, but it&rsquo;s actually quite easy to implement with the tools we already have.
 There&rsquo;s many ways you might find them being implemented in the wild. Some of the common ones are:</p>
 
 <ul>
@@ -91,7 +97,7 @@ Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped i
 <li>Can be a bit verbose</li>
 </ul>
 
-<h2>Achieving generics through header instantiation</h2>
+<h2 id="achieving-generics-through-header-instantiation">Achieving generics through header instantiation</h2>
 
 <p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid identifier name.
 To do this, we&rsquo;ll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:</p>
@@ -113,7 +119,7 @@ To do this we need to be able to append <code>_num</code> to our symbol names. S
 <p>It works now! Now we can wrap our identifier names in a <code>G</code> macro so that they&rsquo;re <a href="https://en.wikipedia.org/wiki/Name_mangling"><em>name mangled</em></a> for the types they&rsquo;re for.<br>
 We can use it to define our functions and structs like this: <code>struct G(something)</code>, <code>void G(do_something)()</code>.</p>
 
-<h3>Enforcing type definition and allowing custom suffixes</h3>
+<h3 id="enforcing-type-definition-and-allowing-custom-suffixes">Enforcing type definition and allowing custom suffixes</h3>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#error VEC_ITEM_TYPE was not defined
 </span></span></span><span class="line"><span class="cl"><span class="cp">#endif
@@ -154,9 +160,9 @@ So we have to introduce a way of programmatically overriding the suffix that&rsq
 </span></span></code></pre>
 <p>As you can see, every time we call anything generic we need to wrap it in <code>G</code> so that it can properly call the generic function.</p>
 
-<h3>The elephants in the room</h3>
+<h3 id="the-elephants-in-the-room">The elephants in the room</h3>
 
-<h4>Redeclaration error</h4>
+<h4 id="redeclaration-error">Redeclaration error</h4>
 
 <p>You can try and use this implementation but unless you only have one C file and nothing else, you&rsquo;re likely to eventually run into a redeclaration error especially if you&rsquo;re
 using this generic library on <code>.c</code> and <code>.h</code> files.</p>
@@ -202,7 +208,7 @@ Which is a nice side effect of this approach to generics, but it can end up look
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;flag.h&#34;</span><span class="cp">
 </span></span></span></code></pre>
-<h4>Multiple includes inheriting types</h4>
+<h4 id="multiple-includes-inheriting-types">Multiple includes inheriting types</h4>
 
 <p>Since we&rsquo;re relying on preprocessor definitions to define our types.
 If we do:</p>
@@ -218,7 +224,7 @@ If we do:</p>
 
 <p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> files for convenience&rsquo;s sake.</p>
 
-<h4>Include guards</h4>
+<h4 id="include-guards">Include guards</h4>
 
 <p>You might be asking about the missing include guard, but you don&rsquo;t need it! The reason is that we actually want to be able to include the same header multiple times.
 Each time with a different type.</p>
@@ -238,7 +244,7 @@ which does not care about types. For example, you might want to have something l
 </span></span></span></code></pre>
 <p>That way, every single vector could still share the same allocator type.</p>
 
-<h2>Putting everything together</h2>
+<h2 id="putting-everything-together">Putting everything together</h2>
 
 <p>The final header should look something like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE

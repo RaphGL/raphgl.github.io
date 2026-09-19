@@ -93,18 +93,19 @@ func NewPost(path string) (Post, error) {
 	}
 	post.ReadDuration = fmt.Sprintf("%d min", EstimateReadTime(post.Content)/time.Minute)
 
+	// == Parsing md header
 	for entry := range strings.SplitSeq(headerStr, "\n") {
 		entry = strings.TrimSpace(entry)
 		if len(entry) == 0 {
 			continue
 		}
 
-		entrySep := strings.Index(entry, ":")
-		if entrySep == -1 {
+		key, value, hasSep := strings.Cut(entry, ":")
+		if !hasSep {
 			return Post{}, errors.New("expected `:` separated key-values in metadata header in " + post.SourceFilePath)
 		}
-		key := strings.ToLower(strings.TrimSpace(entry[:entrySep]))
-		value := strings.TrimSpace(entry[entrySep+1:])
+		key = strings.ToLower(strings.TrimSpace(key))
+		value = strings.TrimSpace(value)
 
 		switch key {
 		case "title":
@@ -215,12 +216,84 @@ func renderCodeblock(w io.Writer, formatter *fmtHTML.Formatter, style *chroma.St
 	return true
 }
 
+type PostSection struct {
+	Title string
+	ID    string
+	Level int
+}
+
+// consumes the sections one by one and returns the generated HTML string
+// and a new post section slice from where it stopped consuming the sections
+func consumePostSectionInLevel(level int, sections []PostSection) (string, []PostSection) {
+	var sb strings.Builder
+	sb.WriteString("<ul>")
+
+	var i int
+	for i = range len(sections) {
+		if i >= len(sections) {
+			break
+		}
+		s := sections[i]
+		if s.Level > level && i < len(sections) {
+			var contents string
+			contents, sections = consumePostSectionInLevel(s.Level, sections[i:])
+			sb.WriteString(contents)
+			continue
+		}
+
+		sb.WriteString("<li>")
+		{
+			sb.WriteString(`<a href="#`)
+			sb.WriteString(s.ID)
+			sb.WriteString(`">`)
+			sb.WriteString(s.Title)
+			sb.WriteString("</a>")
+		}
+		sb.WriteString("</li>")
+	}
+
+	sb.WriteString("</ul>")
+	if i < len(sections) {
+		sections = sections[i:]
+	}
+	return sb.String(), sections
+}
+
+type TableOfContents struct {
+	TOC template.HTML
+}
+
+func renderTableOfContents(sections []PostSection) (string, error) {
+	contents, _ := consumePostSectionInLevel(1, sections)
+
+	tocTempl, err := os.ReadFile("./layout/table-of-contents.html")
+	if err != nil {
+		return "", err
+	}
+
+	templ, err := template.New("toc").Parse(string(tocTempl))
+	if err != nil {
+		return "", err
+	}
+	toc := TableOfContents{
+		TOC: template.HTML(contents),
+	}
+
+	var sb strings.Builder
+	if err := templ.Execute(&sb, toc); err != nil {
+		return "", err
+	}
+	return sb.String(), nil
+}
+
 func (post *Post) Render() (template.HTML, error) {
 	extensions := parser.CommonExtensions
 	p := parser.NewWithExtensions(extensions)
 
 	// === Add syntax highlighting for code blocks ===
 	formatter, style := GetSyntaxHighlighter()
+
+	var postSections []PostSection
 
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,
@@ -233,6 +306,18 @@ func (post *Post) Render() (template.HTML, error) {
 			switch _node := node.(type) {
 			case *ast.CodeBlock:
 				ok = renderCodeblock(w, formatter, style, _node)
+
+			case *ast.Heading:
+				if len(_node.Children) != 0 {
+					title := string(_node.Children[0].AsLeaf().Literal)
+					id := strings.ReplaceAll(strings.ToLower(title), " ", "-")
+					_node.HeadingID = id
+					postSections = append(postSections, PostSection{
+						Title: title,
+						ID:    id,
+						Level: _node.Level,
+					})
+				}
 			}
 			return ast.GoToNext, ok
 
@@ -264,7 +349,13 @@ func (post *Post) Render() (template.HTML, error) {
 	}
 
 	postContents := string(markdown.Render(parsedMd, renderer))
-	post.Content = postContents
+	// fmt.Println(postSections)
+
+	toc, err := renderTableOfContents(postSections)
+	if err != nil {
+		return "", err
+	}
+	post.Content = toc + postContents
 	page, err := post.getPostHTML()
 	return page, err
 }

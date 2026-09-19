@@ -35,14 +35,20 @@
 
   </div>
   <div class="post-content">
-  	<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
+  	<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#the-low-hanging-fruits">The low-hanging fruits</a></li><ul><li><a href="#basic-motions">Basic Motions</a></li><li><a href="#doing-selections">Doing selections</a></li><li><a href="#helix-modes-and-macros">Helix modes and macros</a></li><li><a href="#macros">Macros</a></li><li><a href="#space-mode">Space mode</a></li><li><a href="#goto-mode">Goto mode</a></li><li><a href="#window-mode">Window mode</a></li><li><a href="#match-mode">Match mode</a></li><li><a href="#command-mode">Command mode</a></li><li><a href="#multicursors">Multicursors</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
 So every time I suggest someone tries Helix, if they&rsquo;ve used or use (neo)vim or vim mode on other editors, they almost alway complain about
 the different keybindings being an impediment to them using the editor. So this is my attempt at trying to make the transition less painful
 by drawing parallels between Helix and Vim bindings.</p>
 
-<h2>The low-hanging fruits</h2>
+<h2 id="the-low-hanging-fruits">The low-hanging fruits</h2>
 
-<h4>Basic Motions</h4>
+<h4 id="basic-motions">Basic Motions</h4>
 
 <p>The main difference between Helix and Vim is that Helix is selection based and reverses the motions. A lot of the actions are actually the same.
 So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</code> is <code>ec</code> and so on. The reason for this is that Helix selects text before doing anything with it.</p>
@@ -50,7 +56,7 @@ So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</cod
 <p>You can think of the Helix binding as just Vim but entering visual mode before doing anything. So <code>de</code> would be <code>ved</code> and <code>ce</code> would be <code>vec</code>, the end result on
 Vim would be the exact same as what would happen on Helix.</p>
 
-<h4>Doing selections</h4>
+<h4 id="doing-selections">Doing selections</h4>
 
 <p>A cursor in Helix is essentially a one character selection, so if you attempt to use <code>dd</code> or <code>cc</code> or <code>yy</code> or any other double verb to apply it to the entire line,
 it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the most common selections:</p>
@@ -61,9 +67,9 @@ it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the mo
 <li><code>e</code>, <code>E</code>, <code>b</code>, <code>B</code>, <code>w</code>, <code>W</code>: essentially the same as in vim, select from the current cursor position until where they stop</li>
 </ul>
 
-<h2>Helix modes and macros</h2>
+<h2 id="helix-modes-and-macros">Helix modes and macros</h2>
 
-<h4>Macros</h4>
+<h4 id="macros">Macros</h4>
 
 <p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
 By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
@@ -75,7 +81,7 @@ This also allows you to have multiple things saved at once by just changing the 
 <br>
 Helix also has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
 
-<h4>Space mode</h4>
+<h4 id="space-mode">Space mode</h4>
 
 <p>Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:</p>
 
@@ -90,7 +96,7 @@ Helix also has a few special registers. If you want to know more about registers
 
 <p>Space mode has a few other features as well. You can check what else it can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
 
-<h4>Goto mode</h4>
+<h4 id="goto-mode">Goto mode</h4>
 
 <p>Moving around the file is very common. Vim users are used to using <code>g</code> to move around. Helix also has this keybinding.</p>
 
@@ -129,7 +135,7 @@ One of the most useful ones for moving around is <code>gw</code>, this creates l
 
 <p>If you want to learn more about gotos you can check the docs <a href="https://docs.helix-editor.com/keymap.html#goto-mode">here</a></p>
 
-<h4>Window mode</h4>
+<h4 id="window-mode">Window mode</h4>
 
 <p>Window mode allows you to manage splits in  Helix, you can enter window mode with <code>&lt;space&gt;w</code>.
 Once in window mode, to create the splits you can use <code>s</code> for vertical splits and <code>v</code> for vertical splits.
@@ -137,7 +143,7 @@ Then you can use window mode to manage your splits. Such as moving between them 
 <br>
 You can change windows between vertical and horizontal using <code>t</code> (t stands for transpose), and you can quit the window with <code>q</code>.</p>
 
-<h4>Match mode</h4>
+<h4 id="match-mode">Match mode</h4>
 
 <p>Match mode allows you to select text, in Vim you would usually use <code>gi</code> and <code>ga</code> for this, match mode is the Helix equivalent.
 To enter the window mode you can press <code>m</code> while in normal mode.</p>
@@ -148,7 +154,7 @@ If you don&rsquo;t have an LSP or you want to match something else you can just 
 <br>
 You can also swap a <code>()</code>, <code>{}</code> or any pair with the syntax <code>mr&lt;original_pair&gt;&lt;new_pair&gt;</code> so for <code>()</code> to <code>{}</code> you can do <code>mr({</code>. Or you could delete the pairs <code>md(</code>.</p>
 
-<h4>Command mode</h4>
+<h4 id="command-mode">Command mode</h4>
 
 <p>Basic commands are mostly the same as in Vim. You can enter the command mode with <code>:</code>.</p>
 
@@ -175,7 +181,7 @@ You can also swap a <code>()</code>, <code>{}</code> or any pair with the syntax
 <li><code>:format</code>: format text with language formatter</li>
 </ul>
 
-<h4>Multicursors</h4>
+<h4 id="multicursors">Multicursors</h4>
 
 <p>Helix supports multiple cursors. These can be created by using <code>&lt;shift&gt;C</code> the cursors can be disabled with <code>,</code>.</p>
 

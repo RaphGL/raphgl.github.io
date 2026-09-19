@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><atom:link href="https://raphgl.github.io/rss.xml" rel="self" type="application/rss+xml" /><title>RaphGL</title><link>https://raphgl.github.io</link><description>RaphGL's Blog</description><pubDate>Wed, 19 Aug 2026 18:30:51 +0000</pubDate><item><title>The case for custom static site generators</title><link>https://raphgl.github.io/blog/2026/07/the_case_for_custom_ssgs.html</link><guid>https://raphgl.github.io/blog/2026/07/the_case_for_custom_ssgs.html</guid><pubDate>Sat, 04 Jul 2026 00:00:00 +0000</pubDate><description>Some reasons to ditch static site generators and write your own</description><content:encoded><![CDATA[<p>Static site generators (SSGs) are fairly popular. Some of the most common ones out there are:
+<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><atom:link href="https://raphgl.github.io/rss.xml" rel="self" type="application/rss+xml" /><title>RaphGL</title><link>https://raphgl.github.io</link><description>RaphGL's Blog</description><pubDate>Sat, 19 Sep 2026 17:02:16 +0000</pubDate><item><title>The case for custom static site generators</title><link>https://raphgl.github.io/blog/2026/07/the_case_for_custom_ssgs.html</link><guid>https://raphgl.github.io/blog/2026/07/the_case_for_custom_ssgs.html</guid><pubDate>Sat, 04 Jul 2026 00:00:00 +0000</pubDate><description>Some reasons to ditch static site generators and write your own</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#you-do-not-need-a-general-purpose-static-site-generator">You do not need a general purpose static site generator</a></li></ul></ul>
+  </details>
+</div>
+<p>Static site generators (SSGs) are fairly popular. Some of the most common ones out there are:
 <a href="https://gohugo.io/">Hugo</a>, <a href="https://jekyllrb.com/">Jekyll</a>, <a href="https://www.gatsbyjs.com/">Gatsby</a>, <a href="https://www.getzola.org/">Zola</a></p>
 
 <p>These generators usually rely on some form of directory structure to make sense of your website.
@@ -11,19 +17,25 @@ know which block thingy to wrap your HTML around, etc.</p>
 All you wanted to do was render some HTML and display some information in the exact way you wanted it, but now you have to debug your templates.
 These tools also often break APIs behind your back so you have to keep up with the changes.</p>
 
-<h2>You do not need a general purpose static site generator</h2>
+<h2 id="you-do-not-need-a-general-purpose-static-site-generator">You do not need a general purpose static site generator</h2>
 
 <p>Static site generators are glorified string appenders. You can write your own in half an hour and just add more functionality as you need them.</p>
 
 <p>The initial set up is slightly annoying but once you have a base to build on, it gets much easier.
 You don&rsquo;t have to keep up with breaking changes anymore and you can implement whatever you want in whatever way you want to very easily
 since the code base is yours and you completely understand it.</p>
-]]></content:encoded></item><item><title>Stop (ab)using regex</title><link>https://raphgl.github.io/blog/stop-abusing-regex.html</link><guid>https://raphgl.github.io/blog/stop-abusing-regex.html</guid><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><description>Stop it, get some help!</description><content:encoded><![CDATA[<p>Due to how widespread support for regex is in many languages, people feel like regex is a good tool to reach out for when you need to match over some text.
+]]></content:encoded></item><item><title>Stop (ab)using regex</title><link>https://raphgl.github.io/blog/stop-abusing-regex.html</link><guid>https://raphgl.github.io/blog/stop-abusing-regex.html</guid><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><description>Stop it, get some help!</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#how-your-regex-is-ran">How your regex is ran</a></li><li><a href="#regex-is-bad">Regex is bad</a></li><ul><li><a href="#regex-is-unmaintainable">Regex is unmaintainable</a></li><li><a href="#regex-can't-give-good-error-messages">Regex can't give good error messages</a></li><li><a href="#regex-is-good-actually">Regex is good actually</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>Due to how widespread support for regex is in many languages, people feel like regex is a good tool to reach out for when you need to match over some text.
 Whether it be while writing a parser, validating some input or whatever else. I&rsquo;m here to argue that while there are some small valid uses for regex that are very useful,
 most uses of regex are an abuse of them. This is because people writing regex usually don&rsquo;t really know how to parse themselves.
 So they just use whatever tool they know how to use.</p>
 
-<h3>How your regex is ran</h3>
+<h3 id="how-your-regex-is-ran">How your regex is ran</h3>
 
 <p>To be run, your regex first goes through a few steps:</p>
 
@@ -37,13 +49,13 @@ So they just use whatever tool they know how to use.</p>
 <p>By the time all of this is done your program has run through a couple thousand lines of code.
 Now you have a compiled regex expression and can run it through the regex virtual machine.</p>
 
-<h2>Regex is bad</h2>
+<h2 id="regex-is-bad">Regex is bad</h2>
 
 <p>From a performance standpoint, doing all those steps already is much slower than calling any small function. Running through a virtual machine means at least a few levels
 of indirection which is likely to thrash the cache and just runs a lot more code to do the same thing. So just by using regex, you&rsquo;re letting go of performance.
 But ok, you don&rsquo;t care about performance. I get it, no one cares about performance anymore. So let&rsquo;s look at the other reason why regex is bad.</p>
 
-<h4>Regex is unmaintainable</h4>
+<h4 id="regex-is-unmaintainable">Regex is unmaintainable</h4>
 
 <p>Comprehending any reasonable complex regex expression is a huge waste of time. Let&rsquo;s look at this example
 I copied <a href="https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a">from stackoverflow</a>:</p>
@@ -83,12 +95,12 @@ Here&rsquo;s what it does:</p>
 Meanwhile for the regex version it might take you a couple tries and you might even need to completely scrap your current implementation. Even if you were a regex wizard,
 other people aren&rsquo;t. So your regex is just objectively harder to understand and maintain.</p>
 
-<h4>Regex can&rsquo;t give good error messages</h4>
+<h4 id="regex-can't-give-good-error-messages">Regex can&rsquo;t give good error messages</h4>
 
 <p>The only thing you get from using a regex is a match or not a match. You can&rsquo;t really give good error messages with it.
 If you write the parser yourself and you know what is and isn&rsquo;t expected, you can give more meaningful error messages than &ldquo;password doesn&rsquo;t match regex&rdquo; or whatever.</p>
 
-<h4>Regex is good actually</h4>
+<h4 id="regex-is-good-actually">Regex is good actually</h4>
 
 <p>Regex is not a good tool for validation and parsing. People use them as such but they&rsquo;re not a good tool for that. It&rsquo;s not a replacement for knowing how to parse.
 If your program requires user interactivity to do matches, then regex is a good tool. Things like search functionality in text editors,
@@ -97,7 +109,13 @@ the find tool on browsers and so on are good use cases, for a regex engine in yo
 <p>But if you already know the shape of the thing you want to match against and it&rsquo;s not supplied by the user,
 then you&rsquo;re probably better off writing your own validation/parser.
 You&rsquo;ll get better performance, better errors and more understandable and maintainable code.</p>
-]]></content:encoded></item><item><title>C compiler flags you ought to know</title><link>https://raphgl.github.io/blog/recommended-c-compiler-flags.html</link><guid>https://raphgl.github.io/blog/recommended-c-compiler-flags.html</guid><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><description>A compiled list of compiler flags that make development and catching errors easier</description><content:encoded><![CDATA[<p>C compilers have bad defaults due to the need to be &ldquo;backwards compatible&rdquo;.
+]]></content:encoded></item><item><title>C compiler flags you ought to know</title><link>https://raphgl.github.io/blog/recommended-c-compiler-flags.html</link><guid>https://raphgl.github.io/blog/recommended-c-compiler-flags.html</guid><pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate><description>A compiled list of compiler flags that make development and catching errors easier</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#the-essentials">The Essentials</a></li><ul><li><a href="#sanitizers">Sanitizers</a></li><li><a href="#c-standard">C Standard</a></li><li><a href="#compiler-flags">Compiler Flags</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>C compilers have bad defaults due to the need to be &ldquo;backwards compatible&rdquo;.
 This means that despite improvements in C compilers, you just have to know what to use.
 If you&rsquo;re not in the know, you might subject yourself to pain needlessly.</p>
 
@@ -105,7 +123,7 @@ If you&rsquo;re not in the know, you might subject yourself to pain needlessly.<
 Heavily inspired by <a href="https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html">Compiler Options Hardening Guide for C and C++</a>.
 I felt that this adaptation was needed because that post suffered from &ldquo;too much yapping&rdquo;.</p>
 
-<h2>The Essentials</h2>
+<h2 id="the-essentials">The Essentials</h2>
 
 <p>No matter what you do, always enable <code>-Wall -Wextra -pedantic</code>, these flags are actually a group of other flags that enable other errors.
 If you want to see what they can do you can check the manpage for them:</p>
@@ -178,7 +196,7 @@ If you want to see what they can do you can check the manpage for them:</p>
 <p>Some people recommend adding <code>-Werror</code> which turns every warning into an error, but I don&rsquo;t really think that&rsquo;s reasonable. When you&rsquo;re iterating on a project, being forced to
 fix any minutia slows you down. If you&rsquo;re going to enable it at all, I suggest you enable it for release builds.</p>
 
-<h4>Sanitizers</h4>
+<h4 id="sanitizers">Sanitizers</h4>
 
 <p>Sanitizers are your friend. They&rsquo;ll help you with detecting memory leaks, undefined behavior and other common bugs. They can be enabled with the <code>-fsanitize</code> flag.
 Also don&rsquo;t forget to add <code>-g</code> when compiling to add debug symbols, otherwise the sanitization errors might not be as useful.
@@ -189,7 +207,7 @@ So you might have to compile your code and test it with each sanitizer individua
 So I recommend using this at least on your debug builds. (do not that if you use a library that has many leaks and was never used with sanitizers, you might have to add an ignore list so that you
 can sanitize your own code, it&rsquo;s just the state of things sadly)</p>
 
-<h4>C Standard</h4>
+<h4 id="c-standard">C Standard</h4>
 
 <p>A lot of people swear by C89 but personally I&rsquo;m not a fan. I recommend C99+. C99 is a nice standard if you want to support as many compilers as possible and/or you don&rsquo;t need atomics.
 If you do need atomics, C11 is fine, Linux for example defaults to it (technically gnu11, but still).</p>
@@ -197,7 +215,7 @@ If you do need atomics, C11 is fine, Linux for example defaults to it (technical
 <p>I recommend you always set your standard with <code>-std=c99</code> or whatever version you&rsquo;re using. GCC defaults to their own dialect which has a bunch of extensions. I&rsquo;d rather use the standard
 and not a dialect, only use it if you know you need the extensions (for some reason).</p>
 
-<h2>Compiler Flags</h2>
+<h2 id="compiler-flags">Compiler Flags</h2>
 
 <p>The following are flags that you might benefit from, they either add compile-time or runtime checks to make the compiler/program even stricter.</p>
 
@@ -396,7 +414,13 @@ and not a dialect, only use it if you know you need the extensions (for some rea
 </tbody>
 </table>
 <p>I suggest you read the manpages and search online for the flags you&rsquo;re interested in using.</p>
-]]></content:encoded></item><item><title>How to write generics in C</title><link>https://raphgl.github.io/blog/generics-in-c.html</link><guid>https://raphgl.github.io/blog/generics-in-c.html</guid><pubDate>Sat, 15 Nov 2025 00:00:00 +0000</pubDate><description>Implementing type-safe generics in C step by step</description><content:encoded><![CDATA[<p>C is barebones and &ldquo;doesn&rsquo;t support&rdquo; generics, but it&rsquo;s actually quite easy to implement with the tools we already have.
+]]></content:encoded></item><item><title>How to write generics in C</title><link>https://raphgl.github.io/blog/generics-in-c.html</link><guid>https://raphgl.github.io/blog/generics-in-c.html</guid><pubDate>Sat, 15 Nov 2025 00:00:00 +0000</pubDate><description>Implementing type-safe generics in C step by step</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#achieving-generics-through-header-instantiation">Achieving generics through header instantiation</a></li><ul><li><a href="#enforcing-type-definition-and-allowing-custom-suffixes">Enforcing type definition and allowing custom suffixes</a></li><li><a href="#the-elephants-in-the-room">The elephants in the room</a></li><ul><li><a href="#redeclaration-error">Redeclaration error</a></li><li><a href="#multiple-includes-inheriting-types">Multiple includes inheriting types</a></li><li><a href="#include-guards">Include guards</a></li><li><a href="#putting-everything-together">Putting everything together</a></li></ul></ul></ul></ul>
+  </details>
+</div>
+<p>C is barebones and &ldquo;doesn&rsquo;t support&rdquo; generics, but it&rsquo;s actually quite easy to implement with the tools we already have.
 There&rsquo;s many ways you might find them being implemented in the wild. Some of the common ones are:</p>
 
 <ul>
@@ -452,7 +476,7 @@ Since it doesn&rsquo;t rely on type erasure and everything isn&rsquo;t wrapped i
 <li>Can be a bit verbose</li>
 </ul>
 
-<h2>Achieving generics through header instantiation</h2>
+<h2 id="achieving-generics-through-header-instantiation">Achieving generics through header instantiation</h2>
 
 <p>The way this works is, you instantiate a specialization for a type by defining your type and possibly a suffix if that type is not a valid identifier name.
 To do this, we&rsquo;ll have to rely on a small macro trick, but other than that, everything is quite straight forward. The header instantiation should look like this:</p>
@@ -474,7 +498,7 @@ To do this we need to be able to append <code>_num</code> to our symbol names. S
 <p>It works now! Now we can wrap our identifier names in a <code>G</code> macro so that they&rsquo;re <a href="https://en.wikipedia.org/wiki/Name_mangling"><em>name mangled</em></a> for the types they&rsquo;re for.<br>
 We can use it to define our functions and structs like this: <code>struct G(something)</code>, <code>void G(do_something)()</code>.</p>
 
-<h3>Enforcing type definition and allowing custom suffixes</h3>
+<h3 id="enforcing-type-definition-and-allowing-custom-suffixes">Enforcing type definition and allowing custom suffixes</h3>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>  <span class="cp">#error VEC_ITEM_TYPE was not defined
 </span></span></span><span class="line"><span class="cl"><span class="cp">#endif
@@ -515,9 +539,9 @@ So we have to introduce a way of programmatically overriding the suffix that&rsq
 </span></span></code></pre>
 <p>As you can see, every time we call anything generic we need to wrap it in <code>G</code> so that it can properly call the generic function.</p>
 
-<h3>The elephants in the room</h3>
+<h3 id="the-elephants-in-the-room">The elephants in the room</h3>
 
-<h4>Redeclaration error</h4>
+<h4 id="redeclaration-error">Redeclaration error</h4>
 
 <p>You can try and use this implementation but unless you only have one C file and nothing else, you&rsquo;re likely to eventually run into a redeclaration error especially if you&rsquo;re
 using this generic library on <code>.c</code> and <code>.h</code> files.</p>
@@ -563,7 +587,7 @@ Which is a nice side effect of this approach to generics, but it can end up look
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#define VEC_IMPLEMENTATION
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;flag.h&#34;</span><span class="cp">
 </span></span></span></code></pre>
-<h4>Multiple includes inheriting types</h4>
+<h4 id="multiple-includes-inheriting-types">Multiple includes inheriting types</h4>
 
 <p>Since we&rsquo;re relying on preprocessor definitions to define our types.
 If we do:</p>
@@ -579,7 +603,7 @@ If we do:</p>
 
 <p>NOTE: We don&rsquo;t undefine <code>VEC_IMPLEMENTATION</code> so that we can just declare it once in our <code>.c</code> files for convenience&rsquo;s sake.</p>
 
-<h4>Include guards</h4>
+<h4 id="include-guards">Include guards</h4>
 
 <p>You might be asking about the missing include guard, but you don&rsquo;t need it! The reason is that we actually want to be able to include the same header multiple times.
 Each time with a different type.</p>
@@ -599,7 +623,7 @@ which does not care about types. For example, you might want to have something l
 </span></span></span></code></pre>
 <p>That way, every single vector could still share the same allocator type.</p>
 
-<h2>Putting everything together</h2>
+<h2 id="putting-everything-together">Putting everything together</h2>
 
 <p>The final header should look something like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="cp">#ifndef VEC_ITEM_TYPE
@@ -690,14 +714,20 @@ which does not care about types. For example, you might want to have something l
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_ITEM_TYPE
 </span></span></span><span class="line"><span class="cl"><span class="cp">#undef VEC_SUFFIX
-</span></span></span></code></pre>]]></content:encoded></item><item><title>Helix tutorial for Vim plebs</title><link>https://raphgl.github.io/blog/helix-tutorial.html</link><guid>https://raphgl.github.io/blog/helix-tutorial.html</guid><pubDate>Mon, 21 Jul 2025 00:00:00 +0000</pubDate><description>A walk through vim and helix differences and the various helix modes for people that are familiar with vim motions</description><content:encoded><![CDATA[<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
+</span></span></span></code></pre>]]></content:encoded></item><item><title>Helix tutorial for Vim plebs</title><link>https://raphgl.github.io/blog/helix-tutorial.html</link><guid>https://raphgl.github.io/blog/helix-tutorial.html</guid><pubDate>Mon, 21 Jul 2025 00:00:00 +0000</pubDate><description>A walk through vim and helix differences and the various helix modes for people that are familiar with vim motions</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#the-low-hanging-fruits">The low-hanging fruits</a></li><ul><li><a href="#basic-motions">Basic Motions</a></li><li><a href="#doing-selections">Doing selections</a></li><li><a href="#helix-modes-and-macros">Helix modes and macros</a></li><li><a href="#macros">Macros</a></li><li><a href="#space-mode">Space mode</a></li><li><a href="#goto-mode">Goto mode</a></li><li><a href="#window-mode">Window mode</a></li><li><a href="#match-mode">Match mode</a></li><li><a href="#command-mode">Command mode</a></li><li><a href="#multicursors">Multicursors</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
 So every time I suggest someone tries Helix, if they&rsquo;ve used or use (neo)vim or vim mode on other editors, they almost alway complain about
 the different keybindings being an impediment to them using the editor. So this is my attempt at trying to make the transition less painful
 by drawing parallels between Helix and Vim bindings.</p>
 
-<h2>The low-hanging fruits</h2>
+<h2 id="the-low-hanging-fruits">The low-hanging fruits</h2>
 
-<h4>Basic Motions</h4>
+<h4 id="basic-motions">Basic Motions</h4>
 
 <p>The main difference between Helix and Vim is that Helix is selection based and reverses the motions. A lot of the actions are actually the same.
 So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</code> is <code>ec</code> and so on. The reason for this is that Helix selects text before doing anything with it.</p>
@@ -705,7 +735,7 @@ So for example <code>de</code> in Vim is <code>ed</code> in Helix, <code>ce</cod
 <p>You can think of the Helix binding as just Vim but entering visual mode before doing anything. So <code>de</code> would be <code>ved</code> and <code>ce</code> would be <code>vec</code>, the end result on
 Vim would be the exact same as what would happen on Helix.</p>
 
-<h4>Doing selections</h4>
+<h4 id="doing-selections">Doing selections</h4>
 
 <p>A cursor in Helix is essentially a one character selection, so if you attempt to use <code>dd</code> or <code>cc</code> or <code>yy</code> or any other double verb to apply it to the entire line,
 it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the most common selections:</p>
@@ -716,9 +746,9 @@ it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the mo
 <li><code>e</code>, <code>E</code>, <code>b</code>, <code>B</code>, <code>w</code>, <code>W</code>: essentially the same as in vim, select from the current cursor position until where they stop</li>
 </ul>
 
-<h2>Helix modes and macros</h2>
+<h2 id="helix-modes-and-macros">Helix modes and macros</h2>
 
-<h4>Macros</h4>
+<h4 id="macros">Macros</h4>
 
 <p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
 By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
@@ -730,7 +760,7 @@ This also allows you to have multiple things saved at once by just changing the 
 <br>
 Helix also has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
 
-<h4>Space mode</h4>
+<h4 id="space-mode">Space mode</h4>
 
 <p>Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:</p>
 
@@ -745,7 +775,7 @@ Helix also has a few special registers. If you want to know more about registers
 
 <p>Space mode has a few other features as well. You can check what else it can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
 
-<h4>Goto mode</h4>
+<h4 id="goto-mode">Goto mode</h4>
 
 <p>Moving around the file is very common. Vim users are used to using <code>g</code> to move around. Helix also has this keybinding.</p>
 
@@ -784,7 +814,7 @@ One of the most useful ones for moving around is <code>gw</code>, this creates l
 
 <p>If you want to learn more about gotos you can check the docs <a href="https://docs.helix-editor.com/keymap.html#goto-mode">here</a></p>
 
-<h4>Window mode</h4>
+<h4 id="window-mode">Window mode</h4>
 
 <p>Window mode allows you to manage splits in  Helix, you can enter window mode with <code>&lt;space&gt;w</code>.
 Once in window mode, to create the splits you can use <code>s</code> for vertical splits and <code>v</code> for vertical splits.
@@ -792,7 +822,7 @@ Then you can use window mode to manage your splits. Such as moving between them 
 <br>
 You can change windows between vertical and horizontal using <code>t</code> (t stands for transpose), and you can quit the window with <code>q</code>.</p>
 
-<h4>Match mode</h4>
+<h4 id="match-mode">Match mode</h4>
 
 <p>Match mode allows you to select text, in Vim you would usually use <code>gi</code> and <code>ga</code> for this, match mode is the Helix equivalent.
 To enter the window mode you can press <code>m</code> while in normal mode.</p>
@@ -803,7 +833,7 @@ If you don&rsquo;t have an LSP or you want to match something else you can just 
 <br>
 You can also swap a <code>()</code>, <code>{}</code> or any pair with the syntax <code>mr&lt;original_pair&gt;&lt;new_pair&gt;</code> so for <code>()</code> to <code>{}</code> you can do <code>mr({</code>. Or you could delete the pairs <code>md(</code>.</p>
 
-<h4>Command mode</h4>
+<h4 id="command-mode">Command mode</h4>
 
 <p>Basic commands are mostly the same as in Vim. You can enter the command mode with <code>:</code>.</p>
 
@@ -830,7 +860,7 @@ You can also swap a <code>()</code>, <code>{}</code> or any pair with the syntax
 <li><code>:format</code>: format text with language formatter</li>
 </ul>
 
-<h4>Multicursors</h4>
+<h4 id="multicursors">Multicursors</h4>
 
 <p>Helix supports multiple cursors. These can be created by using <code>&lt;shift&gt;C</code> the cursors can be disabled with <code>,</code>.</p>
 
@@ -844,9 +874,15 @@ after you&rsquo;ve matched the content you can press enter and continue editing.
 
 <p>If you want to learn more give the <a href="https://docs.helix-editor.com/">official docs</a> a try.
 You might also want to try the helix tutor by running <code>helix --tutor</code>.</p>
-]]></content:encoded></item><item><title>Error handling patterns in Rust</title><link>https://raphgl.github.io/blog/rust-error-handling-patterns.html</link><guid>https://raphgl.github.io/blog/rust-error-handling-patterns.html</guid><pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate><description>Common error handling patterns that help reduce verbosity in Rust</description><content:encoded><![CDATA[<p>These are some patterns I&rsquo;ve found in Rust that tend to make error handling code more legible/less noisy.</p>
+]]></content:encoded></item><item><title>Error handling patterns in Rust</title><link>https://raphgl.github.io/blog/rust-error-handling-patterns.html</link><guid>https://raphgl.github.io/blog/rust-error-handling-patterns.html</guid><pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate><description>Common error handling patterns that help reduce verbosity in Rust</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#handling-errors">Handling errors</a></li><li><a href="#propagating-errors">Propagating errors</a></li></ul></ul>
+  </details>
+</div>
+<p>These are some patterns I&rsquo;ve found in Rust that tend to make error handling code more legible/less noisy.</p>
 
-<h2>Handling errors</h2>
+<h2 id="handling-errors">Handling errors</h2>
 
 <p>If you only care about one case in an error, instead of being forced to match against all errors, do this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_option</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -878,7 +914,7 @@ You might also want to try the helix tutor by running <code>helix --tutor</code>
 </ul>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">retcode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">execute_file</span><span class="p">(</span><span class="s">&#34;path/to/file&#34;</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;file should be executable&#34;</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre>
-<h2>Propagating errors</h2>
+<h2 id="propagating-errors">Propagating errors</h2>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// instead of:
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">returns_result</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -904,15 +940,27 @@ you can either use <code>let else</code> idiom:</p>
 <p>If these are not sufficient, you might want to change the Error or Ok values so you can &ldquo;massage&rdquo; it into working,
  these functions are <code>Result::{map_err, map_ok}</code> and <code>Option::map_or</code>. You can use them like this:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">returns_result</span><span class="p">().</span><span class="n">map_err</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="cm">/* massage the value here */</span><span class="p">)</span><span class="o">?</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre>]]></content:encoded></item><item><title>How base64 works</title><link>https://raphgl.github.io/blog/how_base64_works/index.html</link><guid>https://raphgl.github.io/blog/how_base64_works/index.html</guid><pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate><description>A step by step guide into implementing base64 in C</description><content:encoded><![CDATA[<p><center>
+</span></span></span></code></pre>]]></content:encoded></item><item><title>How base64 works</title><link>https://raphgl.github.io/blog/how_base64_works/index.html</link><guid>https://raphgl.github.io/blog/how_base64_works/index.html</guid><pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate><description>A step by step guide into implementing base64 in C</description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul></ul>
+  </details>
+</div>
+<p><center>
   <p>In this document I explain how base64 works and go step by step on how one would go about implementing it.</p>
   <h3>
     <a href="./index.pdf">Open PDF →</a>
   <h3/>
 <center/></p>
-]]></content:encoded></item><item><title>Setting up NeoVim for Godot</title><link>https://raphgl.github.io/blog/godot-with-nvim/index.html</link><guid>https://raphgl.github.io/blog/godot-with-nvim/index.html</guid><pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate><description></description><content:encoded><![CDATA[<p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
+]]></content:encoded></item><item><title>Setting up NeoVim for Godot</title><link>https://raphgl.github.io/blog/godot-with-nvim/index.html</link><guid>https://raphgl.github.io/blog/godot-with-nvim/index.html</guid><pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate><description></description><content:encoded><![CDATA[<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#setting-up">Setting Up</a></li><li><a href="#additional-steps">Additional steps</a></li><ul><li><a href="#setting-up-the-editor">Setting up the editor</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
 
-<h2>Setting Up</h2>
+<h2 id="setting-up">Setting Up</h2>
 
 <p>If you have CoC working correctly already, open NeoVim and run <code>:CocConfig</code>, it&rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="s2">&#34;languageserver&#34;</span><span class="o">:</span> <span class="p">{</span>
@@ -925,11 +973,11 @@ you can either use <code>let else</code> idiom:</p>
 </span></span></code></pre>
 <p><strong>Note:</strong> If there&rsquo;s an error connecting to the LSP, open Godot and go on <code>Editor &gt; Editor Settings &gt; Network &gt; Language Server</code> and check that the port numbers and IP address match.</p>
 
-<h2>Additional steps</h2>
+<h2 id="additional-steps">Additional steps</h2>
 
 <p>You probably want syntax highlighting, for that you have 2 options: you could install the <a href="https://github.com/sheerun/vim-polyglot"><code>sheerun/vim-polyglot</code></a> or use <a href="https://github.com/habamax/vim-godot"><code>habamax/vim-godot</code></a> (which provides syntax highlighting as well as a set of commands allows you to run scenes through NeoVim).</p>
 
-<h4>Setting up the editor</h4>
+<h4 id="setting-up-the-editor">Setting up the editor</h4>
 
 <p>To set up the editor go to <code>Editor &gt; Editor Settings &gt; Text Editor</code> and change the <code>Exec Path</code> to the terminal of your liking (kitty in my case) and on <code>Exec Flags</code> put <code>nvim {file}</code>.</p>
 

@@ -666,6 +666,16 @@ navbar {
   }
 }
 
+.table-of-contents {
+  ul {
+  	padding-left: 2em;
+  }
+
+  background-color: var(--bg3);
+  padding: 1em;
+  border-radius: var(--radius);
+}
+
 footer {
   margin-top: auto;
   width: 100%;

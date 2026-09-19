@@ -33,9 +33,15 @@
 
   </div>
   <div class="post-content">
-  	<p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
+  	<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#setting-up">Setting Up</a></li><li><a href="#additional-steps">Additional steps</a></li><ul><li><a href="#setting-up-the-editor">Setting up the editor</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>Recently I&rsquo;ve been using Godot a bit to mess around with game development and I wanted to have autocompletion working with CoC. I looked around and there were no extensions for the Godot LSP. So, to use Godot with NeoVim I just had to connect to their LSP.</p>
 
-<h2>Setting Up</h2>
+<h2 id="setting-up">Setting Up</h2>
 
 <p>If you have CoC working correctly already, open NeoVim and run <code>:CocConfig</code>, it&rsquo;ll open the configuration file for your CoC, then just add this to the JSON config:</p>
 <pre class="chroma"><code><span class="line"><span class="cl"><span class="s2">&#34;languageserver&#34;</span><span class="o">:</span> <span class="p">{</span>
@@ -48,11 +54,11 @@
 </span></span></code></pre>
 <p><strong>Note:</strong> If there&rsquo;s an error connecting to the LSP, open Godot and go on <code>Editor &gt; Editor Settings &gt; Network &gt; Language Server</code> and check that the port numbers and IP address match.</p>
 
-<h2>Additional steps</h2>
+<h2 id="additional-steps">Additional steps</h2>
 
 <p>You probably want syntax highlighting, for that you have 2 options: you could install the <a href="https://github.com/sheerun/vim-polyglot"><code>sheerun/vim-polyglot</code></a> or use <a href="https://github.com/habamax/vim-godot"><code>habamax/vim-godot</code></a> (which provides syntax highlighting as well as a set of commands allows you to run scenes through NeoVim).</p>
 
-<h4>Setting up the editor</h4>
+<h4 id="setting-up-the-editor">Setting up the editor</h4>
 
 <p>To set up the editor go to <code>Editor &gt; Editor Settings &gt; Text Editor</code> and change the <code>Exec Path</code> to the terminal of your liking (kitty in my case) and on <code>Exec Flags</code> put <code>nvim {file}</code>.</p>
 

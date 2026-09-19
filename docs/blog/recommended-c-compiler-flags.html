@@ -35,7 +35,13 @@
 
   </div>
   <div class="post-content">
-  	<p>C compilers have bad defaults due to the need to be &ldquo;backwards compatible&rdquo;.
+  	<div class="table-of-contents">
+  <details>
+  <summary>Table of Contents</summary>
+  <ul><ul><li><a href="#the-essentials">The Essentials</a></li><ul><li><a href="#sanitizers">Sanitizers</a></li><li><a href="#c-standard">C Standard</a></li><li><a href="#compiler-flags">Compiler Flags</a></li></ul></ul></ul>
+  </details>
+</div>
+<p>C compilers have bad defaults due to the need to be &ldquo;backwards compatible&rdquo;.
 This means that despite improvements in C compilers, you just have to know what to use.
 If you&rsquo;re not in the know, you might subject yourself to pain needlessly.</p>
 
@@ -43,7 +49,7 @@ If you&rsquo;re not in the know, you might subject yourself to pain needlessly.<
 Heavily inspired by <a href="https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html">Compiler Options Hardening Guide for C and C++</a>.
 I felt that this adaptation was needed because that post suffered from &ldquo;too much yapping&rdquo;.</p>
 
-<h2>The Essentials</h2>
+<h2 id="the-essentials">The Essentials</h2>
 
 <p>No matter what you do, always enable <code>-Wall -Wextra -pedantic</code>, these flags are actually a group of other flags that enable other errors.
 If you want to see what they can do you can check the manpage for them:</p>
@@ -116,7 +122,7 @@ If you want to see what they can do you can check the manpage for them:</p>
 <p>Some people recommend adding <code>-Werror</code> which turns every warning into an error, but I don&rsquo;t really think that&rsquo;s reasonable. When you&rsquo;re iterating on a project, being forced to
 fix any minutia slows you down. If you&rsquo;re going to enable it at all, I suggest you enable it for release builds.</p>
 
-<h4>Sanitizers</h4>
+<h4 id="sanitizers">Sanitizers</h4>
 
 <p>Sanitizers are your friend. They&rsquo;ll help you with detecting memory leaks, undefined behavior and other common bugs. They can be enabled with the <code>-fsanitize</code> flag.
 Also don&rsquo;t forget to add <code>-g</code> when compiling to add debug symbols, otherwise the sanitization errors might not be as useful.
@@ -127,7 +133,7 @@ So you might have to compile your code and test it with each sanitizer individua
 So I recommend using this at least on your debug builds. (do not that if you use a library that has many leaks and was never used with sanitizers, you might have to add an ignore list so that you
 can sanitize your own code, it&rsquo;s just the state of things sadly)</p>
 
-<h4>C Standard</h4>
+<h4 id="c-standard">C Standard</h4>
 
 <p>A lot of people swear by C89 but personally I&rsquo;m not a fan. I recommend C99+. C99 is a nice standard if you want to support as many compilers as possible and/or you don&rsquo;t need atomics.
 If you do need atomics, C11 is fine, Linux for example defaults to it (technically gnu11, but still).</p>
@@ -135,7 +141,7 @@ If you do need atomics, C11 is fine, Linux for example defaults to it (technical
 <p>I recommend you always set your standard with <code>-std=c99</code> or whatever version you&rsquo;re using. GCC defaults to their own dialect which has a bunch of extensions. I&rsquo;d rather use the standard
 and not a dialect, only use it if you know you need the extensions (for some reason).</p>
 
-<h2>Compiler Flags</h2>
+<h2 id="compiler-flags">Compiler Flags</h2>
 
 <p>The following are flags that you might benefit from, they either add compile-time or runtime checks to make the compiler/program even stricter.</p>
 
