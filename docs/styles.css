@@ -674,6 +674,10 @@ navbar {
   ul > ul::first-child {
     padding-left: 0;
   }
+  
+  a {
+  	text-decoration: none;
+  }
 
   background-color: var(--bg3);
   padding: 1em;
