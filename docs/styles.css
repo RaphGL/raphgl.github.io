@@ -668,12 +668,17 @@ navbar {
 
 .table-of-contents {
   ul {
-  	padding-left: 2em;
+    padding-left: 1em;
+  }
+
+  ul > ul::first-child {
+    padding-left: 0;
   }
 
   background-color: var(--bg3);
   padding: 1em;
   border-radius: var(--radius);
+  margin: 1em 0;
 }
 
 footer {
