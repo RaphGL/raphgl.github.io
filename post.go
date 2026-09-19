@@ -13,6 +13,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/alecthomas/chroma/v2"
+	fmtHTML "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/lexers"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/ast"
@@ -194,6 +195,26 @@ func (p Post) getPostHTML() (template.HTML, error) {
 	return pageHTML, nil
 }
 
+func renderCodeblock(w io.Writer, formatter *fmtHTML.Formatter, style *chroma.Style, code *ast.CodeBlock) bool {
+	// we're trimming because if there's trailing spaces syntax highlighting stops working
+	lang := strings.TrimSpace(string(code.Info))
+	lexer := lexers.Get(lang)
+	if lexer == nil {
+		lexer = lexers.Fallback
+	}
+	lexer = chroma.Coalesce(lexer)
+
+	it, err := lexer.Tokenise(nil, string(code.Literal))
+	if err != nil {
+		return false
+	}
+	if formatter.Format(w, style, it) != nil {
+		return false
+	}
+
+	return true
+}
+
 func (post *Post) Render() (template.HTML, error) {
 	extensions := parser.CommonExtensions
 	p := parser.NewWithExtensions(extensions)
@@ -204,27 +225,17 @@ func (post *Post) Render() (template.HTML, error) {
 	htmlOpts := html.RendererOptions{
 		Flags: html.CommonFlags,
 		RenderNodeHook: func(w io.Writer, node ast.Node, entering bool) (ast.WalkStatus, bool) {
-			if code, ok := node.(*ast.CodeBlock); ok && entering {
-				// we're trimming because if there's trailing spaces syntax highlighting stops working
-				lang := strings.TrimSpace(string(code.Info))
-				lexer := lexers.Get(lang)
-				if lexer == nil {
-					lexer = lexers.Fallback
-				}
-				lexer = chroma.Coalesce(lexer)
-
-				it, err := lexer.Tokenise(nil, string(code.Literal))
-				if err != nil {
-					return ast.GoToNext, false
-				}
-				if formatter.Format(w, style, it) != nil {
-					return ast.GoToNext, false
-				}
-
-				return ast.GoToNext, true
+			if !entering {
+				return ast.GoToNext, false
 			}
 
-			return ast.GoToNext, false
+			var ok bool
+			switch _node := node.(type) {
+			case *ast.CodeBlock:
+				ok = renderCodeblock(w, formatter, style, _node)
+			}
+			return ast.GoToNext, ok
+
 		},
 	}
 

@@ -3,6 +3,7 @@ package main
 // TODO: add flag to disable deadlink checker so that we don't get limited by servers while developing this generator
 
 import (
+	"flag"
 	"fmt"
 	"html/template"
 	"io/fs"
@@ -14,7 +15,7 @@ import (
 	"time"
 
 	"github.com/alecthomas/chroma/v2"
-	formatterHTML "github.com/alecthomas/chroma/v2/formatters/html"
+	fmtHTML "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/alecthomas/chroma/v2/styles"
 )
 
@@ -54,12 +55,12 @@ func (b Base) Render() (template.HTML, error) {
 	return template.HTML(indexBuilder.String()), nil
 }
 
-func GetSyntaxHighlighter() (*formatterHTML.Formatter, *chroma.Style) {
+func GetSyntaxHighlighter() (*fmtHTML.Formatter, *chroma.Style) {
 	style := styles.Get("dracula")
 	if style == nil {
 		style = styles.Fallback
 	}
-	return formatterHTML.New(formatterHTML.WithClasses(true)), style
+	return fmtHTML.New(fmtHTML.WithClasses(true)), style
 }
 
 func GetStyles() (string, error) {
@@ -125,67 +126,15 @@ func CopyStaticFile(path string) error {
 	return nil
 }
 
-func GenerateRSSFromPosts(posts []Post) string {
-	var rss strings.Builder
-	rss.WriteString(`<?xml version="1.0" encoding="UTF-8" ?>`)
-	rss.WriteString(`<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>`)
-	{
-		rss.WriteString(`<atom:link href="`)
-		rss.WriteString(WebURL + "/rss.xml")
-		rss.WriteString(`" rel="self" type="application/rss+xml" />`)
-
-		rss.WriteString("<title>RaphGL</title>")
-		rss.WriteString("<link>" + WebURL + "</link>")
-		rss.WriteString("<description>RaphGL's Blog</description>")
-
-		rss.WriteString("<pubDate>")
-		rss.WriteString(time.Now().UTC().Format(time.RFC1123Z))
-		rss.WriteString("</pubDate>")
-
-		for idx, post := range posts {
-			// to avoid rss bloating the feed only the most recent posts are shown
-			if idx >= 20 {
-				break
-			}
-
-			rss.WriteString("<item>")
-			{
-				rss.WriteString("<title>")
-				rss.WriteString(post.Title)
-				rss.WriteString("</title>")
-
-				postURL := WebURL + post.SourceFilePath
-				rss.WriteString("<link>")
-				rss.WriteString(postURL)
-				rss.WriteString("</link>")
-
-				rss.WriteString("<guid>")
-				rss.WriteString(postURL)
-				rss.WriteString("</guid>")
-
-				parsedDate, err := time.Parse("2006-01-02", post.Date)
-				if err == nil {
-					rss.WriteString("<pubDate>")
-					rss.WriteString(parsedDate.UTC().Format(time.RFC1123Z))
-					rss.WriteString("</pubDate>")
-				}
-
-				rss.WriteString("<description>")
-				rss.WriteString(post.Description)
-				rss.WriteString("</description>")
-
-				rss.WriteString("<content:encoded><![CDATA[")
-				rss.WriteString(post.Content)
-				rss.WriteString("]]></content:encoded>")
-			}
-			rss.WriteString("</item>")
-		}
-	}
-	rss.WriteString("</channel></rss>")
-	return rss.String()
-}
-
 func main() {
+	debugF := flag.Bool("debug", false, "Enable debug mode")
+	helpF := flag.Bool("help", false, "Show help message")
+	flag.Parse()
+
+	if *helpF {
+		flag.Usage()
+	}
+
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
 	os.RemoveAll(TargetDirName)
@@ -266,7 +215,9 @@ func main() {
 			}
 			// Post Hooks
 			{
-				post.AddCheckerHook(CheckLinkIsReachable)
+				if !*debugF {
+					post.AddCheckerHook(CheckLinkIsReachable)
+				}
 			}
 
 			htmlArtifact, err := post.Render()
@@ -301,8 +252,7 @@ func main() {
 		return
 	}
 
-	rssFeed := GenerateRSSFromPosts(postList.Posts)
-	os.WriteFile(TargetDirName+"/rss.xml", []byte(rssFeed), 0664)
+	os.WriteFile(TargetDirName+"/rss.xml", []byte(postList.GenerateRSSFromPosts()), 0664)
 
 	listHTML, err := postList.Render()
 	if err != nil {
