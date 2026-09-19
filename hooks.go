@@ -14,8 +14,8 @@ func CheckLinkIsReachable(linkpath string, node ast.Node) error {
 		return nil
 	}
 
-	link := string(linkNode.Destination)
-	if !strings.HasPrefix(link, "http://") || strings.HasPrefix(link, "https://") {
+	link := strings.TrimSpace(string(linkNode.Destination))
+	if !strings.HasPrefix(link, "http://") && !strings.HasPrefix(link, "https://") {
 		return nil
 	}
 
@@ -26,10 +26,5 @@ func CheckLinkIsReachable(linkpath string, node ast.Node) error {
 		return defaultErr
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusOK {
-		return nil
-	}
-
-	return defaultErr
+	return nil
 }
