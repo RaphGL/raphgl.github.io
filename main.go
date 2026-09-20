@@ -1,7 +1,5 @@
 package main
 
-// TODO: add flag to disable deadlink checker so that we don't get limited by servers while developing this generator
-
 import (
 	"flag"
 	"fmt"
@@ -9,6 +7,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime/pprof"
 	"slices"
 	"strings"
 	"sync"
@@ -129,10 +128,22 @@ func CopyStaticFile(path string) error {
 func main() {
 	debugF := flag.Bool("debug", false, "Enable debug mode")
 	helpF := flag.Bool("help", false, "Show help message")
+	profileF := flag.Bool("profile", false, "Generate program profile data")
 	flag.Parse()
 
 	if *helpF {
 		flag.Usage()
+		return
+	}
+
+	if *profileF {
+		f, err := os.Create("cpu_profile.pprof")
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			return
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
 	}
 
 	// we remove all files in target dir first to prevent previous
@@ -202,9 +213,7 @@ func main() {
 	// locks writes to renderedPosts
 	var rendMux sync.Mutex
 	for _, filePath := range mdFiles {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			post, err := NewPost(filePath)
 			if err != nil {
 				fmt.Println(err)
@@ -241,7 +250,7 @@ func main() {
 			rendMux.Lock()
 			renderedPosts = append(renderedPosts, post)
 			rendMux.Unlock()
-		}()
+		})
 	}
 	wg.Wait()
 
