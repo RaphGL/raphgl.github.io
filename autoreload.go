@@ -53,8 +53,9 @@ func DetectFileChanged(path string) bool {
 		}
 		fsCacheMtx.Lock()
 		fsCache[path] = fileStamp{
-			path: path,
-			hash: fhash,
+			path:    path,
+			hash:    fhash,
+			lastMod: ftime,
 		}
 		fsCacheMtx.Unlock()
 	} else {
@@ -68,8 +69,9 @@ func DetectFileChanged(path string) bool {
 		}
 		fsCacheMtx.Lock()
 		fsCache[path] = fileStamp{
-			path: path,
-			hash: fhash,
+			path:    path,
+			hash:    fhash,
+			lastMod: ftime,
 		}
 		fsCacheMtx.Unlock()
 	}
@@ -88,14 +90,12 @@ func DetectDirChanged(dirPath string, exts []string) []string {
 
 		ext := filepath.Ext(path)
 		for _, extWanted := range exts {
-			if ext != extWanted {
-				return nil
+			if ext == extWanted && DetectFileChanged(path) {
+				changedFiles = append(changedFiles, path)
+				break
 			}
 		}
 
-		if DetectFileChanged(path) {
-			changedFiles = append(changedFiles, path)
-		}
 		return nil
 	})
 
