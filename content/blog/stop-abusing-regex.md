@@ -8,7 +8,6 @@ Due to how widespread support for regex is in many languages, people feel like r
 Whether it be while writing a parser, validating some input or whatever else. I'm here to argue that while there are some small valid uses for regex that are very useful,
 most uses of regex are an abuse of them. This is because people writing regex usually don't really know how to parse themselves.
 So they just use whatever tool they know how to use.
-
 ### How your regex is ran
 
 To be run, your regex first goes through a few steps:

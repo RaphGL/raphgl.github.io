@@ -205,11 +205,11 @@ func renderCodeblock(w io.Writer, formatter *fmtHTML.Formatter, style *chroma.St
 	}
 	lexer = chroma.Coalesce(lexer)
 
-	it, err := lexer.Tokenise(nil, string(code.Literal))
+	iter, err := lexer.Tokenise(nil, string(code.Literal))
 	if err != nil {
 		return false
 	}
-	if formatter.Format(w, style, it) != nil {
+	if formatter.Format(w, style, iter) != nil {
 		return false
 	}
 
@@ -318,6 +318,7 @@ func (post *Post) Render() (template.HTML, error) {
 						Level: _node.Level,
 					})
 				}
+				ok = false
 			}
 			return ast.GoToNext, ok
 
@@ -349,7 +350,6 @@ func (post *Post) Render() (template.HTML, error) {
 	}
 
 	postContents := string(markdown.Render(parsedMd, renderer))
-	// fmt.Println(postSections)
 
 	toc, err := renderTableOfContents(postSections)
 	if err != nil {
