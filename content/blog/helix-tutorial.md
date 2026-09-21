@@ -26,29 +26,6 @@ it just won't work. You have to do a selection before. Here's the most common se
 - `e`, `E`, `b`, `B`, `w`, `W`: essentially the same as in vim, select from the current cursor position until where they stop
 
 ## Helix modes and macros
-#### Macros
-Macros can be recorded by pressing `Q`, then after you've done whatever you wanted to record, you can press `Q` again to stop.
-By default macros are recorded into the `@` register, you can change where your macros are recorded if you want to store and use multiple macros.
-For example you could do `"mQ` to record a macro in a custom register `m`. `"<register>` is the syntax for changing registers.
-
-You can also delete all macros by doing `:clear-register`.
-Registers can also be used to save your selection (text) so if you use `d`, `y` and so on, they're also saved in registers.
-This also allows you to have multiple things saved at once by just changing the register before doing something.
-\
-Helix also has a few special registers. If you want to know more about registers you can [check the documentation](https://docs.helix-editor.com/registers.html).
-
-#### Space mode
-Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:
-
-- `<space>b`: Buffer picker
-- `<space>e`: File explorer
-- `<space>s`: Symbol search
-- `<space>/`: Global search
-- `<space>d`: LSP diagnostics
-- `<space>a`: Code actions
-
-Space mode has a few other features as well. You can check what else it can do [here](https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode).
-
 #### Goto mode
 Moving around the file is very common. Vim users are used to using `g` to move around. Helix also has this keybinding. 
 
@@ -111,6 +88,29 @@ To do this you can do a selection of the region where you want the cursors to sp
 after you've matched the content you can press enter and continue editing.
 
 To disable a selection you can use `;`.
+
+#### Space mode
+Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:
+
+- `<space>b`: Buffer picker
+- `<space>e`: File explorer
+- `<space>s`: Symbol search
+- `<space>/`: Global search
+- `<space>d`: LSP diagnostics
+- `<space>a`: Code actions
+
+Space mode has a few other features as well. You can check what else it can do [here](https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode).
+
+#### Macros
+Macros can be recorded by pressing `Q`, then after you've done whatever you wanted to record, you can press `Q` again to stop.
+By default macros are recorded into the `@` register, you can change where your macros are recorded if you want to store and use multiple macros.
+For example you could do `"mQ` to record a macro in a custom register `m`. `"<register>` is the syntax for changing registers.
+
+You can also delete all macros by doing `:clear-register`.
+Registers can also be used to save your selection (text) so if you use `d`, `y` and so on, they're also saved in registers.
+This also allows you to have multiple things saved at once by just changing the register before doing something.
+\
+Helix also has a few special registers. If you want to know more about registers you can [check the documentation](https://docs.helix-editor.com/registers.html).
 
 <hr/>
 

@@ -38,7 +38,7 @@
   	<div class="table-of-contents">
   <details>
   <summary>Table of Contents</summary>
-  <ul><ul><li><a href="#the-low-hanging-fruits">The low-hanging fruits</a></li><ul><li><a href="#basic-motions">Basic Motions</a></li><li><a href="#doing-selections">Doing selections</a></li><li><a href="#helix-modes-and-macros">Helix modes and macros</a></li><li><a href="#macros">Macros</a></li><li><a href="#space-mode">Space mode</a></li><li><a href="#goto-mode">Goto mode</a></li><li><a href="#window-mode">Window mode</a></li><li><a href="#match-mode">Match mode</a></li><li><a href="#command-mode">Command mode</a></li><li><a href="#multicursors">Multicursors</a></li></ul></ul></ul>
+  <ul><ul><li><a href="#the-low-hanging-fruits">The low-hanging fruits</a></li><ul><li><a href="#basic-motions">Basic Motions</a></li><li><a href="#doing-selections">Doing selections</a></li></ul><li><a href="#helix-modes-and-macros">Helix modes and macros</a></li><ul><li><a href="#goto-mode">Goto mode</a></li><li><a href="#window-mode">Window mode</a></li><li><a href="#match-mode">Match mode</a></li><li><a href="#command-mode">Command mode</a></li><li><a href="#multicursors">Multicursors</a></li><li><a href="#space-mode">Space mode</a></li><li><a href="#macros">Macros</a></li></ul></ul></ul>
   </details>
 </div>
 <p>(Neo)Vim has been one of the most popular editors for decades now and a lot of people have muscle memory for it.
@@ -68,33 +68,6 @@ it just won&rsquo;t work. You have to do a selection before. Here&rsquo;s the mo
 </ul>
 
 <h2 id="helix-modes-and-macros">Helix modes and macros</h2>
-
-<h4 id="macros">Macros</h4>
-
-<p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
-By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
-For example you could do <code>&quot;mQ</code> to record a macro in a custom register <code>m</code>. <code>&quot;&lt;register&gt;</code> is the syntax for changing registers.</p>
-
-<p>You can also delete all macros by doing <code>:clear-register</code>.
-Registers can also be used to save your selection (text) so if you use <code>d</code>, <code>y</code> and so on, they&rsquo;re also saved in registers.
-This also allows you to have multiple things saved at once by just changing the register before doing something.
-<br>
-Helix also has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
-
-<h4 id="space-mode">Space mode</h4>
-
-<p>Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:</p>
-
-<ul>
-<li><code>&lt;space&gt;b</code>: Buffer picker</li>
-<li><code>&lt;space&gt;e</code>: File explorer</li>
-<li><code>&lt;space&gt;s</code>: Symbol search</li>
-<li><code>&lt;space&gt;/</code>: Global search</li>
-<li><code>&lt;space&gt;d</code>: LSP diagnostics</li>
-<li><code>&lt;space&gt;a</code>: Code actions</li>
-</ul>
-
-<p>Space mode has a few other features as well. You can check what else it can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
 
 <h4 id="goto-mode">Goto mode</h4>
 
@@ -190,6 +163,33 @@ To do this you can do a selection of the region where you want the cursors to sp
 after you&rsquo;ve matched the content you can press enter and continue editing.</p>
 
 <p>To disable a selection you can use <code>;</code>.</p>
+
+<h4 id="space-mode">Space mode</h4>
+
+<p>Helix heavily relies on pickers to provide a lot of interactive features all of these can be accessed by pressing space:</p>
+
+<ul>
+<li><code>&lt;space&gt;b</code>: Buffer picker</li>
+<li><code>&lt;space&gt;e</code>: File explorer</li>
+<li><code>&lt;space&gt;s</code>: Symbol search</li>
+<li><code>&lt;space&gt;/</code>: Global search</li>
+<li><code>&lt;space&gt;d</code>: LSP diagnostics</li>
+<li><code>&lt;space&gt;a</code>: Code actions</li>
+</ul>
+
+<p>Space mode has a few other features as well. You can check what else it can do <a href="https://docs.helix-editor.com/keymap.html?highlight=space%20mode#space-mode">here</a>.</p>
+
+<h4 id="macros">Macros</h4>
+
+<p>Macros can be recorded by pressing <code>Q</code>, then after you&rsquo;ve done whatever you wanted to record, you can press <code>Q</code> again to stop.
+By default macros are recorded into the <code>@</code> register, you can change where your macros are recorded if you want to store and use multiple macros.
+For example you could do <code>&quot;mQ</code> to record a macro in a custom register <code>m</code>. <code>&quot;&lt;register&gt;</code> is the syntax for changing registers.</p>
+
+<p>You can also delete all macros by doing <code>:clear-register</code>.
+Registers can also be used to save your selection (text) so if you use <code>d</code>, <code>y</code> and so on, they&rsquo;re also saved in registers.
+This also allows you to have multiple things saved at once by just changing the register before doing something.
+<br>
+Helix also has a few special registers. If you want to know more about registers you can <a href="https://docs.helix-editor.com/registers.html">check the documentation</a>.</p>
 
 <hr/>
 
