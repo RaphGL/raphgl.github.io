@@ -229,12 +229,18 @@ func consumePostSectionInLevel(level int, sections []PostSection) (string, []Pos
 	sb.WriteString("<ul>")
 
 	var i int
+	foundSibling := false
 	for i = range len(sections) {
 		if i >= len(sections) {
 			break
 		}
 		s := sections[i]
-		if s.Level > level && i < len(sections) {
+		if s.Level < level {
+			foundSibling = true
+			break
+		}
+
+		if s.Level > level {
 			var contents string
 			contents, sections = consumePostSectionInLevel(s.Level, sections[i:])
 			sb.WriteString(contents)
@@ -253,8 +259,14 @@ func consumePostSectionInLevel(level int, sections []PostSection) (string, []Pos
 	}
 
 	sb.WriteString("</ul>")
-	if i < len(sections) {
-		sections = sections[i:]
+	if !foundSibling {
+		i++
+		if i < len(sections) {
+			sections = sections[i:]
+		} else {
+			sections = nil
+		}
+
 	}
 	return sb.String(), sections
 }
