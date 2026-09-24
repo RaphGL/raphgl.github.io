@@ -224,6 +224,10 @@ type PostSection struct {
 
 // consumes the sections one by one and returns the generated HTML string
 // and a new post section slice from where it stopped consuming the sections
+//
+// TODO: rewrite function so not be recursive anymore.
+// We can easily implement this functionality by simply detecting when the `level` changes.
+// once that happens we can insert insert a <ul> tag
 func consumePostSectionInLevel(level int, sections []PostSection) (string, []PostSection) {
 	var sb strings.Builder
 	sb.WriteString("<ul>")

@@ -81,6 +81,7 @@ func GetStyles() (string, error) {
 	return fmt.Sprintln(string(cssReset), string(bodyStyles), cssBuilder.String()), nil
 }
 
+// TODO fix
 func GetTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -89,6 +90,7 @@ func GetTargetPath(path string) (parentPath, destPath string) {
 	return
 }
 
+// TODO fix
 func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -104,51 +106,27 @@ func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	return
 }
 
-func CopyStaticFile(path string) error {
-	contents, err := os.ReadFile(path)
+func CopyStaticFile(to, from string) error {
+	contents, err := os.ReadFile(from)
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return err
 	}
 
-	parentPath, destPath := GetTargetPath(path)
-	if err := os.MkdirAll(parentPath, 0755); err != nil {
-		fmt.Println(err)
-		return nil
+	if err := os.MkdirAll(filepath.Dir(to), 0755); err != nil {
+		return err
 	}
 
-	if err := os.WriteFile(destPath, contents, 0755); err != nil {
-		fmt.Println(err)
-		return nil
+	if err := os.WriteFile(to, contents, 0755); err != nil {
+		return err
 	}
 
 	return nil
 }
 
-func main() {
-	debugF := flag.Bool("debug", false, "Enable debug mode")
-	helpF := flag.Bool("help", false, "Show help message")
-	profileF := flag.Bool("profile", false, "Generate program profile data")
-	flag.Parse()
-
-	if *helpF {
-		flag.Usage()
-		return
-	}
-
-	if *profileF {
-		f, err := os.Create("cpu_profile.pprof")
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err)
-			return
-		}
-		pprof.StartCPUProfile(f)
-		defer pprof.StopCPUProfile()
-	}
-
+func GenerateWebsite(isDebugMode bool, targetDirPath string) {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
-	os.RemoveAll(TargetDirName)
+	os.RemoveAll(targetDirPath)
 
 	dir := "./content"
 	dirStat, err := os.Stat(dir)
@@ -162,7 +140,7 @@ func main() {
 	}
 
 	defer func() {
-		targetDir, err := os.Open(TargetDirName)
+		targetDir, err := os.Open(targetDirPath)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -174,7 +152,7 @@ func main() {
 			return
 		}
 		if len(dirnames) == 0 {
-			os.Remove(TargetDirName)
+			os.Remove(targetDirPath)
 		}
 	}()
 
@@ -224,7 +202,7 @@ func main() {
 			}
 			// Post Hooks
 			{
-				if !*debugF {
+				if !isDebugMode {
 					post.AddCheckerHook(CheckLinkIsReachable)
 				}
 			}
@@ -261,20 +239,21 @@ func main() {
 		return
 	}
 
-	os.WriteFile(TargetDirName+"/rss.xml", []byte(postList.GenerateRSSFromPosts()), 0664)
+	os.WriteFile(filepath.Join(targetDirPath, "rss.xml"), []byte(postList.GenerateRSSFromPosts()), 0664)
 
 	listHTML, err := postList.Render()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	if err = os.WriteFile(TargetDirName+"/index.html", []byte(listHTML), 0644); err != nil {
+	if err = os.WriteFile(filepath.Join(targetDirPath, "index.html"), []byte(listHTML), 0644); err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	for _, file := range staticFiles {
-		if err := CopyStaticFile(file); err != nil {
+		_, destPath := GetTargetPath(file)
+		if err := CopyStaticFile(destPath, file); err != nil {
 			fmt.Println(err)
 		}
 	}
@@ -284,8 +263,50 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	if err := os.WriteFile(TargetDirName+"/styles.css", []byte(styles), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(targetDirPath, "styles.css"), []byte(styles), 0644); err != nil {
 		fmt.Println(err)
 		return
 	}
+}
+
+func main() {
+	devF := flag.Bool("dev", false, "Enable development mode")
+	helpF := flag.Bool("help", false, "Show help message")
+	profileF := flag.Bool("profile", false, "Generate program profile data")
+	flag.Parse()
+
+	if *helpF {
+		flag.Usage()
+		return
+	}
+
+	if *profileF {
+		f, err := os.Create("cpu_profile.pprof")
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			return
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
+	}
+
+	var targetDir string
+	if *devF {
+		tmpDir, err := os.MkdirTemp("", filepath.Base(os.Args[0]))
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer os.RemoveAll(tmpDir)
+		targetDir = tmpDir
+	} else {
+		wd, err := os.Getwd()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		targetDir = filepath.Join(wd, TargetDirName)
+	}
+
+	GenerateWebsite(*devF, targetDir)
 }

@@ -34,7 +34,7 @@ func getFileHash(path string) (FileHash, error) {
 var fsCacheMtx sync.Mutex
 var fsCache = make(map[string]fileStamp)
 
-// detect is pull-based. every time you call if, it remembered the state of the
+// detect is pull-based. every time you call if, it remembers the state of the
 // file it was called with, so next time you call it, it will tell you if the contents of this file
 // has changed or not since then.
 func DetectFileChanged(path string) bool {
