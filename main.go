@@ -81,7 +81,6 @@ func GetStyles() (string, error) {
 	return fmt.Sprintln(string(cssReset), string(bodyStyles), cssBuilder.String()), nil
 }
 
-// TODO fix
 func GetTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -90,7 +89,6 @@ func GetTargetPath(path string) (parentPath, destPath string) {
 	return
 }
 
-// TODO fix
 func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -123,7 +121,7 @@ func CopyStaticFile(to, from string) error {
 	return nil
 }
 
-func GenerateWebsite(isDebugMode bool, targetDirPath string) {
+func GenerateWebsite(isDevMode bool, targetDirPath string) {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
 	os.RemoveAll(targetDirPath)
@@ -185,54 +183,55 @@ func GenerateWebsite(isDebugMode bool, targetDirPath string) {
 		return nil
 	})
 
-	// === Generate posts ===
 	var wg sync.WaitGroup
-	renderedPosts := make([]Post, 0)
-	// locks writes to renderedPosts
-	var rendMux sync.Mutex
-	for _, filePath := range mdFiles {
-		wg.Go(func() {
-			post, err := NewPost(filePath)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			if post.Draft {
-				return
-			}
-			// Post Hooks
-			{
-				if !isDebugMode {
-					post.AddCheckerHook(CheckLinkIsReachable)
+	var renderedPosts []Post
+	/* Generate posts */ {
+		postChan := make(chan Post, 16)
+		for _, filePath := range mdFiles {
+			wg.Go(func() {
+				post, err := NewPost(filePath)
+				if err != nil {
+					fmt.Println(err)
+					return
 				}
-			}
+				if post.Draft {
+					return
+				}
+				// Post Hooks
+				{
+					if !isDevMode {
+						post.AddCheckerHook(CheckLinkIsReachable)
+					}
+				}
 
-			htmlArtifact, err := post.Render()
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
+				htmlArtifact, err := post.Render()
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
 
-			parentDirPath, destPath := GetCompiledTargetPath(filePath)
+				parentDirPath, destPath := GetCompiledTargetPath(filePath)
 
-			if err := os.MkdirAll(parentDirPath, 0755); err != nil {
-				fmt.Println(err)
-				return
-			}
+				if err := os.MkdirAll(parentDirPath, 0755); err != nil {
+					fmt.Println(err)
+					return
+				}
 
-			if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
-				fmt.Println(err)
-				return
-			}
+				if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
+					fmt.Println(err)
+					return
+				}
 
-			rendMux.Lock()
-			renderedPosts = append(renderedPosts, post)
-			rendMux.Unlock()
-		})
+				postChan <- post
+			})
+		}
+		for range len(mdFiles) {
+			renderedPosts = append(renderedPosts, <-postChan)
+		}
+		wg.Wait()
+		close(postChan)
 	}
-	wg.Wait()
 
-	// TODO: consider rendering different contents dirs separately
 	postList, err := NewList(renderedPosts)
 	if err != nil {
 		fmt.Println(err)
@@ -252,11 +251,15 @@ func GenerateWebsite(isDebugMode bool, targetDirPath string) {
 	}
 
 	for _, file := range staticFiles {
-		_, destPath := GetTargetPath(file)
-		if err := CopyStaticFile(destPath, file); err != nil {
-			fmt.Println(err)
-		}
+		// Note: Copying files take time, might as well try and make it concurrent
+		wg.Go(func() {
+			_, destPath := GetTargetPath(file)
+			if err := CopyStaticFile(destPath, file); err != nil {
+				fmt.Println(err)
+			}
+		})
 	}
+	defer wg.Wait()
 
 	styles, err := GetStyles()
 	if err != nil {
