@@ -367,11 +367,14 @@ func (post *Post) Render() (template.HTML, error) {
 
 	postContents := string(markdown.Render(parsedMd, renderer))
 
-	toc, err := renderTableOfContents(postSections)
-	if err != nil {
-		return "", err
+	post.Content = postContents
+	if len(postSections) != 0 {
+		toc, err := renderTableOfContents(postSections)
+		if err != nil {
+			return "", err
+		}
+		post.Content = toc + post.Content
 	}
-	post.Content = toc + postContents
 	page, err := post.getPostHTML()
 	return page, err
 }
