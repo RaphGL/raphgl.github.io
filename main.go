@@ -121,7 +121,43 @@ func CopyStaticFile(to, from string) error {
 	return nil
 }
 
-func GenerateWebsite(isDevMode bool, targetDirPath string) {
+// writes post to `path` and returns the post for further inspection if needed
+func GeneratePost(isDevMode bool, path string) (Post, error) {
+	post, err := NewPost(path)
+	if err != nil {
+		return Post{}, err
+	}
+	if post.Draft {
+		return Post{}, nil
+	}
+	// Post Hooks
+	{
+		if !isDevMode {
+			post.AddCheckerHook(CheckLinkIsReachable)
+		}
+	}
+
+	htmlArtifact, err := post.Render()
+	if err != nil {
+		fmt.Println(err)
+		return Post{}, err
+	}
+
+	parentDirPath, destPath := GetCompiledTargetPath(path)
+
+	if err := os.MkdirAll(parentDirPath, 0755); err != nil {
+		return Post{}, err
+	}
+
+	if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
+		return Post{}, err
+	}
+
+	return post, nil
+}
+
+// writes the entire website to `targetDirPath`
+func GenerateWebsite(targetDirPath string) {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
 	os.RemoveAll(targetDirPath)
@@ -189,39 +225,11 @@ func GenerateWebsite(isDevMode bool, targetDirPath string) {
 		postChan := make(chan Post, 16)
 		for _, filePath := range mdFiles {
 			wg.Go(func() {
-				post, err := NewPost(filePath)
+				post, err := GeneratePost(false, filePath)
 				if err != nil {
 					fmt.Println(err)
 					return
 				}
-				if post.Draft {
-					return
-				}
-				// Post Hooks
-				{
-					if !isDevMode {
-						post.AddCheckerHook(CheckLinkIsReachable)
-					}
-				}
-
-				htmlArtifact, err := post.Render()
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-
-				parentDirPath, destPath := GetCompiledTargetPath(filePath)
-
-				if err := os.MkdirAll(parentDirPath, 0755); err != nil {
-					fmt.Println(err)
-					return
-				}
-
-				if err := os.WriteFile(destPath, []byte(htmlArtifact), 0644); err != nil {
-					fmt.Println(err)
-					return
-				}
-
 				postChan <- post
 			})
 		}
@@ -274,8 +282,8 @@ func GenerateWebsite(isDevMode bool, targetDirPath string) {
 
 func main() {
 	devF := flag.Bool("dev", false, "Enable development mode")
-	helpF := flag.Bool("help", false, "Show help message")
 	profileF := flag.Bool("profile", false, "Generate program profile data")
+	helpF := flag.Bool("help", false, "Show help message")
 	flag.Parse()
 
 	if *helpF {
@@ -293,7 +301,6 @@ func main() {
 		defer pprof.StopCPUProfile()
 	}
 
-	var targetDir string
 	if *devF {
 		tmpDir, err := os.MkdirTemp("", filepath.Base(os.Args[0]))
 		if err != nil {
@@ -301,15 +308,14 @@ func main() {
 			return
 		}
 		defer os.RemoveAll(tmpDir)
-		targetDir = tmpDir
+		// TODO: start up file server in tmpDir, detect changes and regenerate posts
 	} else {
 		wd, err := os.Getwd()
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
-		targetDir = filepath.Join(wd, TargetDirName)
+		targetDir := filepath.Join(wd, TargetDirName)
+		GenerateWebsite(targetDir)
 	}
-
-	GenerateWebsite(*devF, targetDir)
 }
