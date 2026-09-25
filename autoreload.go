@@ -82,11 +82,17 @@ func DetectFileChanged(path string) bool {
 
 // Returns a list of file paths of files that were changed in dirPath with the specified extensions.
 // The extensions must contain a starting dot like `.txt`
+// If no extensions are supplied every file will be checked
 func DetectDirFilesChanged(dirPath string, exts ...string) []string {
 	var changedFiles []string
 	filepath.WalkDir(dirPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil || d.IsDir() {
 			return err
+		}
+
+		if len(exts) == 0 && DetectFileChanged(path) {
+			changedFiles = append(changedFiles, path)
+			return nil
 		}
 
 		ext := filepath.Ext(path)

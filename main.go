@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io/fs"
+	"net/http"
 	"os"
 	"path/filepath"
 	"runtime/pprof"
@@ -81,6 +82,7 @@ func GetStyles() (string, error) {
 	return fmt.Sprintln(string(cssReset), string(bodyStyles), cssBuilder.String()), nil
 }
 
+// TODO: recheck function to see if they can be written better and maybe rename it
 func GetTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -89,6 +91,7 @@ func GetTargetPath(path string) (parentPath, destPath string) {
 	return
 }
 
+// TODO: recheck function to see if they can be written better and maybe rename it
 func GetCompiledTargetPath(path string) (parentPath, destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
@@ -122,8 +125,8 @@ func CopyStaticFile(to, from string) error {
 }
 
 // writes post to `path` and returns the post for further inspection if needed
-func GeneratePost(isDevMode bool, path string) (Post, error) {
-	post, err := NewPost(path)
+func GeneratePost(isDevMode bool, destPath, postPath string) (Post, error) {
+	post, err := NewPost(postPath)
 	if err != nil {
 		return Post{}, err
 	}
@@ -143,9 +146,7 @@ func GeneratePost(isDevMode bool, path string) (Post, error) {
 		return Post{}, err
 	}
 
-	parentDirPath, destPath := GetCompiledTargetPath(path)
-
-	if err := os.MkdirAll(parentDirPath, 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(destPath), 0755); err != nil {
 		return Post{}, err
 	}
 
@@ -225,11 +226,13 @@ func GenerateWebsite(targetDirPath string) {
 		postChan := make(chan Post, 16)
 		for _, filePath := range mdFiles {
 			wg.Go(func() {
-				post, err := GeneratePost(false, filePath)
+				_, destPath := GetCompiledTargetPath(filePath)
+				post, err := GeneratePost(false, destPath, filePath)
 				if err != nil {
 					fmt.Println(err)
 					return
 				}
+
 				postChan <- post
 			})
 		}
@@ -280,6 +283,56 @@ func GenerateWebsite(targetDirPath string) {
 	}
 }
 
+func ServeWebsiteWithHotReload() error {
+	tmpDir, err := os.MkdirTemp("", filepath.Base(os.Args[0]))
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(tmpDir)
+
+	go func() {
+		cssTarget := filepath.Join(tmpDir, "docs", "styles.css")
+		for {
+			for _, f := range DetectDirFilesChanged("./content", ".md") {
+				_, destPath := GetCompiledTargetPath(f)
+				destPath = filepath.Join(tmpDir, destPath)
+				_, err := GeneratePost(true, destPath, f)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
+
+			// TODO: detect when index.html and its `./layout` components change
+			// and recompile it as well
+
+			if DetectFileChanged("./layout/styles.css") {
+				css, err := GetStyles()
+				if err != nil {
+					fmt.Println(err)
+				}
+
+				if err := os.WriteFile(cssTarget, []byte(css), 0644); err != nil {
+					fmt.Println(err)
+				}
+			}
+
+			time.Sleep(400 * time.Millisecond)
+		}
+	}()
+
+	fmt.Println("Using ", tmpDir, "as temporary directory")
+	fmt.Println("Starting server at http://localhost:8080")
+
+	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
+	http.Handle("/", http.FileServer(http.Dir(filepath.Join(tmpDir, TargetDirName))))
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	return nil
+}
+
 func main() {
 	devF := flag.Bool("dev", false, "Enable development mode")
 	profileF := flag.Bool("profile", false, "Generate program profile data")
@@ -302,13 +355,11 @@ func main() {
 	}
 
 	if *devF {
-		tmpDir, err := os.MkdirTemp("", filepath.Base(os.Args[0]))
+		err := ServeWebsiteWithHotReload()
 		if err != nil {
 			fmt.Println(err)
-			return
 		}
-		defer os.RemoveAll(tmpDir)
-		// TODO: start up file server in tmpDir, detect changes and regenerate posts
+		return
 	} else {
 		wd, err := os.Getwd()
 		if err != nil {
