@@ -33,16 +33,10 @@ You might also run into UB.
 DECLARE_VECTOR(int)
 ```
 Con: Everything is wrapped in a macro and might break autocomplete
-
-\
-\
-
+  
 The approach I recommend is not really novel, but it's the one I've found to be the nicest to use and to work better with existing tooling.
 Since it doesn't rely on type erasure and everything isn't wrapped in macros.
-
-\
-\
-
+  
 Pros:
 
 - Type safe
@@ -68,7 +62,7 @@ To do this, we'll have to rely on a small macro trick, but other than that, ever
 ```
 
 With the `VEC_SUFFIX` being optional.
-
+  
 Once instantiated this would give you a `vector_push_num` function you could use.
 To do this we need to be able to append `_num` to our symbol names. So we create a `G` function-like macro.
 
@@ -100,7 +94,7 @@ We can use it to define our functions and structs like this: `struct G(something
 ```
 
 Now we can emit an error if `VEC_ITEM_TYPE` is not defined.
-
+  
 This fixes wrong uses of the header but what if we want to use something like `long long` or `atomic int`? It won't work.
 So we have to introduce a way of programmatically overriding the suffix that's added to functions. So we'll introduce a `VEC_SUFFIX`:
 
@@ -142,9 +136,9 @@ As you can see, every time we call anything generic we need to wrap it in `G` so
 
 You can try and use this implementation but unless you only have one C file and nothing else, you're likely to eventually run into a redeclaration error especially if you're
 using this generic library on `.c` and `.h` files.
-
+  
 A potential fix is to make everything `static` but then you would end up duplicating everything throughout many translation units in your program.
-
+  
 The actual fix is to be able to choose when to forward declare and when to use the implementation:
 
 ```c
@@ -185,7 +179,7 @@ And then on your C files you can tell it that you need the implementations, not 
 
 Side Note: if you include the header in another header, you can still just call `#define VEC_IMPLEMENTATION` without reincluding the generic header library to get the implementation.
 Which is a nice side effect of this approach to generics, but it can end up looking a bit implicit because the include is hidden in another include.
-
+  
 Example:
 ```c
 #define VEC_IMPLEMENTATION
@@ -206,13 +200,13 @@ We'll have a redeclaration error, because both includes see `VEC_ITEM_TYPE` as `
 #undef VEC_SUFFIX
 ```
 This way we still get a "VEC_ITEM_TYPE is not defined" error if we include the vector again and forget to tell it what type we want instantiated.
-
+  
 NOTE: We don't undefine `VEC_IMPLEMENTATION` so that we can just declare it once in our `.c` files for convenience's sake.
 
 #### Include guards
 You might be asking about the missing include guard, but you don't need it! The reason is that we actually want to be able to include the same header multiple times.
 Each time with a different type.
-
+  
 You might still want to have an include guard for a section of the header if you want to declare some types or code
 that is not generic in the header. A good example of this would be if your allocator would receive an allocator context
 which does not care about types. For example, you might want to have something like this:
