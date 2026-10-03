@@ -38,8 +38,11 @@ func NewList(posts []Post) (List, error) {
 	listPosts := make([]Post, len(posts))
 	for i := range len(posts) {
 		post := posts[i]
-		_, destPath := GetCompiledTargetPath(post.SourceFilePath)
-		post.SourceFilePath = strings.TrimLeft(destPath, TargetDirName)
+		destPath, err := GetCompiledTargetPath(post.SourceFilePath)
+		if err != nil {
+			return List{}, err
+		}
+		post.SourceFilePath = destPath
 		listPosts[i] = post
 	}
 

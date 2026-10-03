@@ -82,29 +82,25 @@ func GetStyles() (string, error) {
 	return fmt.Sprintln(string(cssReset), string(bodyStyles), cssBuilder.String()), nil
 }
 
-// TODO: recheck function to see if they can be written better and maybe rename it
-func GetTargetPath(path string) (parentPath, destPath string) {
+// converts the path to its equivalent in the `TargetDirName` directory
+func GetTargetPath(path string) (destPath string) {
 	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
 	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
-	parentPath = strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
-	destPath = strings.Join(destComponents, string(filepath.Separator))
-	return
+	return strings.Join(destComponents, string(filepath.Separator))
 }
 
-// TODO: recheck function to see if they can be written better and maybe rename it
-func GetCompiledTargetPath(path string) (parentPath, destPath string) {
-	pathComponents := strings.Split(path, string(filepath.Separator))[1:]
-	destComponents := slices.Insert(pathComponents, 0, TargetDirName)
-
-	destPath = strings.Join(destComponents, string(filepath.Separator))
-	destExt := filepath.Ext(destPath)
-	destPath = destPath[:len(destPath)-len(destExt)] + ".html"
-	parentPath = strings.Join(destComponents[:len(destComponents)-1], string(filepath.Separator))
-
-	// if on windows it will use backslash instead so we need to convert it
-	parentPath = filepath.ToSlash(parentPath)
-	destPath = filepath.ToSlash(destPath)
-	return
+// returns the path of the compiled file without the `TargetDirName`
+// this is useful for URLs.
+//
+// Note: an error will be returned if the file does not have a `.md` extension
+func GetCompiledTargetPath(path string) (string, error) {
+	target := strings.Join(strings.Split(path, string(filepath.Separator))[1:], string(filepath.Separator))
+	ext := filepath.Ext(target)
+	if ext != ".md" {
+		return "", fmt.Errorf("Expected file with a `.md` extension but found `%s`", ext)
+	}
+	target = string(filepath.Separator) + strings.Replace(target, ext, ".html", 1)
+	return target, nil
 }
 
 func CopyStaticFile(to, from string) error {
@@ -124,7 +120,7 @@ func CopyStaticFile(to, from string) error {
 	return nil
 }
 
-// writes post to `path` and returns the post for further inspection if needed
+// writes post to `destPath` and returns the post for further inspection if needed
 func GeneratePost(isDevMode bool, destPath, postPath string) (Post, error) {
 	post, err := NewPost(postPath)
 	if err != nil {
@@ -161,7 +157,14 @@ func GeneratePost(isDevMode bool, destPath, postPath string) (Post, error) {
 func GenerateWebsite(targetDirPath string) {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
-	os.RemoveAll(targetDirPath)
+	if err := os.RemoveAll(targetDirPath); err != nil {
+		fmt.Println(err)
+		return
+	}
+	if err := os.MkdirAll(targetDirPath, 0755); err != nil {
+		fmt.Println(err)
+		return
+	}
 
 	dir := "./content"
 	dirStat, err := os.Stat(dir)
@@ -226,7 +229,12 @@ func GenerateWebsite(targetDirPath string) {
 		postChan := make(chan Post, 16)
 		for _, filePath := range mdFiles {
 			wg.Go(func() {
-				_, destPath := GetCompiledTargetPath(filePath)
+				destPath, err := GetCompiledTargetPath(filePath)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+				destPath = filepath.Join(targetDirPath, destPath)
 				post, err := GeneratePost(false, destPath, filePath)
 				if err != nil {
 					fmt.Println(err)
@@ -264,7 +272,7 @@ func GenerateWebsite(targetDirPath string) {
 	for _, file := range staticFiles {
 		// Note: Copying files take time, might as well try and make it concurrent
 		wg.Go(func() {
-			_, destPath := GetTargetPath(file)
+			destPath := GetTargetPath(file)
 			if err := CopyStaticFile(destPath, file); err != nil {
 				fmt.Println(err)
 			}
@@ -290,22 +298,31 @@ func ServeWebsiteWithHotReload() error {
 	}
 	defer os.RemoveAll(tmpDir)
 
+	docsDir := filepath.Join(tmpDir, TargetDirName)
+
 	go func() {
-		cssTarget := filepath.Join(tmpDir, "docs", "styles.css")
+		cssTarget := filepath.Join(docsDir, "styles.css")
+
 		for {
+			if len(DetectDirFilesChanged("./layout", ".html")) != 0 {
+				GenerateWebsite(docsDir)
+				continue
+			}
+
 			for _, f := range DetectDirFilesChanged("./content", ".md") {
-				_, destPath := GetCompiledTargetPath(f)
-				destPath = filepath.Join(tmpDir, destPath)
-				_, err := GeneratePost(true, destPath, f)
+				destPath, err := GetCompiledTargetPath(f)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				destPath = filepath.Join(docsDir, destPath)
+				_, err = GeneratePost(true, destPath, f)
 				if err != nil {
 					fmt.Println(err)
 				}
 			}
 
-			// TODO: detect when index.html and its `./layout` components change
-			// and recompile it as well
-
-			if DetectFileChanged("./layout/styles.css") {
+			if len(DetectDirFilesChanged("./layout", ".css")) != 0 {
 				css, err := GetStyles()
 				if err != nil {
 					fmt.Println(err)
@@ -324,7 +341,7 @@ func ServeWebsiteWithHotReload() error {
 	fmt.Println("Starting server at http://localhost:8080")
 
 	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
-	http.Handle("/", http.FileServer(http.Dir(filepath.Join(tmpDir, TargetDirName))))
+	http.Handle("/", http.FileServer(http.Dir(docsDir)))
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err
