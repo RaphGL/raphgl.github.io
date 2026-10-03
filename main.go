@@ -7,11 +7,13 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"runtime/pprof"
 	"slices"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/alecthomas/chroma/v2"
@@ -129,8 +131,8 @@ func GeneratePost(isDevMode bool, destPath, postPath string) (Post, error) {
 	if post.Draft {
 		return Post{}, nil
 	}
-	// Post Hooks
-	{
+
+	{ // Post hooks
 		if !isDevMode {
 			post.AddCheckerHook(CheckLinkIsReachable)
 		}
@@ -154,7 +156,7 @@ func GeneratePost(isDevMode bool, destPath, postPath string) (Post, error) {
 }
 
 // writes the entire website to `targetDirPath`
-func GenerateWebsite(targetDirPath string) {
+func GenerateWebsite(isDevMode bool, targetDirPath string) {
 	// we remove all files in target dir first to prevent previous
 	// compilation items from being left in the final website artifacts
 	if err := os.RemoveAll(targetDirPath); err != nil {
@@ -235,7 +237,7 @@ func GenerateWebsite(targetDirPath string) {
 					return
 				}
 				destPath = filepath.Join(targetDirPath, destPath)
-				post, err := GeneratePost(false, destPath, filePath)
+				post, err := GeneratePost(isDevMode, destPath, filePath)
 				if err != nil {
 					fmt.Println(err)
 					return
@@ -302,10 +304,20 @@ func ServeWebsiteWithHotReload() error {
 
 	go func() {
 		cssTarget := filepath.Join(docsDir, "styles.css")
+		cleanupSigChan := make(chan os.Signal, 1)
+		// we handle these signals so that we can hopefully reduce unnecessary space usage
+		signal.Notify(cleanupSigChan, os.Interrupt, syscall.SIGTERM)
 
 		for {
+			select {
+			case <-cleanupSigChan:
+				os.RemoveAll(tmpDir)
+				os.Exit(0)
+			default:
+			}
+
 			if len(DetectDirFilesChanged("./layout", ".html")) != 0 {
-				GenerateWebsite(docsDir)
+				GenerateWebsite(true, docsDir)
 				continue
 			}
 
@@ -343,7 +355,6 @@ func ServeWebsiteWithHotReload() error {
 	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
 	http.Handle("/", http.FileServer(http.Dir(docsDir)))
 	if err := http.ListenAndServe(":8080", nil); err != nil {
-		fmt.Fprintln(os.Stderr, err)
 		return err
 	}
 
@@ -384,6 +395,6 @@ func main() {
 			return
 		}
 		targetDir := filepath.Join(wd, TargetDirName)
-		GenerateWebsite(targetDir)
+		GenerateWebsite(false, targetDir)
 	}
 }
